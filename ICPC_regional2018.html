@@ -60,35 +60,34 @@
 	\( Answer=\frac{mcm(R,360)}{R}\) or \(Answer=\frac{360}{gcd(R,360)} \).
 	<p> Maybe the hard thing to realise is that you have to make a parsing on the input in order to get the correct solution.
 	
-	<figure>
-	  <figcaption>Your code title</figcaption>
-	  <pre>
-	    <code>
-	      <!-- your code here -->
-		lli mcm(lli a,lli b){
-			return (a*b)/__gcd(a,b);
-		}
-		int main(){
-		    string s;
-		    cin>>s;
-		    int ind=0;
-		    rep(i,0,sz(s)) if(s[i]=='.') ind=i;
+	 <body>
+	    <pre><code id="python_code">def func(A):
+	    result = 0
+	    n = len(A)
+	    while n > 1:
+		n = n/2
+		result = result + min(A[1,...,n])
+	    return result</code></pre>
+	    <script type="text/javascript">
+		window.onload = function(){
+		    var codeElement = document.getElementById('python_code');
+		    var code = codeElement.innerText;
 
-		    vector<int> v1,v2;
-		    rep(i,0,ind) v1.pb(s[i]-'0');
-		    rep(i,ind+1,sz(s)) v2.pb(s[i]-'0');
+		    codeElement.innerHTML = "";
 
-		    lli num=0;
-		    if(sz(v1)==3) num+=v1[0]*10000+v1[1]*1000+v1[2]*100+v2[0]*10+v2[1];
-		    else if(sz(v1)==2) num+=v1[0]*1000+v1[1]*100+v2[0]*10+v2[1];
-		    else num+=v1[0]*100+v2[0]*10+v2[1];
-
-			cout<<(mcm(num,36000)/num)<<endl;
-		    return 0;
-		}
-	    </code>
-	  </pre>
-	</figure>	
+		    var codeMirror = CodeMirror(
+		      codeElement,
+		      {
+			value: code,
+			mode: "python",
+			theme: "default",
+			lineNumbers: false,
+			readOnly: true
+		      }
+		    );
+		};
+	    </script>
+	  </body>	
 	<p> asdnk ka kajnadasd 
 	<p> asdasdasdasdasadasda
 	<p> hola amiguitos asdasd 
