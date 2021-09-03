@@ -59,8 +59,7 @@
 	<p> The way I found the solution for this problem was through playing with the input. It's no hard tho to arrive to the following relation:
 	\( Answer=\frac{mcm(R,360)}{R}\) or \(Answer=\frac{360}{gcd(R,360)} \).
 	<p> Maybe the hard thing to realise is that you have to make a parsing on the input in order to get the correct solution.<\p>
-	<details><summary>code</summary>
-
+	<p> <details><summary>code</summary>
 	```cpp
 	lli mcm(lli a,lli b){
 		return (a*b)/__gcd(a,b);
