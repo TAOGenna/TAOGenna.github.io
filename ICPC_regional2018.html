@@ -78,7 +78,27 @@
 	</style>
 	</head>
 	<body>
-	<p>Some code:</p>
+	<p>
+	int main(){
+	    string s;
+	    cin>>s;
+	    int ind=0;
+	    rep(i,0,sz(s)) if(s[i]=='.') ind=i;
+
+	    vector<int> v1,v2;
+	    rep(i,0,ind) v1.pb(s[i]-'0');
+	    rep(i,ind+1,sz(s)) v2.pb(s[i]-'0');
+
+	    lli num=0;
+	    if(sz(v1)==3) num+=v1[0]*10000+v1[1]*1000+v1[2]*100+v2[0]*10+v2[1];
+	    else if(sz(v1)==2) num+=v1[0]*1000+v1[1]*100+v2[0]*10+v2[1];
+	    else num+=v1[0]*100+v2[0]*10+v2[1];
+
+		cout<<(mcm(num,36000)/num)<<endl;
+	    return 0;
+	}
+		
+	</p>
 	<code>My code...</code>
 	<p> asdasd
 		
