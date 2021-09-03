@@ -57,9 +57,34 @@
 	<h4 class="media-heading">A - A Symetrical Pizza 
 	</h4> 
 	<p> The way I found the solution for this problem was through playing with the input. It's no hard tho to arrive to the following relation:
-	\[ Answer=\frac{mcm(R,360)}{R}\\
-or \\
-Answer=\frac{360}{gcd(R,360)} \]	
+	\( Answer=\frac{mcm(R,360)}{R}\) or \(Answer=\frac{360}{gcd(R,360)} \).
+	<p> Maybe the hard thing to realise is that you have to make a parsing on the input in order to get the correct solution.<\p>
+	<details><summary>code</summary>
+
+	```cpp
+	lli mcm(lli a,lli b){
+		return (a*b)/__gcd(a,b);
+	}
+	int main(){
+	    string s;
+	    cin>>s;
+	    int ind=0;
+	    rep(i,0,sz(s)) if(s[i]=='.') ind=i;
+
+	    vector<int> v1,v2;
+	    rep(i,0,ind) v1.pb(s[i]-'0');
+	    rep(i,ind+1,sz(s)) v2.pb(s[i]-'0');
+
+	    lli num=0;
+	    if(sz(v1)==3) num+=v1[0]*10000+v1[1]*1000+v1[2]*100+v2[0]*10+v2[1];
+	    else if(sz(v1)==2) num+=v1[0]*1000+v1[1]*100+v2[0]*10+v2[1];
+	    else num+=v1[0]*100+v2[0]*10+v2[1];
+
+		cout<<(mcm(num,36000)/num)<<endl;
+	    return 0;
+	}
+	```
+	</details>	
 	
 	<p> <a href="ICPC_regional2018.html" target="_blank">David Poland</a>  I'm a PhD student in theoretical physics at Harvard. 
 		I am interested in using a variety of approaches to gain insight into computation and generalization in neural systems. 
