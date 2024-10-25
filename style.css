@@ -180,13 +180,37 @@ hr {
 
 .card {
     grid-column: span 3;
-    vertical-align: top;
-    background-color: #eee;
+    background-color: white;
     border: 1px solid #ddd;
     border-radius: 3px;
-    padding: 5px;
-    background-color: white;
+    padding: 10px;
     padding-bottom: 10px;
+    min-height: 260px;
+    /* Adjust to desired uniform height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.ccimg img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.cdesc {
+    margin-top: 10px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+code {
+    background-color: #f5f5f5eb;
+    /* Light gray background */
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
 }
 
 @media (max-width: 991px) {
