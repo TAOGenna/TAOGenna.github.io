@@ -178,6 +178,13 @@ hr {
     padding-bottom: 30px;
 }
 
+.icon-link {
+    font-size: small;
+    text-decoration: none;
+    margin-right: 5px;
+    /* Space between the icon and the text */
+}
+
 .card {
     grid-column: span 3;
     background-color: white;
