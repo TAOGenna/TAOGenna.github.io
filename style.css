@@ -319,3 +319,83 @@ code {
     list-style-type: none;
     padding-left: 0;
 }
+
+/* PART DEFINING THE BOXES */
+/* Links Section */
+.links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    /* Reduced gap between boxes */
+    justify-content: flex-start;
+    max-width: 600px;
+    /* Reduced width to make the whole section smaller */
+    margin: 0 auto;
+}
+
+.link-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    /* Reduced font size */
+    font-weight: bold;
+    padding: 15px;
+    /* Reduced padding */
+    border-radius: 8px;
+    /* Slightly smaller rounded corners */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.link-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Specific colors for each link-box */
+.link-box.chess,
+.link-box.math,
+.link-box.music,
+.link-box.painting,
+.link-box.poetry {
+    width: calc(20% - 8px);
+    /* Smaller boxes now take a bit less width to reduce size */
+}
+
+.link-box.programming {
+    width: calc(40% - 8px);
+    /* "programming" still takes up double the width of the smaller boxes */
+    background-color: #8fd466;
+}
+
+.link-box.quotes {
+    width: calc(20% - 8px);
+    /* "quotes" aligns similarly to other smaller boxes */
+    background-color: #59b7e6;
+}
+
+/* Specific colors */
+.link-box.chess {
+    background-color: #a0cbe8;
+}
+
+.link-box.math {
+    background-color: #e8a199;
+}
+
+.link-box.music {
+    background-color: #e8cb79;
+}
+
+.link-box.painting {
+    background-color: #9ed3c6;
+}
+
+.link-box.poetry {
+    background-color: #c6a1b4;
+}
+
+/* END OF PART DEFINING THE BOXES */
