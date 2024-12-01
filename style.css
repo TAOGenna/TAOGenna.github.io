@@ -185,25 +185,78 @@ hr {
     /* Space between the icon and the text */
 }
 
+/* General card styling */
 .card {
     grid-column: span 3;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 3px;
     padding: 10px;
-    padding-bottom: 10px;
     min-height: 260px;
-    /* Adjust to desired uniform height */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    /* Ensures no extra parts of the image overflow */
+}
+
+.ccimg {
+    position: relative;
+    width: 100%;
+    /* Ensures the image container fills the card width */
+    padding: 0;
+    /* Remove padding from the container */
+    margin: 0;
+    /* Remove margin from the container */
 }
 
 .ccimg img {
-    max-width: 100%;
+    width: 100%;
+    /* Ensure the image fills the container */
     height: auto;
+    /* Maintain aspect ratio */
     display: block;
-    margin: 0 auto;
+    transition: opacity 0.3s ease;
+    /* Smooth transition for opacity change */
+    margin: 0;
+    /* Remove default image margin */
+}
+
+/* Overlay container */
+.ccimg .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90.5%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
+    color: white;
+    /* White text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity 0.3s ease;
+    /* Smooth transition for fade in/out */
+    font-size: 1.2em;
+    padding: 0 10px;
+    border-radius: 3px;
+    /* Padding for better text visibility */
+}
+
+/* Hover effect */
+.ccimg:hover img {
+    opacity: 0.3;
+    /* Dim the image only */
+}
+
+.ccimg:hover .overlay {
+    opacity: 1;
+    /* Show overlay */
 }
 
 .cdesc {
@@ -211,6 +264,8 @@ hr {
     flex-grow: 1;
     text-align: left;
 }
+
+
 
 code {
     background-color: #f5f5f5eb;
