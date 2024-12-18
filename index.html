@@ -18,11 +18,23 @@
   </head>
   <body>
 
+  <!-- Navigation Bar -->
+  <div id="navbar"
+  style="background-color: #f8f9fa; padding: 10px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: center; gap: 20px;">
+    <a href="#projects" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">Projects</a>
+    <a href="#publications" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">Publications</a>
+    <a href="#pet-projects" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">Pet-projects</a>
+    <a href="https://taogenna.github.io/kenyi-blog/" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">Blog</a>
+    <a href="/books.html" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">Bookshelf</a>
+    <a href="/saturdays.html" style="text-decoration: none; color: #555; font-family: Georgia, serif; font-size: 20px;">MySaturdays</a>
+  </div>
+
+
     <!-- idea: have a javascript animated loss function converging in the header? :p -->
     <div id="dhead" class="container">
       <div class="row">
         <div id="dpic">
-          <img src="assets/me_new.jpg" class="ppic" />
+          <img src="assets/fotito2.jpg" class="ppic" />
         </div>
         <div id="ddesc">
           <h1>Renzo Kenyi Takagui Perez</h1>
@@ -33,7 +45,7 @@
             <!-- <a href="https://kenyiwoosh.github.io/"><img src="assets/crss.svg" class="iico" /></a> -->
             <img src="assets/cemail.svg" style="cursor: pointer;" class="iico" id="iemail" title="click to reveal" />
             <a href="assets/myCV.pdf"><img src="assets/cv_svg.svg" class="iico" /></a>
-            <a href="https://taogenna.github.io/kenyi-blog/"><img src="assets/blog_svg.svg" class="iico" /></a>
+            <!-- <a href="https://taogenna.github.io/kenyi-blog/"><img src="assets/blog_svg.svg" class="iico" /></a> -->
           </div>
           <div id="demail"></div> <!-- will reveal email -->
         </div>
@@ -50,14 +62,14 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
       <!-- here starts the experiences  -->
       <div class="entry row">
         <div class="timespan">
-          
+          Present
         </div>
         <div class="ico">
           <div class="entry-dot"></div>
           <img src="assets/puppy.jpg" />
         </div>
         <div class="desc">
-          coming soon 🧑‍🍳
+          Home-schooling: Self-teaching machine learning
         </div>
       </div>
 
@@ -141,8 +153,10 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
     <em>
       <p style="text-align:center"><a href="https://icpc.global/">ICPC</a> South America Finalist '20 & '19 | <a href="https://ieeextreme.org/">IEEExtreme</a> Top100 '21 & '20 | Atomic Energy Commission of Argentina, Scholarship '23 & '22 | ITPO Top10 '19</p>
     </em>
-
-    <div style="background-color: #eee; padding-top: 1px; margin-top: 10px;">
+    <!-- ----------------------- -->
+    <!-- --------PROJECTS--------------- -->
+    <!-- ----------------------- -->
+    <div id="projects" style="background-color: #eee; padding-top: 1px; margin-top: 10px;">
       <div id="featured-talks" class="container">
         <div class="ctitle">Projects</div>
         <div class="row">
@@ -186,7 +200,8 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
                 <div class="overlay">AI Notebooks</div>
               </div>
             </a>
-            <div class="cdesc"><code>ai-notebooks</code>, inspired by GeoHotz, is my github playground where I implement several ML experiments</div>
+            <div class="cdesc"><code>ai-notebooks</code>, inspired by GeoHotz, is my github playground where I implement
+              several ML experiments</div>
           </div>
           <!-- INRAS INTERNSHIP -->
           <div class="card">
@@ -196,7 +211,9 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
                 <div class="overlay">Plasma Frequency Profile Inversion Algorithm</div>
               </div>
             </a>
-            <div class="cdesc">Designed an algorithm for the reconstruction of the electron density profile of a local image of the ionosphere. <b><a href="https://arxiv.org/abs/2411.09215" style="color: rgb(0, 102, 255);">[paper]</a></b></div>
+            <div class="cdesc">Designed an algorithm for the reconstruction of the electron density profile of a local image
+              of the ionosphere. <b><a href="https://arxiv.org/abs/2411.09215"
+                  style="color: rgb(0, 102, 255);">[paper]</a></b></div>
           </div>
           <!-- MASTER THESIS -->
           <div class="card">
@@ -206,7 +223,10 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
                 <div class="overlay">Master Thesis & Paper in Condensed Matter Physics</div>
               </div>
             </a>
-            <div class="cdesc">Computation of the energy spectra and expectation values of Majorana zero modes in a topological superconducting wire. <b><a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.109.075416" style="color: rgb(0, 102, 255);">[paper]</a></b></div>
+            <div class="cdesc">Computation of the energy spectra and expectation values of Majorana zero modes in a
+              topological superconducting wire. <b><a
+                  href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.109.075416"
+                  style="color: rgb(0, 102, 255);">[paper]</a></b></div>
           </div>
           <!-- ICPC OLD TIMES -->
           <div class="card">
@@ -231,10 +251,11 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
         </div>
       </div>
     </div>
-
+    
     <!----------------->
     <!-- PUBLICATIONS-->
-
+    <!-- <div id="publications" style="background-color: #ffffff;"> -->
+    <div id="publications" style="background-color: #ffffff;"></div>
     <div class="container">
         <div class="ctitle">Publications</div>
 
@@ -269,9 +290,12 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
         </div>
 
     </div>
+    </div>
+
+
     <!------------------>
     <!-- PET PROJECTS -->
-    <div style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
+    <div id="pet-projects" style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
     <div id="pet-projects" class="container">
         <div class="ctitle">Pet projects</div>
 
@@ -352,7 +376,7 @@ It is important to note that Andrej Karpathy is a member of the Order of the Uni
               <a href="https://taogenna.github.io/kenyi-blog/categories/ai/" class="link-box quotes">AI</a>
             </div>
           </div>
-    </div>
+      </div>
 
 
     <!-- Dummy anchor to reset scrolling

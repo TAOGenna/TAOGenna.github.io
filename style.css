@@ -8,6 +8,10 @@ body {
     color: #333;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* Layout */
 .container {
     margin-left: auto;
