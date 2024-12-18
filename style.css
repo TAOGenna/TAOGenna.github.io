@@ -8,9 +8,43 @@ body {
     color: #333;
 }
 
+/*--------------------NAVIGATION BAR-----------------------------------*/
 html {
     scroll-behavior: smooth;
 }
+  /* Reset body margins to prevent horizontal scrolling */
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Make navbar links responsive */
+  #navbar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Reduce gap for better mobile appearance */
+  }
+
+  #navbar a {
+    text-decoration: none;
+    color: #555;
+    font-family: Georgia, serif;
+    font-size: 18px; /* Slightly smaller font for better fit */
+  }
+
+  /* Adjust styles for smaller screens */
+  @media (max-width: 600px) {
+    #navbar {
+      flex-direction: column; /* Stack links vertically */
+      align-items: center;
+    }
+    
+    #navbar a {
+      font-size: 16px; /* Adjust font size for smaller screens */
+    }
+  }
+/*-------------------- END NAVIGATION BAR-----------------------------------*/
 
 /* Layout */
 .container {
