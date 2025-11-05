@@ -8,6 +8,8 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome 6 -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 		<style type="text/css">
@@ -204,62 +206,74 @@
 			}
 		}
 
-    /* PART DEFINING THE BOXES */
-    /* Links Section */
-    /* Links Section - fixed and centered rows */
-    .links-grid {
-      --gap: 16px;                  /* adjust spacing between boxes */
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--gap);
-      justify-content: center;     /* centers the last (incomplete) row */
-      align-items: stretch;
-      max-width: 900px;            /* or whatever container width you prefer */
-      margin: 0 auto;
-      padding: 12px 0;
-      box-sizing: border-box;
-    }
+		/* PART DEFINING THE BOXES */
+		/* Links Section */
+		/* Links Section - fixed and centered rows */
+		.links-grid {
+		--gap: 16px;                  /* adjust spacing between boxes */
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--gap);
+		justify-content: center;     /* centers the last (incomplete) row */
+		align-items: stretch;
+		max-width: 900px;            /* or whatever container width you prefer */
+		margin: 0 auto;
+		padding: 12px 0;
+		box-sizing: border-box;
+		}
 
-    /* Each box: 5 columns worth when full-width */
-    .link-box {
-      box-sizing: border-box; 
-      flex: 0 0 calc((100% - (4 * var(--gap))) / 5);
-      /* Explanation: total width minus gaps divided by 5 columns */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: black;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 15px;
-      border-radius: 8px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      min-width: 120px;            /* keep boxes from getting too narrow on tiny screens */
-    }
+		/* Each box: 5 columns worth when full-width */
+		.link-box {
+		box-sizing: border-box; 
+		flex: 0 0 calc((100% - (4 * var(--gap))) / 5);
+		/* Explanation: total width minus gaps divided by 5 columns */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		color: black;
+		text-decoration: none;
+		font-size: 16px;
+		font-weight: bold;
+		padding: 15px;
+		border-radius: 8px;
+		transition: transform 0.3s, box-shadow 0.3s;
+		min-width: 120px;            /* keep boxes from getting too narrow on tiny screens */
+		}
 
-    /* hover */
-    .link-box:hover {
-      transform: translateY(-4px);
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    }
+		/* hover */
+		.link-box:hover {
+		transform: translateY(-4px);
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+		}
 
-    /* Specific colors */
-    .link-box.chess    { background-color: #a0cbe8; }
-    .link-box.math     { background-color: #e8a199; }
-    .link-box.music    { background-color: #e8cb79; }
-    .link-box.painting { background-color: #9ed3c6; }
-    .link-box.poetry   { background-color: #c6a1b4; }
-    .link-box.programming {
-      background-color: #8fd466;
-      grid-column: span 2; /* takes up 2 columns */
-    }
-    .link-box.quotes {
-      background-color: #59b7e6;
-    }
+		/* Specific colors */
+		.link-box.chess    { background-color: #a0cbe8; }
+		.link-box.math     { background-color: #e8a199; }
+		.link-box.music    { background-color: #e8cb79; }
+		.link-box.painting { background-color: #9ed3c6; }
+		.link-box.poetry   { background-color: #c6a1b4; }
+		.link-box.programming {
+		background-color: #8fd466;
+		grid-column: span 2; /* takes up 2 columns */
+		}
+		.link-box.quotes {
+		background-color: #59b7e6;
+		}
 
-    /* FINISH DEFINING THE BOXES */
+		/* FINISH DEFINING THE BOXES */
+		.social-icons a {
+		color: var(--text-dark);
+		font-size: 1.8rem; /* increase icon size */
+		margin: 0 0.75rem;
+		transition: color 0.3s ease, transform 0.3s ease;
+		}
+
+		.social-icons a:hover {
+		transform: translateY(-3px);
+		color: var(--accent-color);
+		}
+
 
 
       /* Force Courier New globally */
@@ -281,7 +295,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ms-auto">
        			 <li class="nav-item"><a class="nav-link" href="https://taogenna.github.io/kenyi-blog/"><i class="fa-solid fa-pen-to-square"></i> Blog</a></li>
-				<li class="nav-item"><a class="nav-link" href="Files/resume.pdf"><i class="fa-solid fa-file-lines"></i> Resume</a></li>
+				<!-- <li class="nav-item"><a class="nav-link" href="Files/resume.pdf"><i class="fa-solid fa-file-lines"></i> Resume</a></li> -->
 				<li class="nav-item"><a class="nav-link" href="#papers"><i class="fa-solid fa-file"></i> Papers</a></li>
         		<li class="nav-item"><a class="nav-link" href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
 				<li class="nav-item"><a class="nav-link" href="#lectures"><i class="fa-solid fa-pencil"></i> Lectures & Notes</a></li>
@@ -289,8 +303,8 @@
 				<li class="nav-item"><a class="nav-link" href="https://taogenna.github.io/kenyi-blog/misc/"><i class="fa-solid fa-asterisk"></i> Misc.</a></li>
 				<!-- <li class="nav-item"><a class="nav-link" href="#books"><i class="fa-solid fa-book"></i> Books</a></li> -->
 				<!-- <li class="nav-item"><a class="nav-link" href="https://scholar.google.com/citations?user=mP_MQh0AAAAJ&hl=en"><i class="fa-solid fa-file-pdf"></i> G. Scholar</a></li> -->
-				<li class="nav-item"><a class="nav-link" href="https://github.com/TAOGenna"><i class="fa-brands fa-github"></i></a></li>
-				<li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/kenyitakagui/"><i class="fa-brands fa-linkedin"></i></a></li>
+				<!-- <li class="nav-item"><a class="nav-link" href="https://github.com/TAOGenna"><i class="fa-brands fa-github"></i></a></li>
+				<li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/kenyitakagui/"><i class="fa-brands fa-linkedin"></i></a></li> -->
 				<li class="nav-item">
 					<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
 						<i class="fa-solid fa-moon"></i>
@@ -337,7 +351,7 @@
 		and at <a href="https://fromsolvers.com">Fromsolvers</a> as a backend software engineer. 
 		Earlier in my career, I collaborated with 
 		<a href="https://scholar.google.com/citations?user=EC6p9kIAAAAJ&hl=en" target="_blank">Yoshiharu Kohayakawa</a> 
-		at the University of São Paulo on nonlocality and graph parameters in quantum information, 
+		at the <a href="https://combo.ime.usp.br">University of São Paulo - IME</a> on nonlocality and graph parameters in quantum information, 
 		and with <a href="https://scholar.google.com/citations?user=2uw2cyAAAAAJ&hl=en" target="_blank">Pablo Bueno</a> 
 		from <a href="https://home.cern">CERN</a> on holographic entanglement entropy.
 	</p>
@@ -350,14 +364,29 @@
 
 	
 
-			<div class="text-center mt-4">
-        		<a href="https://taogenna.github.io/kenyi-blog/" class="me-3">Technical Blog</a>
-				<a href="Files/resume.pdf" class="me-3">Resume</a>
-				<a href="https://scholar.google.com/citations?user=mP_MQh0AAAAJ&hl=en" class="me-3">Google Scholar</a>
-				<a href="https://github.com/TAOGenna" class="me-3">GitHub</a>
-				<a href="https://www.linkedin.com/in/kenyitakagui/" class="me-3">LinkedIn</a>
-				<a href="https://x.com/taogenna">Twitter</a>
+			<div class="text-center mt-4 social-icons">
+				<a style="text-decoration:none;" href="https://twitter.com/taogenna" aria-label="Twitter">
+				<i class="fa-brands fa-twitter"></i>
+				</a>
+				<a style="text-decoration:none;" href="https://github.com/TAOGenna" aria-label="GitHub">
+				<i class="fa-brands fa-github"></i>
+				</a>
+				<a style="text-decoration:none;" href="https://scholar.google.com/citations?user=mP_MQh0AAAAJ&hl=en" aria-label="Google Scholar">
+				<i class="ai ai-google-scholar"></i>
+				</a>
+				<a style="text-decoration:none;" href="Files/resume.pdf" aria-label="CV">
+				<i class="ai ai-cv"></i>
+				</a>
+				<a style="text-decoration:none;" href="mailto:kenyi.rtp@gmail.com" aria-label="Email">
+				<i class="fa-solid fa-envelope"></i>
+				</a>
+				<a style="text-decoration:none;" href="https://www.linkedin.com/in/kenyitakagui/" aria-label="LinkedIn">
+				<i class="fa-brands fa-linkedin"></i>
+				</a>
 			</div>
+  
+  
+  
 		</div>
 	</div>
 </div>
@@ -374,10 +403,11 @@
 			</div>
 			<div class="col-8 col-md-10">
 				<h4>Effect of interatomic repulsion on Majorana zero modes in a coupled quantum-dot superconducting-nanowire hybrid system</h4>
-				<p>My undergraduate thesis in mathematics under my advisor, Professor <a href=https://sites.google.com/site/philsangyoo/home target="_blank">Philsang Yoo</a>. Provides an overview of the <a href="https://en.wikipedia.org/wiki/Geometric_Langlands_correspondence" target="_blank">Geometric Langlands correspondence</a> from the point of view of physics. This thesis is based on the material I learned from my advisor's two seminar courses on the subject, a variety of independent reading, and by attending a <a href="https://perimeterinstitute.ca/conferences/gauge-theory-geometric-langlands-and-vertex-operator-algebras" target="_blank">conference on the same topic</a> at the Perimeter Institute.</p>
-				<p><strong>(2018) <em>Yale Senior Thesis</em></strong>
-					<a href="Files/Thesis.pdf">[PDF]</a>
-					<a href="Files/Thesis Presentation.pdf">[Presentation Slides]</a>
+				<p>Work with <a href="https://scholar.google.com/citations?user=T6qxAnkAAAAJ&hl=en" target="_blank">Armando Aligia</a>. We study the low-energy eigenstates of a topological superconductor wire modeled by a Kitaev chain, which is connected at one of its ends to a quantum dot through nearest-neighbor (NN) hopping and NN Coulomb repulsion. Using an unrestricted Hartree-Fock approximation to decouple the Coulomb term, we obtain that the quality of the Majorana end states is seriously affected by this term only when the dependence of the low-lying energies with the energy of the quantum dot shows a “diamond” shape, characteristic of short wires. We discuss limitations of the simplest effective models to describe the physics. We expect the same behavior in more realistic models for topological superconducting wires.
+				</p>
+				<p><strong>(2024) <em>Physical Review D </em></strong>
+					<a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.109.075416">[Journal Link]</a>
+					<a href="https://arxiv.org/pdf/2309.10888">[arXiv]</a>
 				</p>
 			</div>
 		</div>
@@ -390,9 +420,18 @@
 			</div>
 			<div class="col-8 col-md-10">
 				<h4>A note on an inversion algorithm for vertical ionograms for the prediction of plasma frequency profiles</h4>
-				<p>Final term paper on supersymmetry for Francesco Iachello's class on Group Theory, Lie Algebras, and their applications to physics. Many of the examples are taken from the material he provided me (c.f. the references section).</p>
-				<p><strong>(Fall 2015)</strong>
-					<a href="Files/Supersymmetry.pdf">[PDF]</a>
+				<p>
+					Work with <a href="https://scholar.google.com/citations?user=hmykUtcAAAAJ&hl=en">Marco Milla</a>. Building upon the concept of utilizing quasi-parabolic approximations to determine plasma fre-
+					quency profiles from ionograms, we present a refined multi-quasi-parabolic method for modeling the
+					E and F layers. While a recent study [AIP Advances 14, 065034 (2024)] introduced an approach
+					in this direction, we identified several inaccuracies in its mathematical treatment and numerical
+					results. By addressing these issues, we offer a clearer exposition and a more robust algorithm. Our
+					method assumes a parabolic profile for the E layer and approximates the F layer with a series of
+					concatenated quasi-parabolic segments, ensuring continuity and smoothness by matching deriva-
+					tives at the junctions
+				</p>
+				<p><strong>(Fall 2024) <em>In Submission</em></strong>
+					<a href="https://arxiv.org/pdf/2411.09215">[arXiv]</a>
 				</p>
 			</div>
 		</div>
@@ -406,9 +445,9 @@
       <div class="col-8 col-md-10">
         <h4>Holographic Entanglement Entropy</h4>
         <p>
-          My undergraduate thesis in Physics under my advisor, Profesor Pablo Bueno. Provides an overview of entanglement entropy in quantum mechanics, quantum field theory and how we get to the holographic principle and AdS/CFT correspondance.
+          My undergraduate thesis in Physics under my advisor, Profesor <a href="https://scholar.google.com/citations?user=2uw2cyAAAAAJ&hl=en" target="_blank">Pablo Bueno</a>. Provides an overview of entanglement entropy in quantum mechanics, quantum field theory and the Ryu-Takayanagui Conjecture.
         </p>
-        <p><strong>(2022) <em>Pontificia Universidad Catolica del Peru Senior Thesis</em></strong>
+        <p><strong>(2022) <em>Pontificia Universidad Catolica del Peru · Senior Thesis</em></strong>
 					<a href="Files/bachelor_thesis.pdf">[PDF]</a>
 				</p>
       </div>
