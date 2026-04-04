@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -30 1070 540" width="800" height="404" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="250" y="36.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Auxiliary Functions α₁ and α₂: Structure, Symmetry, Limits</text>
+  <rect x="30" y="50" width="480" height="420" rx="0" fill="#fff5f5" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="45" y="81.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">α₁(ζ) — odd in both ζ_x and ζ_y</text>
+  <text x="45" y="103.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">α₁(ζ) = ζ_y / (2π ζ² ζ_x) · (cos(ζ_x/2) − sin(ζ_x/2)/(ζ_x/2))</text>
+  <rect x="60" y="120" width="180" height="50" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="146.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &gt; 0, ζ_y &gt; 0</text>
+  <text x="70" y="164.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">α₁ &lt; 0  (negative lobe)</text>
+  <rect x="260" y="120" width="180" height="50" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="270" y="146.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &lt; 0, ζ_y &gt; 0</text>
+  <text x="270" y="164.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">α₁ &gt; 0  (positive lobe)</text>
+  <rect x="60" y="190" width="180" height="50" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="216.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &gt; 0, ζ_y &lt; 0</text>
+  <text x="70" y="234.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">α₁ &gt; 0  (positive lobe)</text>
+  <rect x="260" y="190" width="180" height="50" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="270" y="216.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &lt; 0, ζ_y &lt; 0</text>
+  <text x="270" y="234.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">α₁ &lt; 0  (negative lobe)</text>
+  <text x="45" y="280.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Limits:</text>
+  <text x="45" y="299.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">ζ_x → 0:  α₁ → −ζ_x ζ_y / (16π ζ²)  → 0</text>
+  <text x="45" y="319.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">ζ → 0:    α₁ → 0  (finite everywhere)</text>
+  <text x="45" y="344.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">Taylor: cos(u)−sinc(u) ≈ −u²/8 + u⁴/192 ...</text>
+  <text x="45" y="364.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">Use Taylor when |ζ_x| &lt; 1e-4  for stability</text>
+  <text x="45" y="400.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">GOTCHA: np.sinc(x) = sin(πx)/(πx)  ← WRONG!</text>
+  <text x="45" y="420.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">Use:  np.where(|u|&lt;1e-12, 1, np.sin(u)/u)</text>
+  <text x="45" y="450.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Opposing edges: α₁(−ζ) = −α₁(ζ)  → edges cancel  ✓</text>
+  <rect x="540" y="50" width="480" height="420" rx="0" fill="#f0f8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="555" y="81.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">α₂(ζ) — even in ζ_x, odd in ζ_y</text>
+  <text x="555" y="103.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">α₂(ζ) = ζ_y / (2π ζ²) · sin(ζ_x/2)/(ζ_x/2)</text>
+  <rect x="570" y="120" width="180" height="50" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="580" y="146.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &gt; 0, ζ_y &gt; 0</text>
+  <text x="580" y="164.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">α₂ &gt; 0  (positive lobe)</text>
+  <rect x="770" y="120" width="180" height="50" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="780" y="146.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &lt; 0, ζ_y &gt; 0</text>
+  <text x="780" y="164.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">α₂ &gt; 0  (even in ζ_x!)</text>
+  <rect x="570" y="190" width="180" height="50" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="580" y="216.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &gt; 0, ζ_y &lt; 0</text>
+  <text x="580" y="234.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">α₂ &lt; 0  (negative lobe)</text>
+  <rect x="770" y="190" width="180" height="50" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="780" y="216.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">ζ_x &lt; 0, ζ_y &lt; 0</text>
+  <text x="780" y="234.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">α₂ &lt; 0  (even in ζ_x!)</text>
+  <text x="555" y="280.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Limits:</text>
+  <text x="555" y="299.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">ζ_x → 0:  α₂ → ζ_y / (2π ζ_y²) = 1/(2πζ_y)</text>
+  <text x="555" y="319.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">ζ → 0:    α₂ → ∞  (diverges — but ψⱼ stays finite)</text>
+  <text x="555" y="344.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">sinc(ζ_x/2) → 1 as ζ_x → 0</text>
+  <text x="555" y="364.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">Only ζ_y = 0 line is singular (m̂ ⊥ ξ direction)</text>
+  <text x="555" y="395.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">Power: ℑ₂ = ∫|α₂|² dζ  = 0.11487543</text>
+  <text x="555" y="415.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">Power: ℑ₁ = ∫|α₁|² dζ  = 0.0045255085</text>
+  <text x="555" y="435.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Ratio ℑ₂/ℑ₁ ≈ 25.4:  α₂ carries 25× more power!</text>
+  <text x="555" y="460.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Opposing edges: α₂(−ζ) = −α₂(ζ)  → edges cancel  ✓</text>
+</svg>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 -20 1034 634" width="800" height="490" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1971c2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1971c2"/>
+    </marker>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+    <marker id="ah-e03131" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e03131"/>
+    </marker>
+  </defs>
+  <text x="400" y="46.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Fraunhofer Diffraction: Single Slit Geometry</text>
+  <rect x="200" y="100" width="20" height="400" rx="0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <rect x="200" y="260" width="20" height="80" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="160" y="235.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">screen</text>
+  <text x="160" y="251.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">(opaque)</text>
+  <text x="160" y="310.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">slit</text>
+  <text x="160" y="326.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">w = 10λ</text>
+  <path d="M 50.0 300.0 L 150.0 300.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <text x="55" y="290.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">incident plane wave</text>
+  <text x="55" y="306.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">φ(q) = rect(q/w)</text>
+  <path d="M 220.0 300.0 L 320.0 300.0" fill="none" stroke="#aaaaaa" stroke-width="2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="225" y="94.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#aaaaaa" text-anchor="start">ẑ (optical axis)</text>
+  <rect x="750" y="80" width="12" height="440" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="745" y="554.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">observation</text>
+  <text x="745" y="568.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">screen</text>
+  <path d="M 240.0 300.0 L 340.0 300.0" fill="none" stroke="#1971c2" stroke-width="2" stroke-dasharray="8 4" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <text x="450" y="295.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">R  (far field: R &gt;&gt; w²/λ)</text>
+  <path d="M 240.0 300.0 L 340.0 300.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <path d="M 240.0 300.0 L 340.0 300.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <path d="M 240.0 300.0 L 340.0 300.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <path d="M 240.0 300.0 L 340.0 300.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <text x="400" y="160.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">diffracted rays</text>
+  <text x="400" y="176.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">(into shadow!)</text>
+  <text x="770" y="145.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">I(ξ) = (kw/2π)² sinc²(kw·ξ/2π)</text>
+  <ellipse cx="775.0" cy="297.5" rx="15.0" ry="27.5" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="798" y="299.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">← central</text>
+  <text x="798" y="313.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">  lobe</text>
+  <ellipse cx="770.0" cy="195.0" rx="10.0" ry="15.0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="770.0" cy="355.0" rx="10.0" ry="15.0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="767.0" cy="141.0" rx="7.0" ry="11.0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="767.0" cy="401.0" rx="7.0" ry="11.0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="798" y="199.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">1st order</text>
+  <text x="798" y="213.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">lobe</text>
+  <path d="M 750.0 300.0 L 850.0 300.0" fill="none" stroke="#9c36b5" stroke-width="1" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="690" y="235.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">ξ</text>
+  <text x="690" y="251.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">(angle)</text>
+  <text x="395" y="435.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">shadow region</text>
+  <text x="395" y="451.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">(ray optics says I=0 here,</text>
+  <text x="395" y="466.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">but diffraction disagrees!)</text>
+  <rect x="240" y="100" width="500" height="190" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <rect x="240" y="390" width="500" height="100" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+</svg>

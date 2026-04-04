@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 1040 540" width="800" height="415" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+  <text x="350" y="44.0" font-size="20" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Babinet's Principle: Aperture vs. Complement Fields</text>
+  <text x="80" y="88.0" font-size="15" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">APERTURE  A⊥  (opening)</text>
+  <text x="680" y="88.0" font-size="15" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">COMPLEMENT  Ā⊥  (obstacle)</text>
+  <rect x="30" y="100" width="360" height="200" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <rect x="130" y="160" width="160" height="80" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="175" y="207.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">opening</text>
+  <text x="175" y="223.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">A⊥</text>
+  <rect x="630" y="100" width="360" height="200" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <rect x="730" y="160" width="160" height="80" rx="0" fill="#e03131" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="775" y="207.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#ffffff" text-anchor="start">obstacle</text>
+  <text x="775" y="223.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#ffffff" text-anchor="start">Ā⊥</text>
+  <text x="40" y="334.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Incident beam φ passes through.</text>
+  <text x="40" y="348.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Diffracted field ψ(ξ) computed.</text>
+  <text x="640" y="334.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Incident beam φ hits the screen.</text>
+  <text x="640" y="348.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Diffracted field ψ̄(ξ) computed.</text>
+  <text x="380" y="218.2" font-size="36" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">+</text>
+  <text x="510" y="218.2" font-size="36" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">=</text>
+  <rect x="530" y="130" width="80" height="140" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="537" y="202.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">φ̃(ξ)</text>
+  <text x="537" y="216.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">full</text>
+  <text x="537" y="231.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">FT</text>
+  <text x="200" y="396.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Outside central lobe where |φ̃| ≈ 0:</text>
+  <text x="200" y="416.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">|ψ(ξ)|²  ≈  |ψ̄(ξ)|²    ← Babinet's principle!</text>
+  <text x="200" y="440.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Both produce identical diffraction patterns in the wings.</text>
+  <text x="200" y="476.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">Identity:  ψ(ξ) + ψ̄(ξ) = φ̃(ξ)   (exact, from linearity of FT)</text>
+  <path d="M 390.0 200.0 L 510.0 200.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="40" y="473.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">← small slit: few samples</text>
+  <text x="640" y="473.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">← compact wire: key for renderer!</text>
+</svg>

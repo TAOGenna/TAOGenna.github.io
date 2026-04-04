@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 -25 1140 573" width="800" height="402" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+  </defs>
+  <text x="280" y="39.0" font-size="20" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">RobustPrune: How Alpha Controls Long-Edge Preservation</text>
+  <text x="50" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">alpha = 1.0 (aggressive pruning)</text>
+  <text x="580" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">alpha = 2.0 (slack preserves long edges)</text>
+  <ellipse cx="90.0" cy="190.0" rx="30.0" ry="30.0" fill="#ffec99" stroke="#f08c00" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="80" y="203.6" font-size="18" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">p</text>
+  <text x="55" y="241.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">source node</text>
+  <ellipse cx="227.5" cy="167.5" rx="27.5" ry="27.5" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="213" y="176.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">c*</text>
+  <text x="188" y="116.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">closest candidate</text>
+  <text x="188" y="129.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">dist(p,c*)=1.0</text>
+  <ellipse cx="337.5" cy="167.5" rx="27.5" ry="27.5" fill="#ffc9c9" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="326" y="176.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">q</text>
+  <text x="295" y="116.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">candidate</text>
+  <text x="295" y="129.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(p,q)=2.0</text>
+  <text x="295" y="142.6" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(c*,q)=1.0</text>
+  <ellipse cx="227.5" cy="297.5" rx="27.5" ry="27.5" fill="#ffc9c9" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="216" y="306.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">r</text>
+  <text x="185" y="346.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">candidate</text>
+  <text x="185" y="359.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(p,r)=5.0</text>
+  <text x="185" y="372.6" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(c*,r)=4.5</text>
+  <path d="M 127.5 183.9 L 192.5 173.2" fill="none" stroke="#2f9e44" stroke-width="3" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 263.0 167.5 L 302.0 167.5" fill="none" stroke="#9c36b5" stroke-width="2" stroke-dasharray="8 4" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="115" y="389.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">PRUNED: dist(p,q)=2.0 &gt;= 1.0 * dist(c*,q)=1.0  ✗</text>
+  <text x="115" y="403.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">PRUNED: dist(p,r)=5.0 &gt;= 1.0 * dist(c*,r)=4.5  ✗</text>
+  <text x="115" y="418.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Only c* survives</text>
+  <text x="145" y="445.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Result: 1 edge only (tight cluster, no long reach)</text>
+  <ellipse cx="640.0" cy="190.0" rx="30.0" ry="30.0" fill="#ffec99" stroke="#f08c00" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="630" y="203.6" font-size="18" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">p</text>
+  <text x="605" y="241.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">source node</text>
+  <ellipse cx="777.5" cy="167.5" rx="27.5" ry="27.5" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="763" y="176.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">c*</text>
+  <text x="738" y="116.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">closest candidate</text>
+  <text x="738" y="129.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">dist(p,c*)=1.0</text>
+  <ellipse cx="887.5" cy="167.5" rx="27.5" ry="27.5" fill="#ffc9c9" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="876" y="176.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">q</text>
+  <text x="845" y="116.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">candidate</text>
+  <text x="845" y="129.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(p,q)=2.0</text>
+  <text x="845" y="142.6" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">dist(c*,q)=1.0</text>
+  <ellipse cx="777.5" cy="297.5" rx="27.5" ry="27.5" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="766" y="306.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">r</text>
+  <text x="735" y="346.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">candidate</text>
+  <text x="735" y="359.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">dist(p,r)=5.0</text>
+  <text x="735" y="372.6" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">dist(c*,r)=4.5</text>
+  <path d="M 677.5 183.9 L 742.5 173.2" fill="none" stroke="#2f9e44" stroke-width="3" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 669.9 213.4 L 749.5 275.6" fill="none" stroke="#2f9e44" stroke-width="3" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 813.0 167.5 L 852.0 167.5" fill="none" stroke="#9c36b5" stroke-width="2" stroke-dasharray="8 4" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="635" y="389.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">PRUNED: dist(p,q)=2.0 &gt;= 2.0 * dist(c*,q)=1.0  check: 2.0 &gt;= 2.0 ✗</text>
+  <text x="635" y="403.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">KEPT:   dist(p,r)=5.0 &gt;= 2.0 * dist(c*,r)=4.5  check: 5.0 &gt;= 9.0 ✓</text>
+  <text x="635" y="418.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Both c* and r survive</text>
+  <text x="645" y="445.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Result: 2 edges — c* (close) + r (long reach!)</text>
+  <path d="M 530.0 80.0 L 630.0 80.0" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="200" y="481.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Pruning condition: REMOVE candidate q if  dist(p, q) &gt;= alpha * dist(c*, q)</text>
+  <text x="200" y="505.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Higher alpha = more slack = more long edges survive = better far-away navigation (up to a point)</text>
+</svg>

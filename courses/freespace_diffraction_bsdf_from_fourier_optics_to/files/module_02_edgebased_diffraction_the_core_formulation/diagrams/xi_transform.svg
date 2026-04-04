@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -30 1126 553" width="800" height="393" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+  </defs>
+  <text x="200" y="34.0" font-size="20" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Linear Transform Ξⱼ: Normalizing Edge Geometry into Universal Coordinates</text>
+  <rect x="30" y="50" width="400" height="330" rx="0" fill="#f0f8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="45" y="80.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">ξ-space (scattering directions)</text>
+  <text x="55" y="107.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Edge j:  eⱼ = (4, 0), eⱼ=4, m̂ⱼ=(0,1)</text>
+  <text x="55" y="127.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">k = 2π (one wavelength units)</text>
+  <text x="55" y="155.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">Ξⱼ^{-1} = (k/2) · [[eⱼ^T], [eⱼ m̂ⱼ^T]]</text>
+  <text x="55" y="175.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">         = π · [[ 4,  0 ], [ 0,  4 ]]</text>
+  <text x="55" y="195.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">         = [[ 4π,  0 ], [ 0,  4π ]]</text>
+  <text x="55" y="225.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">|Ξⱼ^{-1}| = 16π²   →   |Ξⱼ| = 1/(16π²)</text>
+  <text x="55" y="243.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">Check: 2/(k·eⱼ) = 2/(2π·4) = 1/(4π) ≠ 1/(16π²)</text>
+  <text x="55" y="263.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">(exact formula depends on full det)</text>
+  <ellipse cx="161.0" cy="276.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="172" y="283.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">ξ = (0.1, 0.2)</text>
+  <text x="55" y="315.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">ζ = Ξⱼ^{-T} ξ = [[4π, 0],[0, 4π]]^T (0.1, 0.2)</text>
+  <text x="55" y="335.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">     = (4π·0.1, 4π·0.2) = (1.257, 2.513)</text>
+  <text x="55" y="362.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ζ_x = k·(eⱼ·ξ)/2  ζ_y = k·eⱼ(μŷⱼ·ξ)/2</text>
+  <rect x="470" y="50" width="400" height="330" rx="0" fill="#f0fff0" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="485" y="80.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">ζ-space (normalized coordinates)</text>
+  <text x="495" y="110.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">α₁(ζ), α₂(ζ) are UNIVERSAL in this space</text>
+  <text x="495" y="130.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">No edge length, no k, no orientation!</text>
+  <ellipse cx="601.0" cy="181.0" rx="6.0" ry="6.0" fill="#f08c00" stroke="#f08c00" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="612" y="188.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">ζ = (1.257, 2.513)</text>
+  <text x="495" y="235.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">Evaluate: α₂(ζ) = ζ_y/(2πζ²) sinc(ζ_x/2)</text>
+  <text x="495" y="255.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">  ζ² = 1.257² + 2.513² = 7.893</text>
+  <text x="495" y="275.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">  sinc(0.628) = sin(0.628)/0.628 = 0.936</text>
+  <text x="495" y="295.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">  α₂ = 2.513/(2π·7.893)·0.936 = 0.0474</text>
+  <text x="495" y="331.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Same α₂ table works for ANY edge!</text>
+  <text x="495" y="355.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">→ precompute iCDF once → importance sample any BSDF</text>
+  <path d="M 435.0 215.0 L 535.0 215.0" fill="none" stroke="#9c36b5" stroke-width="3" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="430" y="208.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Ξⱼ^{-T}</text>
+  <text x="425" y="222.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">maps ξ</text>
+  <text x="425" y="239.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">to ζ</text>
+  <text x="30" y="416.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Physical meaning of ζ:</text>
+  <text x="30" y="440.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">  ζ_x = (k/2)(eⱼ · ξ) = (k·eⱼ/2) cosθ_∥    — phase accumulated across edge IN the edge direction</text>
+  <text x="30" y="460.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">  ζ_y = (k/2)(eⱼ)(m̂ⱼ · ξ) = (k·eⱼ/2) cosθ_⊥  — phase accumulated across edge NORMAL to edge</text>
+  <text x="30" y="480.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">  |Ξⱼ| = 4/(k²·eⱼ²) — Jacobian of coord change: longer edges spread lobes more narrowly in ξ-space (more concentrated power)</text>
+</svg>

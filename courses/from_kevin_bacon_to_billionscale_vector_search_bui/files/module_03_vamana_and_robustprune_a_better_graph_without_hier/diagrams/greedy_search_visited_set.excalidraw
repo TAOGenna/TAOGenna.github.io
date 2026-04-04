@@ -1,0 +1,786 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "mcp-excalidraw-server",
+  "elements": [
+    {
+      "id": "mnhx00rg2lojdpvr1vr",
+      "type": "text",
+      "x": 350,
+      "y": 20,
+      "strokeColor": "#1e1e1e",
+      "text": "GreedySearch: How the Visited Set Creates Long + Short Edges",
+      "fontSize": 20,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgq6r7pbcch",
+      "type": "text",
+      "x": 30,
+      "y": 70,
+      "strokeColor": "#e03131",
+      "text": "QUERY\n(target)",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "query",
+      "type": "ellipse",
+      "x": 30,
+      "y": 110,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgdsqy9puxicr",
+      "type": "text",
+      "x": 42,
+      "y": 132,
+      "strokeColor": "#e03131",
+      "text": "q",
+      "fontSize": 18,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgyhgvxbwc8is",
+      "type": "text",
+      "x": 120,
+      "y": 50,
+      "strokeColor": "#1971c2",
+      "text": "Entry node\n(far from q)",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "entry",
+      "type": "ellipse",
+      "x": 120,
+      "y": 90,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgcdamng5lg2t",
+      "type": "text",
+      "x": 135,
+      "y": 108,
+      "strokeColor": "#1971c2",
+      "text": "s₀",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgs9bt51stm8r",
+      "type": "text",
+      "x": 100,
+      "y": 155,
+      "strokeColor": "#1971c2",
+      "text": "visited 1st",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v1",
+      "type": "ellipse",
+      "x": 240,
+      "y": 70,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgjzpy1sb586j",
+      "type": "text",
+      "x": 254,
+      "y": 87,
+      "strokeColor": "#1971c2",
+      "text": "v₁",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgv0uguh2ucg",
+      "type": "text",
+      "x": 225,
+      "y": 130,
+      "strokeColor": "#1971c2",
+      "text": "visited 2nd",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v2",
+      "type": "ellipse",
+      "x": 370,
+      "y": 100,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg4jciuym9fxm",
+      "type": "text",
+      "x": 384,
+      "y": 117,
+      "strokeColor": "#1971c2",
+      "text": "v₂",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg0e0ihepe7b6n",
+      "type": "text",
+      "x": 355,
+      "y": 160,
+      "strokeColor": "#1971c2",
+      "text": "visited 3rd",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v3",
+      "type": "ellipse",
+      "x": 490,
+      "y": 130,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgzrq02mb8hzr",
+      "type": "text",
+      "x": 504,
+      "y": 147,
+      "strokeColor": "#1971c2",
+      "text": "v₃",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v4",
+      "type": "ellipse",
+      "x": 600,
+      "y": 150,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgg0t4ukb9lcq",
+      "type": "text",
+      "x": 614,
+      "y": 167,
+      "strokeColor": "#1971c2",
+      "text": "v₄",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgzhrefhiuwdc",
+      "type": "text",
+      "x": 585,
+      "y": 210,
+      "strokeColor": "#1971c2",
+      "text": "visited 5th",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v5",
+      "type": "ellipse",
+      "x": 680,
+      "y": 160,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgdsdijx03ema",
+      "type": "text",
+      "x": 694,
+      "y": 177,
+      "strokeColor": "#1971c2",
+      "text": "v₅",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg7cqxx8fc18w",
+      "type": "text",
+      "x": 665,
+      "y": 220,
+      "strokeColor": "#1971c2",
+      "text": "visited last",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "new_node",
+      "type": "ellipse",
+      "x": 750,
+      "y": 130,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgmv5h7s7esno",
+      "type": "text",
+      "x": 765,
+      "y": 153,
+      "strokeColor": "#2f9e44",
+      "text": "I",
+      "fontSize": 18,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgbkbxx1f54gt",
+      "type": "text",
+      "x": 735,
+      "y": 100,
+      "strokeColor": "#2f9e44",
+      "text": "NEW\nNODE",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rghkmvg852x7m",
+      "type": "arrow",
+      "x": 182.3665093121712,
+      "y": 110.82343438703104,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          50.22236935538797,
+          -9.617049451031733
+        ]
+      ],
+      "start": {
+        "id": "entry"
+      },
+      "end": {
+        "id": "v1"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgnd3aydbkjl",
+      "type": "arrow",
+      "x": 297.1549094579225,
+      "y": 102.42036372105902,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          65.69018108415503,
+          15.159272557881948
+        ]
+      ],
+      "start": {
+        "id": "v1"
+      },
+      "end": {
+        "id": "v2"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg9z4kv9hc77a",
+      "type": "arrow",
+      "x": 427.01470250479593,
+      "y": 133.00367562619897,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          55.97059499040813,
+          13.992648747602033
+        ]
+      ],
+      "start": {
+        "id": "v2"
+      },
+      "end": {
+        "id": "v3"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg8c8xupm18kh",
+      "type": "arrow",
+      "x": 547.467707033297,
+      "y": 160.90321946059944,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          45.06458593340608,
+          8.19356107880111
+        ]
+      ],
+      "start": {
+        "id": "v3"
+      },
+      "end": {
+        "id": "v4"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgma614n8ewrb",
+      "type": "arrow",
+      "x": 657.7451699315511,
+      "y": 179.0931462414439,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          14.509660136897764,
+          1.8137075171122206
+        ]
+      ],
+      "start": {
+        "id": "v4"
+      },
+      "end": {
+        "id": "v5"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rg2dpz1kh8up4",
+      "type": "arrow",
+      "x": 736.306548835667,
+      "y": 174.56448372144436,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          7.64348583841354,
+          -2.5478286128045227
+        ]
+      ],
+      "start": {
+        "id": "v5"
+      },
+      "end": {
+        "id": "new_node"
+      },
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rgmldhrouw68",
+      "type": "text",
+      "x": 30,
+      "y": 290,
+      "strokeColor": "#1e1e1e",
+      "text": "After insert: V → I edges added",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "entry2",
+      "type": "ellipse",
+      "x": 120,
+      "y": 330,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rh3fcwnbshce",
+      "type": "text",
+      "x": 135,
+      "y": 348,
+      "strokeColor": "#1971c2",
+      "text": "s₀",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v1b",
+      "type": "ellipse",
+      "x": 240,
+      "y": 310,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhehhgfzrts1",
+      "type": "text",
+      "x": 254,
+      "y": 327,
+      "strokeColor": "#1971c2",
+      "text": "v₁",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v3b",
+      "type": "ellipse",
+      "x": 490,
+      "y": 370,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhvl3hngmmbai",
+      "type": "text",
+      "x": 504,
+      "y": 387,
+      "strokeColor": "#1971c2",
+      "text": "v₃",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "v5b",
+      "type": "ellipse",
+      "x": 680,
+      "y": 380,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rh832xtxkcgcc",
+      "type": "text",
+      "x": 694,
+      "y": 397,
+      "strokeColor": "#1971c2",
+      "text": "v₅",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "new_node2",
+      "type": "ellipse",
+      "x": 750,
+      "y": 330,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rh8inftijmyf4",
+      "type": "text",
+      "x": 765,
+      "y": 353,
+      "strokeColor": "#2f9e44",
+      "text": "I",
+      "fontSize": 18,
+      "createdAt": "2026-04-02T20:15:57.151Z",
+      "updatedAt": "2026-04-02T20:15:57.151Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhhm8zsmnl6tk",
+      "type": "arrow",
+      "x": 182.99972269849516,
+      "y": 357.6403151094802,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#f08c00",
+      "strokeWidth": 3,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          559.0005741312847,
+          2.20948843530158
+        ]
+      ],
+      "start": {
+        "id": "entry2"
+      },
+      "end": {
+        "id": "new_node2"
+      },
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhko2azfvp8wh",
+      "type": "arrow",
+      "x": 297.96118650299985,
+      "y": 336.600057597233,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#f08c00",
+      "strokeWidth": 3,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          444.08350782687916,
+          21.55745183625629
+        ]
+      ],
+      "start": {
+        "id": "v1b"
+      },
+      "end": {
+        "id": "new_node2"
+      },
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhopcrg0i1xzj",
+      "type": "arrow",
+      "x": 547.7158868323118,
+      "y": 390.6790338146003,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 3,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          194.61127378502624,
+          -25.703375782927935
+        ]
+      ],
+      "start": {
+        "id": "v3b"
+      },
+      "end": {
+        "id": "new_node2"
+      },
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhj0moadxmamd",
+      "type": "arrow",
+      "x": 733.297266548514,
+      "y": 388.02164007089164,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          14.118002274409264,
+          -8.470801364645638
+        ]
+      ],
+      "start": {
+        "id": "v5b"
+      },
+      "end": {
+        "id": "new_node2"
+      },
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhi2zaoriw7v",
+      "type": "text",
+      "x": 200,
+      "y": 450,
+      "strokeColor": "#f08c00",
+      "text": "LONG edges (orange) — from early visited nodes, far from I",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rhnamxzilra3n",
+      "type": "text",
+      "x": 200,
+      "y": 475,
+      "strokeColor": "#2f9e44",
+      "text": "SHORT edges (green) — from late visited nodes, close to I",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx00rh15cho8jjra1",
+      "type": "text",
+      "x": 30,
+      "y": 510,
+      "strokeColor": "#1e1e1e",
+      "text": "Key insight: The traversal path naturally spans all distances.\nNo hierarchy needed — early nodes are always far, late nodes are always close.",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:15:57.152Z",
+      "updatedAt": "2026-04-02T20:15:57.152Z",
+      "version": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

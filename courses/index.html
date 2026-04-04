@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Distill — Courses</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #fffff8; --fg: #111; --fg-dim: #555;
+            --fg-muted: #888; --border: #ddd; --accent: #a00000;
+            --hover-bg: rgba(0,0,0,0.02);
+        }
+
+        html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+
+        body {
+            font-family: Georgia, 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background: var(--bg); color: var(--fg);
+            max-width: 740px; margin: 0 auto; padding: 4rem 2rem 6rem;
+        }
+
+        ::selection { background: rgba(160, 0, 0, 0.15); }
+
+        header { margin-bottom: 3rem; }
+
+        .site-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.05em; color: var(--accent);
+        }
+
+        h1 {
+            font-weight: 400; font-size: 2.4rem;
+            line-height: 1.15; margin-top: 0.5rem;
+        }
+
+        .course-list { list-style: none; }
+
+        .course-entry {
+            display: block; padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none; color: inherit;
+        }
+        .course-entry:first-child { border-top: 1px solid var(--border); }
+        .course-entry:hover h2 { text-decoration: underline; }
+
+        .course-entry h2 {
+            font-weight: 400; font-size: 1.5rem;
+            line-height: 1.3; color: var(--accent);
+        }
+        .course-entry .description {
+            color: var(--fg-dim); font-size: 1.1rem;
+            line-height: 1.6; margin-top: 0.4rem;
+        }
+        .course-entry .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem; color: var(--fg-muted); margin-top: 0.5rem;
+        }
+
+        .empty { color: var(--fg-muted); font-style: italic; margin-top: 2rem; }
+
+        footer {
+            margin-top: 4rem; padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem; color: var(--fg-muted);
+        }
+
+        .theme-toggle {
+            position: fixed; top: 1rem; right: 1rem;
+            background: none; border: 1px solid var(--border);
+            border-radius: 3px; width: 28px; height: 28px;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--fg-dim); font-size: 1rem;
+        }
+        .theme-toggle:hover { color: var(--fg); border-color: var(--fg-dim); }
+        .theme-toggle::before { content: '\263E'; }
+        [data-theme="dark"] .theme-toggle::before { content: '\2600'; }
+
+        :root[data-theme="dark"] {
+            --bg: #1a1a1a; --fg: #d4d4d4; --fg-dim: #999;
+            --fg-muted: #666; --border: #333; --accent: #f87171;
+            --hover-bg: rgba(255,255,255,0.03);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #1a1a1a; --fg: #d4d4d4; --fg-dim: #999;
+                --fg-muted: #666; --border: #333; --accent: #f87171;
+                --hover-bg: rgba(255,255,255,0.03);
+            }
+        }
+
+        [data-theme="dark"] ::selection { background: rgba(248, 113, 113, 0.2); }
+
+        @media (max-width: 600px) {
+            body { padding: 2rem 1.2rem 4rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <button type="button" class="theme-toggle" id="theme-toggle"
+            title="toggle theme" aria-label="toggle theme"></button>
+
+    <header>
+        <div class="site-title">distill</div>
+        <h1>Courses</h1>
+    </header>
+
+    <main>
+        <div class="course-list">
+            <a href="freespace_diffraction_bsdf_from_fourier_optics_to/" class="course-entry">
+                <h2>Free-Space Diffraction BSDF: From Fourier Optics to Path-Tracer-Ready Scattering</h2>
+                <p class="description">A hands-on course that rebuilds, from scratch, the free-space diffraction BSDF of Steinberg et al. (SIGGRAPH 2024). Starting from the Fourier-transform formulation of Fraunhofer diffraction—territo…</p>
+                <p class="meta">5 modules · 10 exercises</p>
+            </a>
+            <a href="from_kevin_bacon_to_billionscale_vector_search_bui/" class="course-entry">
+                <h2>From Kevin Bacon to Billion-Scale Vector Search: Building ANN Indices from Scratch</h2>
+                <p class="description">A hands-on systems engineering course that builds a working vector search engine piece by piece. Starting from brute-force search and the curse of dimensionality, you'll implement greedy graph trav…</p>
+                <p class="meta">6 modules · 21 exercises</p>
+            </a>
+            <a href="selfcompressing_neural_networks_learning_to_quanti/" class="course-entry">
+                <h2>Self-Compressing Neural Networks: Learning to Quantize from Scratch</h2>
+                <p class="description">Reproduce the Self-Compressing Neural Networks paper (arXiv 2301.13142) from scratch using PyTorch. Build a neural network that learns its own compression during training by making quantization bit…</p>
+                <p class="meta">5 modules · 16 exercises</p>
+            </a>
+        </div>
+    </main>
+
+    <footer>generated with distill</footer>
+
+    <script>
+    (function() {
+        var s = localStorage.getItem('distill_theme');
+        if (s) document.documentElement.setAttribute('data-theme', s);
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            var c = document.documentElement.getAttribute('data-theme');
+            var d = c === 'dark' || (!c && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            var n = d ? 'light' : 'dark';
+            localStorage.setItem('distill_theme', n);
+            document.documentElement.setAttribute('data-theme', n);
+        });
+    })();
+    </script>
+</body>
+</html>
