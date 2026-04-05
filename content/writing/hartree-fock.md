@@ -1,7 +1,7 @@
 ---
 title: "Application of the self-consistent Hartree-Fock method"
 date: 2025-01-28
-categories: ["math"]
+tags: ["math"]
 order: 1
 ---
 

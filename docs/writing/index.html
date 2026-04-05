@@ -52,27 +52,39 @@ gtag('config', 'G-VB0FSFKM9M');
     <h1>Writing</h1>
 </section>
 
-<div class="blog-list">
+<div class="writing-filters">
+    <label><input type="checkbox" id="math" /> math</label>
+    <label><input type="checkbox" id="code" /> code</label>
+    <label><input type="checkbox" id="music" /> music</label>
+    <label><input type="checkbox" id="chess" /> chess</label>
+    <label><input type="checkbox" id="poetry" /> poetry</label>
+    <label><input type="checkbox" id="quotes" /> quotes</label>
+    <label><input type="checkbox" id="painting" /> painting</label>
+    <label><input type="checkbox" id="games" /> games</label>
+    <label><input type="checkbox" id="food" /> food</label>
+</div>
+
+<div class="blog-list" id="writing-grid">
     
-    <a class="post" href="/writing/ppca-gen/">
+    <a class="post tag-math tag-code " href="/writing/ppca-gen/">
         <span class="title">PPCA: The Minimal Generative Model</span>
         <span class="hline"></span>
         <span class="publishDate">Oct &#39;25</span>
     </a>
     
-    <a class="post" href="/writing/eeml/">
+    <a class="post tag-code " href="/writing/eeml/">
         <span class="title">Advancements in Representing Atomic Environments for Machine Learning Interatomic Potentials</span>
         <span class="hline"></span>
         <span class="publishDate">Apr &#39;25</span>
     </a>
     
-    <a class="post" href="/writing/hartree-fock/">
+    <a class="post tag-math " href="/writing/hartree-fock/">
         <span class="title">Application of the self-consistent Hartree-Fock method</span>
         <span class="hline"></span>
         <span class="publishDate">Jan &#39;25</span>
     </a>
     
-    <a class="post" href="/writing/oqs/">
+    <a class="post tag-math " href="/writing/oqs/">
         <span class="title">How to measure the non-Markovianity of a Quantum System?</span>
         <span class="hline"></span>
         <span class="publishDate">Jul &#39;23</span>
@@ -80,6 +92,7 @@ gtag('config', 'G-VB0FSFKM9M');
     
 </div>
 
+<script src="/scripts/writing-filter.js"></script>
 
 
     </main>

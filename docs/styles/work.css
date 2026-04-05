@@ -594,6 +594,73 @@ ul.front-company-list {
   margin-bottom: 0;
 }
 
+/* Writing filters */
+
+.writing-filters {
+  margin-left: 130px;
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+.writing-filters label {
+  display: flex;
+  align-items: center;
+  font-family: "Suisse", sans-serif;
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+}
+
+.writing-filters input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #bbb;
+  border-radius: 3px;
+  margin-right: 6px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.writing-filters input[type="checkbox"]:hover {
+  border-color: #888;
+}
+
+.writing-filters input[type="checkbox"]:checked {
+  background: #333;
+  border-color: #333;
+}
+
+.writing-filters input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: white;
+  font-size: 11px;
+  position: absolute;
+  top: -1px;
+  left: 2px;
+}
+
+/* Post visibility: hidden by default, shown when grid has matching class */
+#writing-grid a.post {
+  display: none;
+}
+
+#writing-grid.math a.post.tag-math,
+#writing-grid.code a.post.tag-code,
+#writing-grid.music a.post.tag-music,
+#writing-grid.chess a.post.tag-chess,
+#writing-grid.poetry a.post.tag-poetry,
+#writing-grid.quotes a.post.tag-quotes,
+#writing-grid.painting a.post.tag-painting,
+#writing-grid.games a.post.tag-games,
+#writing-grid.food a.post.tag-food {
+  display: flex;
+}
+
 /* Blog list — left-aligned like Karina's */
 
 .blog-list {
@@ -854,6 +921,10 @@ article li a:hover {
   }
 
   .blog-list {
+    margin-left: 40px;
+  }
+
+  .writing-filters {
     margin-left: 40px;
   }
 

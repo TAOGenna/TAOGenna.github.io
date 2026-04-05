@@ -1,7 +1,7 @@
 ---
 title: "PPCA: The Minimal Generative Model"
 date: 2025-10-20
-categories: ["AI"]
+tags: ["math", "code"]
 ---
 
 # PPCA: Probabilistic Principal Component Analysis  

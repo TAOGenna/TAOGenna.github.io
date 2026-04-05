@@ -1,7 +1,7 @@
 ---
 title: "How to measure the non-Markovianity of a Quantum System?"
 date: 2023-07-26
-categories: ["math"]
+tags: ["math"]
 ---
 
 <div style="text-align: center;">

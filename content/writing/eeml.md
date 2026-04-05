@@ -1,7 +1,7 @@
 ---
 title: "Advancements in Representing Atomic Environments for Machine Learning Interatomic Potentials"
 date: 2025-04-12
-categories: ["physics"]
+tags: ["code"]
 ---
 
 <div style="text-align: center;">

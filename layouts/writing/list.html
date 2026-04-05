@@ -4,9 +4,21 @@
     <h1>{{ .Title }}</h1>
 </section>
 
-<div class="blog-list">
+<div class="writing-filters">
+    <label><input type="checkbox" id="math" /> math</label>
+    <label><input type="checkbox" id="code" /> code</label>
+    <label><input type="checkbox" id="music" /> music</label>
+    <label><input type="checkbox" id="chess" /> chess</label>
+    <label><input type="checkbox" id="poetry" /> poetry</label>
+    <label><input type="checkbox" id="quotes" /> quotes</label>
+    <label><input type="checkbox" id="painting" /> painting</label>
+    <label><input type="checkbox" id="games" /> games</label>
+    <label><input type="checkbox" id="food" /> food</label>
+</div>
+
+<div class="blog-list" id="writing-grid">
     {{ range .Pages.ByDate.Reverse }}
-    <a class="post" href="{{ .RelPermalink }}">
+    <a class="post {{ range .Params.tags }}tag-{{ . }} {{ end }}" href="{{ .RelPermalink }}">
         <span class="title">{{ .Title }}</span>
         <span class="hline"></span>
         <span class="publishDate">{{ .Date.Format "Jan '06" }}</span>
@@ -14,5 +26,6 @@
     {{ end }}
 </div>
 
+<script src="/scripts/writing-filter.js"></script>
 
 {{ end }}
