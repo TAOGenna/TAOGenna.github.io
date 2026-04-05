@@ -1,24 +1,34 @@
-let checkboxes = Array.from(document.querySelectorAll(".writing-filters input[type='checkbox']"));
+let labels = Array.from(document.querySelectorAll(".writing-filters label"));
 let grid = document.getElementById("writing-grid");
+let filtersContainer = document.querySelector(".writing-filters");
+let allTags = labels.map((l) => l.dataset.tag);
 
-for (const cb of checkboxes) {
-    grid.classList.add(cb.id);
+// Show all by default
+for (const tag of allTags) {
+    grid.classList.add(tag);
 }
 
-checkboxes.forEach((cb) => {
-    cb.checked = false;
-    cb.addEventListener("change", filterPosts);
+labels.forEach((label) => {
+    label.addEventListener("click", () => {
+        let tag = label.dataset.tag;
+        let wasActive = label.classList.contains("active");
+
+        // Clear all
+        labels.forEach((l) => l.classList.remove("active"));
+
+        if (wasActive) {
+            // Deselect: show all
+            filtersContainer.classList.remove("has-active");
+            for (const t of allTags) {
+                grid.classList.add(t);
+            }
+        } else {
+            // Select this one only
+            label.classList.add("active");
+            filtersContainer.classList.add("has-active");
+            for (const t of allTags) {
+                t === tag ? grid.classList.add(t) : grid.classList.remove(t);
+            }
+        }
+    });
 });
-
-function filterPosts() {
-    let checked = Array.from(document.querySelectorAll(".writing-filters input[type='checkbox']:checked"));
-    if (checked.length === 0) {
-        for (const cb of checkboxes) {
-            grid.classList.add(cb.id);
-        }
-    } else {
-        for (const cb of checkboxes) {
-            cb.checked ? grid.classList.add(cb.id) : grid.classList.remove(cb.id);
-        }
-    }
-}

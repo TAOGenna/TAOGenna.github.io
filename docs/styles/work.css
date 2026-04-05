@@ -601,48 +601,54 @@ ul.front-company-list {
   margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 20px;
+  gap: 8px 8px;
 }
 
 .writing-filters label {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: "Suisse", sans-serif;
-  font-size: 15px;
-  color: #666;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #444;
   cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 4px;
+  background: var(--tag-color);
+  transition: opacity 0.2s, box-shadow 0.2s, transform 0.15s;
+  user-select: none;
+}
+
+.writing-filters label:hover {
+  opacity: 0.85;
+}
+
+/* When any filter is active, dim the inactive ones */
+.writing-filters.has-active label {
+  opacity: 0.28;
+}
+
+.writing-filters.has-active label.active {
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
 }
 
 .writing-filters input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid #bbb;
-  border-radius: 3px;
-  margin-right: 6px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-  position: relative;
+  display: none;
 }
 
-.writing-filters input[type="checkbox"]:hover {
-  border-color: #888;
-}
-
-.writing-filters input[type="checkbox"]:checked {
-  background: #333;
-  border-color: #333;
-}
-
-.writing-filters input[type="checkbox"]:checked::after {
-  content: "✓";
-  color: white;
-  font-size: 11px;
-  position: absolute;
-  top: -1px;
-  left: 2px;
-}
+/* Tag colors — matched from Alfredo's palette */
+.writing-filters label[data-tag="food"]     { --tag-color: #8cd8ea; }
+.writing-filters label[data-tag="chess"]    { --tag-color: #f8e494; }
+.writing-filters label[data-tag="quotes"]   { --tag-color: #f0b0b8; }
+.writing-filters label[data-tag="poetry"]   { --tag-color: #f5c4a4; }
+.writing-filters label[data-tag="games"]    { --tag-color: #a8e0b0; }
+.writing-filters label[data-tag="code"]     { --tag-color: #b8e86c; }
+.writing-filters label[data-tag="painting"] { --tag-color: #2898f0; color: #fff; }
+.writing-filters label[data-tag="music"]    { --tag-color: #f04e3e; color: #fff; }
+.writing-filters label[data-tag="math"]     { --tag-color: #f5c020; }
 
 /* Post visibility: hidden by default, shown when grid has matching class */
 #writing-grid a.post {
