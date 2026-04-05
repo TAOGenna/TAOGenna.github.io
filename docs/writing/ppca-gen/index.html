@@ -235,65 +235,65 @@ Then M-step updates $W$ and $\sigma^2$ by solving linear equations involving the
   <figcaption>We start from the observed data (in blue) and through the PPCA max log likelihood we find the optimized parameters, which once plugged in the linear relation and sample some values from the latent space we effectively generate a new dataset (in red) with similar distribution as the observed dataset.</figcaption>
 </figure>
 
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy.linalg <span style="color:#f92672">import</span> eigh
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">numpy</span> <span style="color:#008000;font-weight:bold">as</span> <span style="color:#00f;font-weight:bold">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">matplotlib.pyplot</span> <span style="color:#008000;font-weight:bold">as</span> <span style="color:#00f;font-weight:bold">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">numpy.linalg</span> <span style="color:#008000;font-weight:bold">import</span> eigh
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 1. Generate some real 2D data</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
-</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N, <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>T_real <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>hstack([z, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.2</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N, <span style="color:#ae81ff">1</span>)])  <span style="color:#75715e"># correlated data</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Step 1. Generate some real 2D data</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>np<span style="color:#666">.</span>random<span style="color:#666">.</span>seed(<span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span>N <span style="color:#666">=</span> <span style="color:#666">500</span>
+</span></span><span style="display:flex;"><span>z <span style="color:#666">=</span> np<span style="color:#666">.</span>random<span style="color:#666">.</span>randn(N, <span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>T_real <span style="color:#666">=</span> np<span style="color:#666">.</span>hstack([z, <span style="color:#666">0.5</span><span style="color:#666">*</span>z <span style="color:#666">+</span> <span style="color:#666">0.2</span><span style="color:#666">*</span>np<span style="color:#666">.</span>random<span style="color:#666">.</span>randn(N, <span style="color:#666">1</span>)])  <span style="color:#408080;font-style:italic"># correlated data</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 2. Estimate PPCA parameters</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Center data</span>
-</span></span><span style="display:flex;"><span>mu <span style="color:#f92672">=</span> T_real<span style="color:#f92672">.</span>mean(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>X_centered <span style="color:#f92672">=</span> T_real <span style="color:#f92672">-</span> mu
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Step 2. Estimate PPCA parameters</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Center data</span>
+</span></span><span style="display:flex;"><span>mu <span style="color:#666">=</span> T_real<span style="color:#666">.</span>mean(axis<span style="color:#666">=</span><span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span>X_centered <span style="color:#666">=</span> T_real <span style="color:#666">-</span> mu
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Sample covariance</span>
-</span></span><span style="display:flex;"><span>S <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cov(X_centered<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Sample covariance</span>
+</span></span><span style="display:flex;"><span>S <span style="color:#666">=</span> np<span style="color:#666">.</span>cov(X_centered<span style="color:#666">.</span>T)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Eigen decomposition</span>
-</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#f92672">=</span> eigh(S)
-</span></span><span style="display:flex;"><span>idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argsort(vals)[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#f92672">=</span> vals[idx], vecs[:, idx]
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Eigen decomposition</span>
+</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#666">=</span> eigh(S)
+</span></span><span style="display:flex;"><span>idx <span style="color:#666">=</span> np<span style="color:#666">.</span>argsort(vals)[::<span style="color:#666">-</span><span style="color:#666">1</span>]
+</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#666">=</span> vals[idx], vecs[:, idx]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Latent dimension q = 1</span>
-</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>U_q <span style="color:#f92672">=</span> vecs[:, :q]
-</span></span><span style="display:flex;"><span>Lambda_q <span style="color:#f92672">=</span> vals[:q]
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Latent dimension q = 1</span>
+</span></span><span style="display:flex;"><span>q <span style="color:#666">=</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>U_q <span style="color:#666">=</span> vecs[:, :q]
+</span></span><span style="display:flex;"><span>Lambda_q <span style="color:#666">=</span> vals[:q]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute sigma^2 and W</span>
-</span></span><span style="display:flex;"><span>D <span style="color:#f92672">=</span> T_real<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>sigma2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(vals[q:])  <span style="color:#75715e"># average of remaining eigenvalues</span>
-</span></span><span style="display:flex;"><span>W <span style="color:#f92672">=</span> U_q <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(Lambda_q <span style="color:#f92672">-</span> sigma2)
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Compute sigma^2 and W</span>
+</span></span><span style="display:flex;"><span>D <span style="color:#666">=</span> T_real<span style="color:#666">.</span>shape[<span style="color:#666">1</span>]
+</span></span><span style="display:flex;"><span>sigma2 <span style="color:#666">=</span> np<span style="color:#666">.</span>mean(vals[q:])  <span style="color:#408080;font-style:italic"># average of remaining eigenvalues</span>
+</span></span><span style="display:flex;"><span>W <span style="color:#666">=</span> U_q <span style="color:#666">*</span> np<span style="color:#666">.</span>sqrt(Lambda_q <span style="color:#666">-</span> sigma2)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Learned W =</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>W<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Learned sigma^2 = </span><span style="color:#e6db74">{</span>sigma2<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Mean = </span><span style="color:#e6db74">{</span>mu<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#008000">print</span>(<span style="color:#ba2121">f</span><span style="color:#ba2121">&#34;Learned W =</span><span style="color:#b62;font-weight:bold">\n</span><span style="color:#b68;font-weight:bold">{</span>W<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#008000">print</span>(<span style="color:#ba2121">f</span><span style="color:#ba2121">&#34;Learned sigma^2 = </span><span style="color:#b68;font-weight:bold">{</span>sigma2<span style="color:#b68;font-weight:bold">:</span><span style="color:#ba2121">.4f</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#008000">print</span>(<span style="color:#ba2121">f</span><span style="color:#ba2121">&#34;Mean = </span><span style="color:#b68;font-weight:bold">{</span>mu<span style="color:#b68;font-weight:bold">}</span><span style="color:#ba2121">&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 3. Generate new data from model</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span>N_gen <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
-</span></span><span style="display:flex;"><span>x_gen <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N_gen, q)
-</span></span><span style="display:flex;"><span>eps <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(sigma2) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N_gen, D)
-</span></span><span style="display:flex;"><span>T_gen <span style="color:#f92672">=</span> x_gen <span style="color:#f92672">@</span> W<span style="color:#f92672">.</span>T <span style="color:#f92672">+</span> mu <span style="color:#f92672">+</span> eps
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Step 3. Generate new data from model</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>N_gen <span style="color:#666">=</span> <span style="color:#666">500</span>
+</span></span><span style="display:flex;"><span>x_gen <span style="color:#666">=</span> np<span style="color:#666">.</span>random<span style="color:#666">.</span>randn(N_gen, q)
+</span></span><span style="display:flex;"><span>eps <span style="color:#666">=</span> np<span style="color:#666">.</span>sqrt(sigma2) <span style="color:#666">*</span> np<span style="color:#666">.</span>random<span style="color:#666">.</span>randn(N_gen, D)
+</span></span><span style="display:flex;"><span>T_gen <span style="color:#666">=</span> x_gen <span style="color:#666">@</span> W<span style="color:#666">.</span>T <span style="color:#666">+</span> mu <span style="color:#666">+</span> eps
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 4. Compare</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">6</span>))
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(T_real[:,<span style="color:#ae81ff">0</span>], T_real[:,<span style="color:#ae81ff">1</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Real data&#34;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;royalblue&#34;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(T_gen[:,<span style="color:#ae81ff">0</span>], T_gen[:,<span style="color:#ae81ff">1</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Generated from PPCA&#34;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tomato&#34;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;PPCA as a Generative Model&#34;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;equal&#34;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># Step 4. Compare</span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>figure(figsize<span style="color:#666">=</span>(<span style="color:#666">6</span>,<span style="color:#666">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>scatter(T_real[:,<span style="color:#666">0</span>], T_real[:,<span style="color:#666">1</span>], alpha<span style="color:#666">=</span><span style="color:#666">0.5</span>, label<span style="color:#666">=</span><span style="color:#ba2121">&#34;Real data&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;royalblue&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>scatter(T_gen[:,<span style="color:#666">0</span>], T_gen[:,<span style="color:#666">1</span>], alpha<span style="color:#666">=</span><span style="color:#666">0.5</span>, label<span style="color:#666">=</span><span style="color:#ba2121">&#34;Generated from PPCA&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;tomato&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>title(<span style="color:#ba2121">&#34;PPCA as a Generative Model&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>legend()
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>axis(<span style="color:#ba2121">&#34;equal&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#666">.</span>show()
 </span></span></code></pre></div><hr>
 <h1 id="intuition--how-to-read-the-equations">Intuition &amp; how to read the equations</h1>
 <ul>

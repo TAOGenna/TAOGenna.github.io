@@ -14,3 +14,8 @@ publishDir = 'docs'
         [markup.goldmark.extensions.passthrough.delimiters]
           block = [['$$', '$$']]
           inline = [['$', '$']]
+  [markup.highlight]
+    codeFences = true
+    noClasses = true
+    style = "pygments"
+    guessSyntax = true

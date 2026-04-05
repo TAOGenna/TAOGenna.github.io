@@ -593,13 +593,24 @@ article li a:hover {
   color: #333;
 }
 
-.writing-article pre {
-  background: #f6f6f6;
+.writing-article pre,
+.writing-article .highlight pre {
+  background: #f8f8f8;
   padding: 20px 24px;
   overflow-x: auto;
   font-size: 14px;
-  line-height: 1.5em;
+  line-height: 1.6em;
   border-radius: 4px;
+}
+
+.writing-article pre code,
+.writing-article .highlight pre code {
+  font-family: "IBM Plex Mono", monospace;
+  background: none;
+}
+
+.writing-article .highlight {
+  background: none;
 }
 
 .writing-article code {
