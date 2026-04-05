@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -25 1132 840" width="800" height="593" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1971c2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1971c2"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+  </defs>
+  <text x="200" y="41.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">HNSW Insert: Tracing Node 101 Through All Levels</text>
+  <rect x="20" y="55" width="620" height="280" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="0.25" filter="url(#handdrawn)"/>
+  <text x="30" y="83.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">PHASE 1: Navigate down to level 2 (beam_width=1)</text>
+  <rect x="20" y="355" width="1050" height="420" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="0.2" filter="url(#handdrawn)"/>
+  <text x="30" y="383.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">PHASE 2: Insert edges at each level (beam_width = ef_construction = 32)</text>
+  <rect x="40" y="95" width="200" height="80" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="122.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Level 3 (entry: node 42)</text>
+  <text x="50" y="141.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Greedy search→ land on node 17</text>
+  <text x="50" y="161.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">dist(17, query) &lt; dist(42, query)</text>
+  <path d="M 240.0 135.0 L 330.0 135.0" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="255" y="132.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">drop to</text>
+  <text x="255" y="146.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">level 2 at</text>
+  <text x="255" y="161.2" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">node 17</text>
+  <rect x="340" y="95" width="200" height="80" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="350" y="122.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Level 2 (entry: node 17)</text>
+  <text x="350" y="141.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Greedy search→ land on node 5</text>
+  <text x="350" y="161.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">dist(5, query) &lt; dist(17, query)</text>
+  <text x="200" y="231.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Node 101 assigned level = 2 by exponential draw</text>
+  <text x="200" y="253.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">level = floor(-ln(0.086) * 0.36) = floor(2.45 * 0.36) = floor(0.88) wait...</text>
+  <text x="200" y="272.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">level = floor(-ln(0.012) * 1.44) = floor(4.42 * 1.44) = floor(2.09) = 2 ✓</text>
+  <rect x="40" y="390" width="300" height="110" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="416.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">INSERT at Level 2</text>
+  <text x="50" y="436.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Beam search (ef=32): finds 3 candidates</text>
+  <text x="50" y="456.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Select top M=16 (only 3 exist at level 2)</text>
+  <text x="50" y="476.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Add edges: 101↔node5, 101↔node17, 101↔node42</text>
+  <text x="50" y="496.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">These are LONG edges (few level-2 nodes!)</text>
+  <path d="M 340.0 445.0 L 390.0 445.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <rect x="400" y="390" width="300" height="110" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="410" y="416.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">INSERT at Level 1</text>
+  <text x="410" y="436.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Beam search (ef=32): finds 25 candidates</text>
+  <text x="410" y="456.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Select top M=16, trim extras</text>
+  <text x="410" y="476.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Add edges: 101 ↔ {node3,7,9,12,...}</text>
+  <text x="410" y="496.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">MEDIUM edges (more nodes at level 1)</text>
+  <path d="M 700.0 445.0 L 750.0 445.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <rect x="760" y="390" width="300" height="110" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="770" y="416.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">INSERT at Level 0</text>
+  <text x="770" y="436.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Beam search (ef=32): finds 200+ candidates</text>
+  <text x="770" y="456.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Select top M=16 true nearest neighbors</text>
+  <text x="770" y="476.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Add edges: 101 ↔ {true nearest 16}</text>
+  <text x="770" y="496.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">SHORT edges (all nodes present!)</text>
+  <rect x="200" y="530" width="660" height="80" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="210" y="561.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Result: Node 101 has edges at 3 levels.</text>
+  <text x="210" y="582.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Level 2: 3 long edges (navigational)    Level 1: 16 medium edges    Level 0: 16 short edges (accurate)</text>
+  <text x="210" y="607.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">One insert, three scales of connectivity. No explicit long-edge planning needed.</text>
+  <rect x="40" y="640" width="1010" height="75" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="55" y="669.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">COMMON MISTAKE ⚠</text>
+  <text x="55" y="688.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Only inserting at level 2 (the assigned level) instead of levels 2, 1, AND 0.</text>
+  <text x="55" y="708.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Result: node 101 is unreachable from level 0, breaking graph connectivity for 63% of all future queries.</text>
+</svg>

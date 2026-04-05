@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kenyi Takagui-Perez</title>
+    <link>https://taogenna.github.io/</link>
+    <description>Recent content on Kenyi Takagui-Perez</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://taogenna.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PPCA: The Minimal Generative Model</title>
+      <link>https://taogenna.github.io/writing/ppca-gen/</link>
+      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/writing/ppca-gen/</guid>
+      <description>&lt;h1 id=&#34;ppca-probabilistic-principal-component-analysis&#34;&gt;PPCA: Probabilistic Principal Component Analysis&lt;/h1&gt;&#xA;&lt;p&gt;PCA is one of those algorithms you learn early and then treat as a black box: center the data, compute the top eigenvectors of the sample covariance, project. But PCA &lt;em&gt;feels&lt;/em&gt; algebraic, where does it come from probabilistically? Probabilistic PCA (PPCA) answers that question: it is the &lt;strong&gt;maximum-likelihood solution of a simple linear Gaussian latent-variable model&lt;/strong&gt;. Understanding PPCA is a tiny, high-value step on the path to modern generative models (VAEs, normalizing flows): it isolates the linear + Gaussian case where every calculation is analytic, so you can see clearly how inference and likelihood tie together.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Advancements in Representing Atomic Environments for Machine Learning Interatomic Potentials</title>
+      <link>https://taogenna.github.io/writing/eeml/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/writing/eeml/</guid>
+      <description>&lt;div style=&#34;text-align: center;&#34;&gt;&#xA;    Extended Abstract&#xA;&lt;/div&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Accurate and efficient interatomic potentials are crucial for simulating materials at the atomic level, and machine learning interatomic potentials (MLIPs) have emerged as a powerful alternative to traditional methods. A central aspect of MLIP development is the representation of local atomic environments, which significantly impacts the accuracy, transferability, and computational cost of the resulting potentials. This extended abstract reviews recent advancements in representing atomic environments for MLIPs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Application of the self-consistent Hartree-Fock method</title>
+      <link>https://taogenna.github.io/writing/hartree-fock/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/writing/hartree-fock/</guid>
+      <description>&lt;p&gt;This is a summary of the computational method I used for my &lt;a href=&#34;https://taogenna.github.io/Files/master_thesis.pdf&#34;&gt;master&amp;rsquo;s thesis&lt;/a&gt; [1]. I will focus on the Hartree-Fock approximation.&lt;/p&gt;&#xA;&lt;h2 id=&#34;model&#34;&gt;Model&lt;/h2&gt;&#xA;&lt;p&gt;The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is&lt;/p&gt;&#xA;$$&#xA;\begin{align*}&#xA;H &amp;= \sum_{j=1}^{N-1} \left( -t c_{j+1}^\dagger c_j + \Delta c_{j+1}^\dagger c_j^\dagger + \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\&#xA; &amp;+ \epsilon_d d^\dagger d - t&#39; \left( d^\dagger c_1 + \text{H.c.} \right) \\&#xA; &amp;+ V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)&#xA;\end{align*}&#xA;$$&lt;p&gt;The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to measure the non-Markovianity of a Quantum System?</title>
+      <link>https://taogenna.github.io/writing/oqs/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/writing/oqs/</guid>
+      <description>&lt;div style=&#34;text-align: center;&#34;&gt;&#xA;    Final term paper for the course of Open Quantum Systems.&#xA;&lt;/div&gt;&#xA;&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;&#xA;&lt;p&gt;Master equations govern the time evolution of a quantum system interacting with an environment and can be written in a variety of forms. Time-independent or memoryless master equations can be expressed in the well-known Lindblad form. In fact, any master equation local in time, Markovian or non-Markovian, can also be written in a Lindblad-like form. A diagonalization procedure results in a unique, canonical representation of the equation, which can be used to fully characterize the non-Markovianity of the time evolution. Several different measures of non-Markovianity have recently been presented that reflect, to different degrees, the appearance of negative decoherence rates in the Lindblad-like form of the master equation. We therefore propose to use the negative decoherence rates themselves as they appear in the canonical form of the master equation to fully characterize non-Markovianity.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Arithmetic coding with GPT for the comma.ai compression challenge</title>
+      <link>https://taogenna.github.io/projects/comma-compression/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/comma-compression/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bookshelf</title>
+      <link>https://taogenna.github.io/bookshelf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/bookshelf/</guid>
+      <description>&lt;h2 id=&#34;2025&#34;&gt;2025&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;The Idea Factory: Learning to Think at MIT&lt;/strong&gt;, Pepper White&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Stories of Your Life and Others&lt;/strong&gt;, Ted Chiang&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Deep Work&lt;/strong&gt;, Cal Newport&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;A Theory of Fun for Game Design&lt;/strong&gt;, Raph Koster&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;What I Talk About When I Talk About Running&lt;/strong&gt;, Haruki Murakami&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;2024&#34;&gt;2024&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Situational Awareness&lt;/strong&gt;, Leopold Aschenbrenner&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;The Little Book of Deep Learning&lt;/strong&gt;, Fransois Fleuret&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Meta Learning&lt;/strong&gt;, Radek Osmulski&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;2023&#34;&gt;2023&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;The Metamorphosis of Prime Intellect&lt;/strong&gt;, Roger Williams&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;The Usefulness of Useless Knowledge&lt;/strong&gt;, Abraham Flexner&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Distill: transform technical content into hands-on courses</title>
+      <link>https://taogenna.github.io/projects/distill/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/distill/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Inversion algorithm for plasma frequency profiles from ionograms</title>
+      <link>https://taogenna.github.io/projects/inversion-ionograms/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/inversion-ionograms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>IonogramNET: ionospheric echo detection with CNNs</title>
+      <link>https://taogenna.github.io/projects/ionogramnet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/ionogramnet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Language-driven semantic segmentation (LSeg, ICML 2022)</title>
+      <link>https://taogenna.github.io/projects/lseg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/lseg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Misc.</title>
+      <link>https://taogenna.github.io/misc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/misc/</guid>
+      <description>&lt;h2 id=&#34;online-courses&#34;&gt;Online Courses&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.coursera.org/specializations/deep-learning&#34;&gt;Deep Learning&lt;/a&gt;, Andrew Ng&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;courses&#34;&gt;Courses&lt;/h2&gt;&#xA;&lt;h3 id=&#34;msc-third-semester&#34;&gt;MSc. Third Semester&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Photonics in Microwave Systems&lt;/li&gt;&#xA;&lt;li&gt;Laser Physics&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;msc-second-semester&#34;&gt;MSc. Second Semester&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Open Quantum Systems&lt;/li&gt;&#xA;&lt;li&gt;Topological Matter (Jorge Facio)&lt;/li&gt;&#xA;&lt;li&gt;Quantum Many Body Theory (Armando Aligia)&lt;/li&gt;&#xA;&lt;li&gt;Introduction to Material Science and Chemistry&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;msc-first-semester&#34;&gt;MSc. First Semester&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Quantum Field Theory (Mazitelli)&lt;/li&gt;&#xA;&lt;li&gt;Quantum Theory of Solids (Pablo Cornaglia)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;sixth-year&#34;&gt;Sixth Year&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;FIS255: Electromagnetism II&lt;/li&gt;&#xA;&lt;li&gt;Quantum Field Theory I and II (auditing, University of São Paulo)&lt;/li&gt;&#xA;&lt;li&gt;FIS312: Experimental Physics I&lt;/li&gt;&#xA;&lt;li&gt;FIS338: Physics Seminar&lt;/li&gt;&#xA;&lt;li&gt;1FIS11: Research Studies II&lt;/li&gt;&#xA;&lt;li&gt;1FIS10: Research Studies I&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;fifth-year&#34;&gt;Fifth Year&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;FIS247: Optics and Photonics&lt;/li&gt;&#xA;&lt;li&gt;FIS239: Solid State Physics&lt;/li&gt;&#xA;&lt;li&gt;FIS220: Computational Techniques in Physics&lt;/li&gt;&#xA;&lt;li&gt;ING220: Ethics&lt;/li&gt;&#xA;&lt;li&gt;FIS309: Quantum Mechanics II&lt;/li&gt;&#xA;&lt;li&gt;FIS240: Thermodynamics and Statistical Mechanics&lt;/li&gt;&#xA;&lt;li&gt;FIS227: Elementary Particles&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;fourth-year&#34;&gt;Fourth Year&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;MAT218: Applied Differential Equations&lt;/li&gt;&#xA;&lt;li&gt;FIS327: Non-Linear Dynamics&lt;/li&gt;&#xA;&lt;li&gt;FIS308: Quantum Mechanics I&lt;/li&gt;&#xA;&lt;li&gt;FIS249: Classical Mechanics II&lt;/li&gt;&#xA;&lt;li&gt;FIS248: Classical Mechanics I&lt;/li&gt;&#xA;&lt;li&gt;FIS218: Modern Physics&lt;/li&gt;&#xA;&lt;li&gt;FIS208: Topics in General Physics&lt;/li&gt;&#xA;&lt;li&gt;FIS203: Physics 4 — Optics&lt;/li&gt;&#xA;&lt;li&gt;1FIS09: Physics 4 Laboratory&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;third-year&#34;&gt;Third Year&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;MAT219: Mathematical Tools for Physics&lt;/li&gt;&#xA;&lt;li&gt;ING306: Spacial Science and Engineering&lt;/li&gt;&#xA;&lt;li&gt;FIS254: Electromagnetism I&lt;/li&gt;&#xA;&lt;li&gt;FIS245: Electronics&lt;/li&gt;&#xA;&lt;li&gt;FIS246: Laboratory of Electronics&lt;/li&gt;&#xA;&lt;li&gt;MAT202: Series and Transformation&lt;/li&gt;&#xA;&lt;li&gt;IEE256: Digital Systems&lt;/li&gt;&#xA;&lt;li&gt;IEE204: Analogic Circuits Lab&lt;/li&gt;&#xA;&lt;li&gt;IEE203: Analogic Circuits&lt;/li&gt;&#xA;&lt;li&gt;1IEE07: Theory of Electromagnetic Fields&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;second-year&#34;&gt;Second Year&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;IEE148: Electric Circuits I&lt;/li&gt;&#xA;&lt;li&gt;1MAT09: Calculus 4 — Applied Calculus&lt;/li&gt;&#xA;&lt;li&gt;1FIS06: Physics 3 — Electricity and Magnetism&lt;/li&gt;&#xA;&lt;li&gt;1MAT08: Calculus 3 — Calculus in Several Variables&lt;/li&gt;&#xA;&lt;li&gt;1LIN15: Academic Communication&lt;/li&gt;&#xA;&lt;li&gt;1IEE05: Electronic Innovation&lt;/li&gt;&#xA;&lt;li&gt;1IEE04: Digital Design&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Monte Carlo Tree Search for Connect4</title>
+      <link>https://taogenna.github.io/projects/connect4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/connect4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Neural Style Transfer (Gatys et al.)</title>
+      <link>https://taogenna.github.io/projects/neural-style-transfer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/neural-style-transfer/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

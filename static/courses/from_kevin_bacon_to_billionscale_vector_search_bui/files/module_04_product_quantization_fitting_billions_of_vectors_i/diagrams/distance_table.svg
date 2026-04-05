@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 -30 996 512" width="800" height="411" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-e03131" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e03131"/>
+    </marker>
+  </defs>
+  <text x="200" y="36.4" font-size="22" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Asymmetric Distance Computation: The Lookup Table Trick</text>
+  <text x="10" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">NAIVE APPROACH (slow — defeats PQ's purpose)</text>
+  <rect x="10" y="80" width="150" height="60" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="20" y="105.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Query q</text>
+  <text x="20" y="120.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">[0.3, -0.7, 0.1,</text>
+  <text x="20" y="133.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">..., 0.9]  (128D)</text>
+  <rect x="10" y="160" width="150" height="60" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="20" y="183.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Decode code [47,193,...]</text>
+  <text x="20" y="198.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">→ lookup 8 centroids</text>
+  <text x="20" y="213.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">→ concat → 128D vector</text>
+  <rect x="10" y="240" width="150" height="60" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="20" y="263.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Compute L2 distance</text>
+  <text x="20" y="278.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">128 subtractions</text>
+  <text x="20" y="293.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">128 multiply-adds</text>
+  <path d="M 85.0 148.0 L 85.0 152.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <path d="M 85.0 228.0 L 85.0 232.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <text x="10" y="330.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Cost per candidate: O(D) = 128 ops</text>
+  <text x="10" y="347.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#888888" text-anchor="start">Repeat for every neighbor every hop.</text>
+  <text x="10" y="365.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">No memory savings achieved!</text>
+  <text x="320" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">LOOKUP TABLE APPROACH (fast — the correct method)</text>
+  <rect x="320" y="80" width="310" height="70" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="330" y="103.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Step A: Precompute distance table T (once per query)</text>
+  <text x="330" y="118.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#555555" text-anchor="start">For each subspace m, for each centroid k:</text>
+  <text x="330" y="133.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#555555" text-anchor="start">  T[m][k] = ||q_m - centroid_m_k||^2</text>
+  <text x="330" y="150.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">Table: 8 subspaces × 256 entries = 2,048 floats = 8 KB</text>
+  <text x="630" y="114.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">Fits in</text>
+  <text x="630" y="128.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">L1 cache!</text>
+  <rect x="320" y="175" width="310" height="90" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="330" y="198.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">Distance table T (8×256 grid)</text>
+  <text x="330" y="212.0" font-size="10" font-family="Cascadia Code, Fira Code, monospace" fill="#888888" text-anchor="start">       k=0    k=1    k=2    ...  k=255</text>
+  <text x="330" y="225.0" font-size="10" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">m=0: [0.42,  1.83,  0.71,  ..., 2.14]</text>
+  <text x="330" y="237.0" font-size="10" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">m=1: [1.07,  0.29,  3.44,  ..., 0.88]</text>
+  <text x="330" y="249.0" font-size="10" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">m=2: [2.91,  0.63,  1.22,  ..., 1.75]</text>
+  <text x="330" y="261.0" font-size="10" font-family="Cascadia Code, Fira Code, monospace" fill="#888888" text-anchor="start">...  ...</text>
+  <rect x="320" y="285" width="310" height="90" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="330" y="308.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Step B: For each candidate (code=[47,193,88,...])</text>
+  <text x="330" y="323.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">dist = T[0][47] + T[1][193] + T[2][88] + ...</text>
+  <text x="330" y="338.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#555555" text-anchor="start">     = 0.42   + 0.29   + 2.91   + ... = 9.87</text>
+  <text x="330" y="357.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Just 8 array lookups + 7 additions!</text>
+  <text x="330" y="373.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">↑ these are cache hits (table in L1 cache)</text>
+  <text x="320" y="405.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Cost per candidate: O(M) = 8 ops</text>
+  <text x="320" y="422.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#888888" text-anchor="start">16x fewer operations than exact (128D vs 8D).</text>
+  <text x="320" y="439.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#888888" text-anchor="start">Plus: table precomputed once, amortized over thousands of candidates.</text>
+  <rect x="200" y="165" width="90" height="40" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="212" y="204.4" font-size="22" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">VS</text>
+</svg>

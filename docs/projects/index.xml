@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Kenyi Takagui-Perez</title>
+    <link>https://taogenna.github.io/projects/</link>
+    <description>Recent content in Projects on Kenyi Takagui-Perez</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="https://taogenna.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arithmetic coding with GPT for the comma.ai compression challenge</title>
+      <link>https://taogenna.github.io/projects/comma-compression/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/comma-compression/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Distill: transform technical content into hands-on courses</title>
+      <link>https://taogenna.github.io/projects/distill/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/distill/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Inversion algorithm for plasma frequency profiles from ionograms</title>
+      <link>https://taogenna.github.io/projects/inversion-ionograms/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/inversion-ionograms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>IonogramNET: ionospheric echo detection with CNNs</title>
+      <link>https://taogenna.github.io/projects/ionogramnet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/ionogramnet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Language-driven semantic segmentation (LSeg, ICML 2022)</title>
+      <link>https://taogenna.github.io/projects/lseg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/lseg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monte Carlo Tree Search for Connect4</title>
+      <link>https://taogenna.github.io/projects/connect4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/connect4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Neural Style Transfer (Gatys et al.)</title>
+      <link>https://taogenna.github.io/projects/neural-style-transfer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/projects/neural-style-transfer/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

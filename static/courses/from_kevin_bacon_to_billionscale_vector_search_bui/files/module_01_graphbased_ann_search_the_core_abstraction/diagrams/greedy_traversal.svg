@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 1072 527" width="800" height="393" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+  <text x="350" y="46.4" font-size="22" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Greedy Graph Traversal: A Step-by-Step Walkthrough</text>
+  <text x="30" y="76.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">THE GRAPH (5 nodes, each with 2 edges)</text>
+  <ellipse cx="105.0" cy="175.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="93" y="187.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">E</text>
+  <text x="60" y="223.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Entry node</text>
+  <text x="60" y="236.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">d=8.2 to Q</text>
+  <ellipse cx="245.0" cy="125.0" rx="25.0" ry="25.0" fill="#ffec99" stroke="#f08c00" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="233" y="137.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">A</text>
+  <text x="200" y="173.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">d=5.1 to Q</text>
+  <ellipse cx="225.0" cy="265.0" rx="25.0" ry="25.0" fill="#ffec99" stroke="#f08c00" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="213" y="277.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">B</text>
+  <text x="180" y="313.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">d=9.7 to Q</text>
+  <ellipse cx="385.0" cy="145.0" rx="25.0" ry="25.0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="373" y="157.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">C</text>
+  <text x="340" y="193.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">d=2.3 to Q</text>
+  <ellipse cx="385.0" cy="265.0" rx="25.0" ry="25.0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="373" y="277.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">D</text>
+  <text x="340" y="313.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">d=4.8 to Q</text>
+  <ellipse cx="485.0" cy="180.0" rx="25.0" ry="25.0" fill="#d0bfff" stroke="#9c36b5" stroke-width="3" filter="url(#handdrawn)"/>
+  <text x="473" y="192.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Q</text>
+  <text x="445" y="228.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Query vector</text>
+  <text x="445" y="241.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">(target)</text>
+  <path d="M 136.1 163.9 L 213.9 136.1" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 131.4 194.8 L 198.6 245.2" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 277.7 129.7 L 352.3 140.3" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 268.3 148.3 L 361.7 241.7" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 258.0 265.0 L 352.0 265.0" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 385.0 178.0 L 385.0 232.0" fill="none" stroke="#1e1e1e" stroke-width="1.5" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="580" y="60" width="400" height="330" rx="0" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="590" y="88.0" font-size="15" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">SEARCH LOG — 3 iterations</text>
+  <rect x="590" y="95" width="380" height="70" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="1.5" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="600" y="118.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Step 1: At entry node E (d=8.2 to Q)</text>
+  <text x="600" y="136.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">  Neighbors: A (d=5.1), B (d=9.7)</text>
+  <text x="600" y="154.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">  Best neighbor: A (5.1 &lt; 8.2) → MOVE to A</text>
+  <rect x="590" y="175" width="380" height="70" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="1.5" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="600" y="198.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Step 2: At node A (d=5.1 to Q)</text>
+  <text x="600" y="216.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">  Neighbors: C (d=2.3), D (d=4.8)</text>
+  <text x="600" y="234.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">  Best neighbor: C (2.3 &lt; 5.1) → MOVE to C</text>
+  <rect x="590" y="255" width="380" height="90" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="600" y="278.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Step 3: At node C (d=2.3 to Q) ★ TRUE NN</text>
+  <text x="600" y="297.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">  Neighbors: D (d=4.8)  [E and A already visited]</text>
+  <text x="600" y="316.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">  D (4.8) &gt; C (2.3) → NO improvement</text>
+  <text x="600" y="337.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">  LOCAL MINIMUM REACHED → RETURN C ✓</text>
+  <text x="590" y="416.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Path: E → A → C   (3 hops, found true NN!)</text>
+  <text x="590" y="439.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Key invariant: visited = {E, A} prevents re-expanding them</text>
+  <text x="590" y="464.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Stopping condition: no unvisited neighbor improves best_dist</text>
+</svg>

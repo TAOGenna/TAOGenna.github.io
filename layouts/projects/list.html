@@ -1,0 +1,28 @@
+{{ define "main" }}
+
+<section class="hero">
+    <h1>{{ .Title }}</h1>
+</section>
+
+<div id="gallery-grid">
+    {{ range ( .Pages.ByParam "order" ) }}
+    <div class="card show">
+        {{ if .Params.External }}
+        <a href="{{ .Params.External }}" target="_blank">
+            <div class="card_img_zoom_container">
+                <img class="card_img_container" src="/Files/{{ .Params.Image }}" alt="{{ .Title }}" />
+            </div>
+            <p class="definition">{{ .Title }}</p>
+        </a>
+        {{ else }}
+        <div class="card_img_zoom_container">
+            <img class="card_img_container" src="/Files/{{ .Params.Image }}" alt="{{ .Title }}" />
+        </div>
+        <p class="definition">{{ .Title }}</p>
+        {{ end }}
+        <p class="more-details">{{ .Params.Description }} · {{ .Params.Year }}{{ if .Params.Demo }} · <a href="{{ .Params.Demo }}" class="demo-link">View output</a>{{ end }}</p>
+    </div>
+    {{ end }}
+</div>
+
+{{ end }}

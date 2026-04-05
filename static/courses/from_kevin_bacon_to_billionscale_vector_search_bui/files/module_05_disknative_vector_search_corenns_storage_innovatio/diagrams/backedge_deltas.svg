@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -25 959 605" width="800" height="505" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-e03131" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e03131"/>
+    </marker>
+  </defs>
+  <text x="250" y="41.4" font-size="22" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Backedge Deltas vs. Naive Rewrite</text>
+  <text x="40" y="76.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Inserting node 5001. It has 3 neighbors: nodes 17, 88, 203. Each needs a backedge.</text>
+  <text x="40" y="114.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">NAIVE: each backedge immediately rewrites the full entry</text>
+  <rect x="40" y="120" width="360" height="90" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="144.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">node_17 BEFORE  (M=3, RobustPruned)</text>
+  <text x="50" y="163.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">KEY: [0x01][17]</text>
+  <text x="50" y="181.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">VALUE: [vector: 3072 bytes][count:3][9, 42, 77]</text>
+  <text x="50" y="198.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Total: 3084 bytes written to disk</text>
+  <path d="M 420.0 165.0 L 520.0 165.0" fill="none" stroke="#e03131" stroke-width="3" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <text x="440" y="158.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Add 5001</text>
+  <text x="440" y="171.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">as backedge</text>
+  <text x="440" y="184.6" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">(FULL REWRITE)</text>
+  <rect x="500" y="120" width="390" height="90" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="510" y="144.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">node_17 AFTER  (M+1=4, triggers RobustPrune!)</text>
+  <text x="510" y="163.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">KEY: [0x01][17]</text>
+  <text x="510" y="181.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">VALUE: [vector: 3072 bytes][count:3][9, 42, 5001]  (77 pruned)</text>
+  <text x="510" y="198.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">WROTE: 3084 bytes for 4 bytes of new data (WA = 771x)</text>
+  <text x="40" y="239.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Repeat for nodes 88, 203: 3 full rewrites x ~3084 bytes = 9252 bytes written per insert</text>
+  <text x="40" y="289.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">CORENN: backedge written as tiny delta, merged at query time</text>
+  <rect x="40" y="300" width="360" height="90" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="324.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">node_17 BASE  (unchanged!)</text>
+  <text x="50" y="343.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">KEY: [0x01][17]</text>
+  <text x="50" y="361.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">VALUE: [vector: 3072 bytes][count:3][9, 42, 77]</text>
+  <text x="50" y="381.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">NOT TOUCHED — still optimized by RobustPrune</text>
+  <rect x="40" y="410" width="360" height="65" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="434.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">node_17 DELTA  (new tiny entry!)</text>
+  <text x="50" y="453.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">KEY: [0x02][17]</text>
+  <text x="50" y="471.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">VALUE: [5001]   ← just 4 bytes!</text>
+  <text x="420" y="354.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">At query time:</text>
+  <text x="420" y="368.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">merge [9,42,77] + [5001]</text>
+  <text x="420" y="383.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">= [9,42,77,5001]</text>
+  <text x="420" y="397.6" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">consider all 4 as candidates</text>
+  <rect x="500" y="295" width="390" height="200" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="510" y="319.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">node_17 at query time (merged view):</text>
+  <text x="510" y="338.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#0c8599" text-anchor="start">get_all_neighbors(db, node_17):</text>
+  <text x="510" y="358.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">  base = [9, 42, 77]   (from KEY 0x01)</text>
+  <text x="510" y="376.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">  delta = [5001]        (from KEY 0x02)</text>
+  <text x="510" y="394.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">  return base + delta = [9, 42, 77, 5001]</text>
+  <text x="510" y="418.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">When total &gt; max_degree_bound:</text>
+  <text x="510" y="436.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">  run RobustPrune([9,42,77,...,5001])</text>
+  <text x="510" y="454.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">  rewrite base entry, clear delta</text>
+  <text x="510" y="473.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">  (amortized: 1 rewrite per 25 backedges)</text>
+  <text x="40" y="515.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Write savings: 4 bytes written per backedge vs 3084 bytes. ~771x less per edge!</text>
+  <text x="40" y="537.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">With compaction amortized over 25 backedges: 3084/25 = 123 bytes avg — still 25x less</text>
+</svg>

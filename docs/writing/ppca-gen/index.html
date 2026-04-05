@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VB0FSFKM9M"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-VB0FSFKM9M');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Kenyi Takagui-Perez — physicist turned ML engineer. Research in condensed matter physics, machine learning, and ionospheric science." />
+<link rel="icon" href="/Files/prof1.jpg" type="image/jpeg" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles/work.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$', display: false}]});"></script>
+
+
+    <title>PPCA: The Minimal Generative Model | Kenyi Takagui-Perez</title>
+    <link rel="canonical" href="https://taogenna.github.io/writing/ppca-gen/" />
+
+    <meta property="og:url" content="https://taogenna.github.io/writing/ppca-gen/" />
+    <meta property="og:title" content="PPCA: The Minimal Generative Model" />
+    <meta property="og:description" content="PPCA: Probabilistic Principal Component Analysis
+PCA is one of those algorithms you learn early and then treat as a black box: center the data, compute the top eigenvectors of the sample covariance, project. But PCA feels algebraic, where does it come from probabilistically? Probabilistic PCA (PPCA) answers that question: it is the maximum-likelihood solution of a simple linear Gaussian latent-variable model. Understanding PPCA is a tiny, high-value step on the path to modern generative models (VAEs, normalizing flows): it isolates the linear &#43; Gaussian case where every calculation is analytic, so you can see clearly how inference and likelihood tie together." />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PPCA: The Minimal Generative Model">
+    <meta name="twitter:description" content="PPCA: Probabilistic Principal Component Analysis
+PCA is one of those algorithms you learn early and then treat as a black box: center the data, compute the top eigenvectors of the sample covariance, project. But PCA feels algebraic, where does it come from probabilistically? Probabilistic PCA (PPCA) answers that question: it is the maximum-likelihood solution of a simple linear Gaussian latent-variable model. Understanding PPCA is a tiny, high-value step on the path to modern generative models (VAEs, normalizing flows): it isolates the linear &#43; Gaussian case where every calculation is analytic, so you can see clearly how inference and likelihood tie together.">
+
+    
+</head>
+
+<body>
+    <nav class="tabs">
+    <a href="/" >Home</a>
+    <a href="/projects/" >Projects</a>
+    <a href="/writing/" >Writing</a>
+    <a href="/bookshelf/" >Bookshelf</a>
+    <a href="/misc/" >Misc.</a>
+</nav>
+
+    <main>
+        
+
+<div class="writing-container">
+    <h1 class="writing-title">PPCA: The Minimal Generative Model</h1>
+    <p class="writing-date">20 October 2025</p>
+
+    <article class="writing-article">
+        <h1 id="ppca-probabilistic-principal-component-analysis">PPCA: Probabilistic Principal Component Analysis</h1>
+<p>PCA is one of those algorithms you learn early and then treat as a black box: center the data, compute the top eigenvectors of the sample covariance, project. But PCA <em>feels</em> algebraic, where does it come from probabilistically? Probabilistic PCA (PPCA) answers that question: it is the <strong>maximum-likelihood solution of a simple linear Gaussian latent-variable model</strong>. Understanding PPCA is a tiny, high-value step on the path to modern generative models (VAEs, normalizing flows): it isolates the linear + Gaussian case where every calculation is analytic, so you can see clearly how inference and likelihood tie together.</p>
+<p>Below I present a single self-contained story: model → marginal → posterior → likelihood → MLE solution → interpretation. I&rsquo;ll highlight the key identities you need and keep the algebra explicit so nothing mysterious is swept under the rug.</p>
+<hr>
+<h1 id="motivation">Motivation</h1>
+<p>We want a generative model for $d$-dimensional observations $t$ that:</p>
+<ul>
+<li>Is simple enough to solve analytically; and</li>
+<li>Reduces to classical PCA in an appropriate limit.</li>
+</ul>
+<p>A latent-variable model does exactly this: introduce a low-dimensional latent $x\in\mathbb{R}^q$ ($q<d$) and pick simple Gaussian forms so all integrals and conditionals are Gaussian.</p>
+<hr>
+<h1 id="model-linear-gaussian-latent-variable">Model (linear Gaussian latent variable)</h1>
+<p>Assume the generative process
+</p>
+$$
+x \sim \mathcal{N}(0, I_q),\qquad
+t \mid x \sim \mathcal{N}(W x + \mu,\, \sigma^2 I_d),
+$$<p>
+where $W$ is a $d\times q$ matrix (the linear mapping), $\mu\in\mathbb{R}^d$ is the mean, and $\sigma^2>0$ is isotropic noise variance. This is the PPCA model (Tipping &amp; Bishop, 1999).</p>
+<p>Two immediate facts:</p>
+<ol>
+<li>Because both prior and likelihood are Gaussian, the marginal $p(t)$ and posterior $p(x\mid t)$ are Gaussian and computable in closed form.</li>
+<li>The model has a rotational ambiguity in $W$: replacing $W$ by $W R$ for any orthogonal $R\in\mathbb{R}^{q\times q}$ leaves the model unchanged (with appropriate change of latent coordinates). So $W$ is identifiable only up to orthogonal transforms.</li>
+</ol>
+<p>For the sake of clarity I&rsquo;ll use the explanation of <a href="https://medium.com/practical-coding/the-simplest-generative-model-you-probably-missed-c840d68b704">Oliver</a>:</p>
+<figure class="align-center">
+  <img src="ppca_prince.jpg" alt="PPCA diagram" />
+  <figcaption>Bishop&#39;s &#34;Pattern Recognition and Machine Learning&#34;, chapter 12.</figcaption>
+</figure>
+
+<ul>
+<li>Left panel: After sampling a variable from the latent distribution,</li>
+<li>Middle panel: The visibles are drawn from an isotropic Gaussian (diagonal covariance matrix) around $W * x_h + \mu$.</li>
+<li>Right panel: The resulting marginal distribution for the observables is also a Gaussian, but not isotropic.</li>
+</ul>
+<hr>
+<h1 id="marginal-distribution">Marginal distribution $p(t)$</h1>
+<p>We compute the marginal by integrating out $x$:
+</p>
+$$
+p(t) = \int p(t\mid x)\,p(x)\,dx.
+$$<p>
+Set $r := t-\mu$. Using the Gaussian forms,
+</p>
+$$
+p(t\mid x)\,p(x)
+\propto
+\exp\Big(-\tfrac{1}{2}\big[(r - W x)^\top (\sigma^{-2} I_d)(r - W x) + x^\top x\big]\Big).
+$$<p>
+Collect the quadratic terms in $x$:</p>
+$$
+\frac{1}{\sigma^{2}}(r - W x)^{T}(r - W x) + x^{T}x = \frac{1}{\sigma^{2}} r^{T}r - \frac{2}{\sigma^{2}} x^{T} W^{T} r + x^{T}\Big(I_q + \frac{1}{\sigma^{2}} W^{T} W\Big)x.
+$$<p>Define the $q\times q$ matrix
+</p>
+$$
+M := I_q + \frac{1}{\sigma^2} W^{T}W.
+$$<p>
+Completing the square in $x$ gives a Gaussian integral whose value is $(2\pi)^{q/2} |M|^{-1/2}$. Carefully tracking normalization constants (from $p(x)$ and $p(t\mid x)$) yields
+</p>
+$$
+p(t)
+= \frac{1}{(2\pi)^{d/2} (\sigma^2)^{d/2} } |M|^{-1/2}
+\exp\Big(-\tfrac{1}{2} r^\top \big(\tfrac{1}{\sigma^2} I_d - \tfrac{1}{\sigma^4} W M^{-1} W^\top\big) r\Big).
+$$<p>Now recognize the familiar covariance and precision using two matrix identities.</p>
+<h2 id="woodbury-identity-precision">Woodbury identity (precision)</h2>
+<p>For $C := W W^\top + \sigma^2 I_d$,
+</p>
+$$
+C^{-1} = (\sigma^2 I_d + W W^\top)^{-1}
+= \frac{1}{\sigma^2} I_d - \frac{1}{\sigma^4} W\big(I_q + \tfrac{1}{\sigma^2}W^\top W\big)^{-1}W^\top
+= \frac{1}{\sigma^2} I_d - \frac{1}{\sigma^4} W M^{-1} W^\top.
+$$<p>
+This matches the precision we found in the exponent.</p>
+<h2 id="matrix-determinant-lemma">Matrix determinant lemma</h2>
+$$
+|W W^\top + \sigma^2 I_d| = (\sigma^2)^d\,\Big|I_q + \frac{1}{\sigma^2}W^\top W\Big| = (\sigma^2)^d |M|.
+$$<p>
+Therefore $(\sigma^2)^{d/2}|M|^{1/2}=|C|^{1/2}$.</p>
+<p>Putting the pieces together,
+</p>
+$$
+\boxed{p(t) = \mathcal{N}(t\mid \mu,\, C), \qquad
+C := W W^\top + \sigma^2 I_d. }
+$$<p>So PPCA is a Gaussian density with covariance equal to the low-rank part $W W^\top$ plus isotropic noise.</p>
+<hr>
+<h1 id="posterior--exact-inference">Posterior $p(x\mid t)$ (exact inference)</h1>
+<p>From the quadratic completion above one also reads the posterior over $x$:
+</p>
+$$
+p(x\mid t) = \mathcal{N}\big(x \mid m, \Sigma\big)
+$$<p>
+with
+</p>
+$$
+\boxed{ \Sigma = \sigma^2 \big(W^\top W + \sigma^2 I_q\big)^{-1}, \qquad
+m = \big(W^\top W + \sigma^2 I_q\big)^{-1} W^\top (t-\mu).}
+$$<p>
+(Equivalently, define $M := I_q + \sigma^{-2}W^\top W$ and you get $\Sigma=M^{-1}$ and $m = M^{-1}\sigma^{-2}W^\top (t-\mu)$; both forms are algebraically the same.)</p>
+<p>Two intuitions:</p>
+<ul>
+<li>When $\sigma^2$ is small, posterior variance is small and $m\approx (W^\top W)^{-1}W^\top (t-\mu)$, i.e. classical least-squares projection onto the column space of $W$.</li>
+<li>When $\sigma^2$ is large, the posterior concentrates near zero (the prior) because the observation is noisy.</li>
+</ul>
+<hr>
+<h1 id="likelihood-for-a-dataset-and-maximum-likelihood-estimation">Likelihood for a dataset and maximum likelihood estimation</h1>
+<p>Given $N$ i.i.d. datapoints $\lbrace t_i\rbrace_{i=1}^N$,</p>
+$$
+\begin{align*}
+p(T | W,\psi, \mu) &= \prod_{i=1}^N p(t_i | W,\psi, \mu)\\
+&= (2\pi)^{-ND/2}|C|^{-N/2}\exp{\Big\lbrace -\frac{1}{2}\sum_{i=1}^N (t_i-\mu)^TC^{-1}(t_i-\mu) \Big\rbrace}
+\end{align*}
+$$<p>the log-likelihood is
+</p>
+$$
+\log p(T\mid W,\sigma^2,\mu)
+= -\frac{N}{2}\Big( d\log(2\pi) + \log|C| + \operatorname{Tr}\big(C^{-1} S\big) \Big),
+$$<p>
+where $S$ is the sample covariance</p>
+$$
+S := \frac{1}{N}\sum_{i=1}^N (t_i-\mu)(t_i-\mu)^\top.
+$$<p>For fixed $\mu$ (choose $\mu=\bar t$), maximizing the likelihood reduces to minimizing
+</p>
+$$
+L(W,\sigma^2) =\log|C| + \operatorname{Tr}(C^{-1} S), \qquad C = W W^\top + \sigma^2 I_d.
+$$<p>Tipping &amp; Bishop show that the stationary point can be written in closed form using the top eigenstructure of $S$. Let the eigen-decomposition be
+</p>
+$$
+S = U \Lambda U^\top,\qquad \Lambda = \operatorname{diag}(\lambda_1,\dots,\lambda_d),\quad \lambda_1\ge\cdots\ge\lambda_d.
+$$<p>
+Split $U = [U_q\ U_{d-q}]$ and $\Lambda = \operatorname{diag}(\Lambda_q,\Lambda_{d-q})$ where $U_q$ are the top $q$ eigenvectors and $\Lambda_q$ the corresponding eigenvalues. Then the maximum-likelihood estimates are</p>
+$$
+\boxed{
+\begin{aligned}
+\mu^* &= \bar t,\\[4pt]
+W^* &= U_q\big(\Lambda_q - \sigma^{2*} I_q\big)^{1/2} R,\qquad R\in\mathbb{R}^{q\times q}\ \text{orthogonal},\\[4pt]
+\sigma^{2*} &= \frac{1}{d-q}\sum_{j=q+1}^{d}\lambda_j.
+\end{aligned}
+}
+$$<p>A few remarks:</p>
+<ul>
+<li>The orthogonal matrix $R$ remains free: it is the rotational indeterminacy of the latent coordinates.</li>
+<li>The noise variance $\sigma^{2*}$ is the average of the discarded eigenvalues (the variance not explained by the principal subspace).</li>
+<li>When $\sigma^2\to 0$, the columns of $W^*$ span the same subspace as the top-$q$ PCA directions and $W^*W^{*\top}$ tends to $U_q\Lambda_q U_q^\top$. Thus PPCA recovers classical PCA as a limiting case.</li>
+</ul>
+<p>If you want to compute the MLE in practice:</p>
+<ul>
+<li>You can directly solve for $\sigma^{2*}$ from the eigenvalues and then compute $W^*$ from the top eigenpairs (this is Tipping &amp; Bishop&rsquo;s closed form).</li>
+<li>Alternatively, you can optimize $L(W,\sigma^2)$ numerically or use an EM algorithm (below) if you prefer an iterative approach that cleanly separates the inference (E-step) and parameter update (M-step).</li>
+</ul>
+<hr>
+<h1 id="em-algorithm">EM algorithm</h1>
+<p>EM treats $x$ as missing data. With current parameters $(W,\sigma^2)$ compute posterior expectations
+</p>
+$$
+\mathbb{E}[x\mid t] = m,\qquad \mathbb{E}[x x^\top \mid t] = \Sigma + m m^\top.
+$$<p>
+Then M-step updates $W$ and $\sigma^2$ by solving linear equations involving these expectations (closed form). EM is useful when you want a monotonic increase in likelihood or when you want to generalize (e.g. to non-isotropic noise $\Psi$) where closed forms are less tidy.</p>
+<hr>
+<h1 id="ppca-vs-factor-analysis-vs-pca">PPCA vs Factor Analysis vs PCA</h1>
+<ul>
+<li><strong>Classical PCA</strong>: algorithmic; finds subspace spanned by top eigenvectors of $S$. No generative likelihood (no noise model).</li>
+<li><strong>PPCA</strong>: linear generative model with <em>isotropic</em> Gaussian noise $\sigma^2 I_d$. Likelihood is available and PCA arises in the limit $\sigma^2\to 0$.</li>
+<li><strong>Factor analysis (FA)</strong>: same linear structure but with <em>diagonal</em> noise covariance $\Psi$ (not necessarily isotropic). FA is more flexible but algebraically messier, closed-form MLEs for $\Psi$ do not generally exist and EM is standard.</li>
+</ul>
+<hr>
+<h1 id="sampling--use-as-a-generative-model">Sampling &amp; use as a generative model</h1>
+<p>Sampling from PPCA is trivial and instructive:</p>
+<ol>
+<li>Sample $x\sim\mathcal{N}(0,I_q)$.</li>
+<li>Sample noise $\epsilon\sim\mathcal{N}(0,\sigma^2 I_d)$.</li>
+<li>Return $t = W x + \mu + \epsilon$.</li>
+</ol>
+<p>This generates samples from $\mathcal{N}(\mu, W W^\top + \sigma^2 I_d)$. So PPCA is <em>not</em> a complex high-capacity generative model, but it provides a clear probabilistic story for projection + reconstruction and clarifies the role of latent dimensions and noise.</p>
+<h1 id="code-and-visuals">Code and visuals</h1>
+<figure class="align-center">
+  <img src="ppca_output.png" alt="PPCA output" />
+  <figcaption>We start from the observed data (in blue) and through the PPCA max log likelihood we find the optimized parameters, which once plugged in the linear relation and sample some values from the latent space we effectively generate a new dataset (in red) with similar distribution as the observed dataset.</figcaption>
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy.linalg <span style="color:#f92672">import</span> eigh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 1. Generate some real 2D data</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>T_real <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>hstack([z, <span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.2</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N, <span style="color:#ae81ff">1</span>)])  <span style="color:#75715e"># correlated data</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 2. Estimate PPCA parameters</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Center data</span>
+</span></span><span style="display:flex;"><span>mu <span style="color:#f92672">=</span> T_real<span style="color:#f92672">.</span>mean(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>X_centered <span style="color:#f92672">=</span> T_real <span style="color:#f92672">-</span> mu
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Sample covariance</span>
+</span></span><span style="display:flex;"><span>S <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cov(X_centered<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Eigen decomposition</span>
+</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#f92672">=</span> eigh(S)
+</span></span><span style="display:flex;"><span>idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argsort(vals)[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>vals, vecs <span style="color:#f92672">=</span> vals[idx], vecs[:, idx]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Latent dimension q = 1</span>
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>U_q <span style="color:#f92672">=</span> vecs[:, :q]
+</span></span><span style="display:flex;"><span>Lambda_q <span style="color:#f92672">=</span> vals[:q]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute sigma^2 and W</span>
+</span></span><span style="display:flex;"><span>D <span style="color:#f92672">=</span> T_real<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>sigma2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(vals[q:])  <span style="color:#75715e"># average of remaining eigenvalues</span>
+</span></span><span style="display:flex;"><span>W <span style="color:#f92672">=</span> U_q <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(Lambda_q <span style="color:#f92672">-</span> sigma2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Learned W =</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>W<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Learned sigma^2 = </span><span style="color:#e6db74">{</span>sigma2<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Mean = </span><span style="color:#e6db74">{</span>mu<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 3. Generate new data from model</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>N_gen <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
+</span></span><span style="display:flex;"><span>x_gen <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N_gen, q)
+</span></span><span style="display:flex;"><span>eps <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(sigma2) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(N_gen, D)
+</span></span><span style="display:flex;"><span>T_gen <span style="color:#f92672">=</span> x_gen <span style="color:#f92672">@</span> W<span style="color:#f92672">.</span>T <span style="color:#f92672">+</span> mu <span style="color:#f92672">+</span> eps
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 4. Compare</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(T_real[:,<span style="color:#ae81ff">0</span>], T_real[:,<span style="color:#ae81ff">1</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Real data&#34;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;royalblue&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(T_gen[:,<span style="color:#ae81ff">0</span>], T_gen[:,<span style="color:#ae81ff">1</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Generated from PPCA&#34;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tomato&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;PPCA as a Generative Model&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;equal&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><hr>
+<h1 id="intuition--how-to-read-the-equations">Intuition &amp; how to read the equations</h1>
+<ul>
+<li>$W W^\top$ captures the <strong>structured, low-rank variability</strong> in the data (the principal subspace).</li>
+<li>$\sigma^2 I_d$ captures <strong>isotropic residual noise</strong>, variance not explained by the subspace.</li>
+<li>The posterior $p(x\mid t)$ tells you how to infer latent coordinates of a datum: as noise decreases ($\sigma^2\to0$) the posterior collapses to a point and the mean becomes the usual linear projection onto principal components.</li>
+<li>The MLE for $\sigma^2$ being the mean of the discarded eigenvalues gives a neat decomposition: total variance = explained (top $q$ eigenvalues) + unexplained (average of remaining eigenvalues).</li>
+</ul>
+<hr>
+<h1 id="bridge-to-vaes-why-study-ppca-first">Bridge to VAEs (why study PPCA first)</h1>
+<p>A Variational Autoencoder (VAE) generalizes PPCA in two directions:</p>
+<ul>
+<li>Replace the linear decoder $W x + \mu$ by a neural network $f_\theta(x)$ (nonlinear decoder).</li>
+<li>Replace exact Gaussian posterior inference (available in PPCA) with an <em>approximate</em> amortized posterior $q_\phi(x\mid t)$ (the encoder), trained by variational inference.</li>
+</ul>
+<p>PPCA is therefore the canonical linear Gaussian toy model where inference, sampling, and MLE are closed form. Studying PPCA first gives you a clean map of what changes when you make the model nonlinear and inference approximate.</p>
+<h1 id="references">References</h1>
+<p>[1] M. E. Tipping and C. M. Bishop, &ldquo;Probabilistic Principal Component Analysis,&rdquo; Journal of the Royal Statistical Society: Series B (Statistical Methodology) 61, 611-622 (1999), <a href="https://www.cs.columbia.edu/~blei/seminar/2020-representation/readings/TippingBishop1999.pdf">https://www.cs.columbia.edu/~blei/seminar/2020-representation/readings/TippingBishop1999.pdf</a></p>
+<p>[2] S. Patel, &ldquo;The Simplest Generative Model You Probably Missed,&rdquo; Medium (2018), <a href="https://medium.com/practical-coding/the-simplest-generative-model-you-probably-missed-c840d68b704">https://medium.com/practical-coding/the-simplest-generative-model-you-probably-missed-c840d68b704</a></p>
+<p>[3] S. J. D. Prince, <em>Understanding Deep Learning</em> (MIT Press, 2023), <a href="https://udlbook.github.io/udlbook/">https://udlbook.github.io/udlbook/</a></p>
+
+    </article>
+</div>
+
+
+    </main>
+    <footer class="site-footer">
+</footer>
+
+</body>
+
+</html>

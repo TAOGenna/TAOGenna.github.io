@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -20 1352 750" width="800" height="444" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-f08c00" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f08c00"/>
+    </marker>
+  </defs>
+  <text x="300" y="46.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">HNSW: Long Edges Emerge From Fewer Nodes</text>
+  <rect x="40" y="70" width="1100" height="160" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="0.3" filter="url(#handdrawn)"/>
+  <text x="50" y="96.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">LEVEL 2  (~3 nodes, ~14% of all nodes)</text>
+  <rect x="40" y="260" width="1100" height="170" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="0.3" filter="url(#handdrawn)"/>
+  <text x="50" y="286.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">LEVEL 1  (~8 nodes, ~37% of all nodes)</text>
+  <rect x="40" y="460" width="1100" height="190" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="0.3" filter="url(#handdrawn)"/>
+  <text x="50" y="486.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">LEVEL 0  (all 20 nodes — the base graph)</text>
+  <ellipse cx="164.0" cy="134.0" rx="14.0" ry="14.0" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="574.0" cy="124.0" rx="14.0" ry="14.0" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="974.0" cy="144.0" rx="14.0" ry="14.0" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 178.0 134.0 L 560.0 124.0" fill="none" stroke="#9c36b5" stroke-width="3" filter="url(#handdrawn)"/>
+  <path d="M 588.0 124.0 L 960.0 140.0" fill="none" stroke="#9c36b5" stroke-width="3" filter="url(#handdrawn)"/>
+  <text x="300" y="114.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">span ~400 units</text>
+  <text x="720" y="122.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">span ~380 units</text>
+  <text x="680" y="210.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">← Long edges: nearest level-2 neighbor is far away because there are so few nodes</text>
+  <ellipse cx="131.0" cy="331.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="241.0" cy="316.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="381.0" cy="341.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="501.0" cy="319.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="651.0" cy="336.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="761.0" cy="311.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="891.0" cy="326.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="1011.0" cy="316.0" rx="11.0" ry="11.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 142.0 331.0 L 230.0 316.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 252.0 316.0 L 370.0 330.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 392.0 341.0 L 490.0 319.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 512.0 319.0 L 640.0 325.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 662.0 336.0 L 750.0 311.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 772.0 311.0 L 880.0 315.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 902.0 326.0 L 1000.0 316.0" fill="none" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="50" y="425.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">← Medium edges: ~120 units apart on average</text>
+  <ellipse cx="88.0" cy="538.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="148.0" cy="528.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="208.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="278.0" cy="533.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="338.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="408.0" cy="528.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="468.0" cy="548.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="538.0" cy="533.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="608.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="673.0" cy="528.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="738.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="798.0" cy="533.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="858.0" cy="548.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="918.0" cy="528.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="978.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="1038.0" cy="533.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="1083.0" cy="553.0" rx="8.0" ry="8.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 96.0 538.0 L 140.0 532.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 156.0 528.0 L 200.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 216.0 553.0 L 270.0 525.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 286.0 533.0 L 330.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 346.0 553.0 L 400.0 520.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 416.0 528.0 L 460.0 540.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 476.0 548.0 L 530.0 525.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 546.0 533.0 L 600.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 616.0 553.0 L 665.0 520.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 681.0 528.0 L 730.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 746.0 553.0 L 790.0 525.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 806.0 533.0 L 850.0 540.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 866.0 548.0 L 910.0 520.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 926.0 528.0 L 970.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 986.0 553.0 L 1030.0 525.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <path d="M 1046.0 533.0 L 1075.0 545.0" fill="none" stroke="#2f9e44" stroke-width="1" filter="url(#handdrawn)"/>
+  <text x="50" y="625.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">← Short edges: ~50 units apart on average. Dense, fine-grained navigation.</text>
+  <path d="M 1130.0 140.0 L 1130.0 530.0" fill="none" stroke="#f08c00" stroke-width="3" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <text x="1135" y="295.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">Query</text>
+  <text x="1135" y="311.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">descends</text>
+  <text x="1135" y="326.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">level by</text>
+  <text x="1135" y="342.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">level</text>
+  <text x="55" y="686.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">KEY INSIGHT: Same rule ('connect to nearest neighbor') applied at every level. Longer edges at top are EMERGENT — not explicitly chosen.</text>
+</svg>

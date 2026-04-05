@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VB0FSFKM9M"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-VB0FSFKM9M');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Kenyi Takagui-Perez — physicist turned ML engineer. Research in condensed matter physics, machine learning, and ionospheric science." />
+<link rel="icon" href="/Files/prof1.jpg" type="image/jpeg" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles/work.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$', display: false}]});"></script>
+
+
+    <title>Application of the self-consistent Hartree-Fock method | Kenyi Takagui-Perez</title>
+    <link rel="canonical" href="https://taogenna.github.io/writing/hartree-fock/" />
+
+    <meta property="og:url" content="https://taogenna.github.io/writing/hartree-fock/" />
+    <meta property="og:title" content="Application of the self-consistent Hartree-Fock method" />
+    <meta property="og:description" content="This is a summary of the computational method I used for my master&rsquo;s thesis [1]. I will focus on the Hartree-Fock approximation.
+Model
+The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is
+$$
+\begin{align*}
+H &= \sum_{j=1}^{N-1} \left( -t c_{j&#43;1}^\dagger c_j &#43; \Delta c_{j&#43;1}^\dagger c_j^\dagger &#43; \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\
+ &&#43; \epsilon_d d^\dagger d - t&#39; \left( d^\dagger c_1 &#43; \text{H.c.} \right) \\
+ &&#43; V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)
+\end{align*}
+$$The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site." />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Application of the self-consistent Hartree-Fock method">
+    <meta name="twitter:description" content="This is a summary of the computational method I used for my master&rsquo;s thesis [1]. I will focus on the Hartree-Fock approximation.
+Model
+The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is
+$$
+\begin{align*}
+H &= \sum_{j=1}^{N-1} \left( -t c_{j&#43;1}^\dagger c_j &#43; \Delta c_{j&#43;1}^\dagger c_j^\dagger &#43; \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\
+ &&#43; \epsilon_d d^\dagger d - t&#39; \left( d^\dagger c_1 &#43; \text{H.c.} \right) \\
+ &&#43; V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)
+\end{align*}
+$$The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site.">
+
+    
+</head>
+
+<body>
+    <nav class="tabs">
+    <a href="/" >Home</a>
+    <a href="/projects/" >Projects</a>
+    <a href="/writing/" >Writing</a>
+    <a href="/bookshelf/" >Bookshelf</a>
+    <a href="/misc/" >Misc.</a>
+</nav>
+
+    <main>
+        
+
+<div class="writing-container">
+    <h1 class="writing-title">Application of the self-consistent Hartree-Fock method</h1>
+    <p class="writing-date">28 January 2025</p>
+
+    <article class="writing-article">
+        <p>This is a summary of the computational method I used for my <a href="/Files/master_thesis.pdf">master&rsquo;s thesis</a> [1]. I will focus on the Hartree-Fock approximation.</p>
+<h2 id="model">Model</h2>
+<p>The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is</p>
+$$
+\begin{align*}
+H &= \sum_{j=1}^{N-1} \left( -t c_{j+1}^\dagger c_j + \Delta c_{j+1}^\dagger c_j^\dagger + \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\
+ &+ \epsilon_d d^\dagger d - t' \left( d^\dagger c_1 + \text{H.c.} \right) \\
+ &+ V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)
+\end{align*}
+$$<p>The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site.</p>
+<h2 id="hartree-fock">Hartree-Fock</h2>
+<p>Applying the <a href="https://journals.aps.org/pr/abstract/10.1103/PhysRev.102.1303">unrestrictive Hartree-Fock approximation</a> to the repulsion term:</p>
+$$
+\begin{align*}
+n_d n_1 &\simeq \langle n_d \rangle n_1 + n_d \langle n_1 \rangle - \langle n_d \rangle \langle n_1 \rangle \\
+&\quad - \langle d^\dagger c_1 \rangle c_1^\dagger d - d^\dagger c_1 \langle c_1^\dagger d \rangle + \langle d^\dagger c_1 \rangle \langle c_1^\dagger d \rangle \\
+&\quad + \langle d^\dagger c_1^\dagger \rangle c_1 d + d^\dagger c_1^\dagger \langle c_1 d \rangle - \langle d^\dagger c_1^\dagger \rangle \langle c_1 d \rangle.
+\end{align*}
+$$<h2 id="mapping">Mapping</h2>
+<p>There is a very useful technique that allows us to go from fermionic operators to kets and bras, making the computation of the Hamiltonian matrix elements easy. After performing the mapping we end up with</p>
+$$
+    \begin{matrix}
+    \bra{d,c}\tilde H\ket{d,c}= \epsilon_d + V\langle n_1\rangle & \bra{d,a}\tilde H\ket{d,a}= -\epsilon_d - V\langle n_1\rangle\\
+     \bra{1,c}\tilde H\ket{d,c} = -t' - V\langle c^\dagger_d c_1\rangle & \bra{1,a}\tilde H\ket{d,a} = t' + V\langle c^\dagger_d c_1\rangle\\
+      \bra{d,c}\tilde H\ket{1,a} = -V\langle c^\dagger_d c^\dagger_1 \rangle & \bra{d,a}\tilde H\ket{1,c} = V\langle c^\dagger_d c^\dagger_1 \rangle\\
+      \bra{1,c}\tilde H\ket{1,c} = ...+ V\langle n_d\rangle & \bra{1,a}\tilde H\ket{1,a} = ...- V\langle n_d\rangle
+    \end{matrix}
+$$<p>where $j$ is the site index, $c$ stands for creation and $a$ for annihilation. Then, using some techniques from superconductivity, we can relate the expectation values to the eigenvalues and eigenvectors of the diagonalized Hamiltonian defined above.</p>
+<h2 id="self-consistency">Self-consistency</h2>
+<p>Self-consistency means that we take the expectation values and plug them again into the model until convergence is reached. The process would look like</p>
+<ul>
+<li>Set initial values for the EVs(expectation values)</li>
+<li>Add them to the Hamiltonian</li>
+<li>Compute the eigenvalues and eigenvectors</li>
+<li>Substract them from the Hamiltonian</li>
+<li>Update the EV&rsquo;s values based on the eigenvalues and eigenvectors</li>
+<li>Go back to step 2</li>
+</ul>
+<h2 id="code">Code</h2>
+<p><code>ini!</code> is the function where you define your Hamiltonian <code>H</code> as a matrix after the mapping. Usually the code below is inside another loop going through several values of the occupation energy of some site, in this case it would be the one of the quantum dot so that at the end we end up with a plot of <code>expectation_value vs occupation_energy_QD</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># ITERATIONS FOR CONVERGE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>iterations
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># SET EV values to the Hamiltonian</span>
+</span></span><span style="display:flex;"><span>    ini!(H,initial_ev[<span style="color:#ae81ff">1</span>],initial_ev[<span style="color:#ae81ff">2</span>],(initial_ev[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>),(initial_ev[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>),V)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># COMPUTE EIGENVALUES AND EIGENVECTORS</span>
+</span></span><span style="display:flex;"><span>    espec<span style="color:#f92672">=</span>eigvals(H)
+</span></span><span style="display:flex;"><span>    espec_vec<span style="color:#f92672">=</span>eigvecs(H)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> x<span style="color:#f92672">==</span>iterations
+</span></span><span style="display:flex;"><span>        matrix_plot<span style="color:#f92672">=</span>deepcopy(H)
+</span></span><span style="display:flex;"><span>        push!(store_x,values_ed)
+</span></span><span style="display:flex;"><span>        push!(store_y,initial_ev[<span style="color:#ae81ff">3</span>])        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># SUBSTRACT EV VALUES FOR THE NEXT UPDATE</span>
+</span></span><span style="display:flex;"><span>    ini!(H,<span style="color:#f92672">-</span>initial_ev[<span style="color:#ae81ff">1</span>],<span style="color:#f92672">-</span>initial_ev[<span style="color:#ae81ff">2</span>],<span style="color:#f92672">-</span>(initial_ev[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>),<span style="color:#f92672">-</span>(initial_ev[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>),V)
+</span></span><span style="display:flex;"><span>    ev<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.0</span>,<span style="color:#ae81ff">0.0</span>,<span style="color:#ae81ff">0.0</span>,<span style="color:#ae81ff">0.0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># COMPUTE THE NEW EV VALUES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> espec[i]<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> abs(espec[i])<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">10</span><span style="color:#f92672">^</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">4</span>,i]<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e"># &lt; c+d c+1 &gt;</span>
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">3</span>,i]<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e"># &lt; c+d c_1 &gt;</span>
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">1</span>,i]<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e"># &lt; c+d c_d &gt;</span>
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">3</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">3</span>,i]<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e"># &lt; c+1 c_1 &gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span> 
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">4</span>,i]
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">3</span>,i]
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">1</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">1</span>,i]
+</span></span><span style="display:flex;"><span>                ev[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+=</span> conj(espec_vec[<span style="color:#ae81ff">3</span>,i]) <span style="color:#f92672">*</span> espec_vec[<span style="color:#ae81ff">3</span>,i]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> initial_ev <span style="color:#f92672">=</span> deepcopy(ev)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="references">References</h2>
+<p>[1] K. Takagui and A. A. Aligia, &ldquo;Effect of interatomic repulsion on Majorana zero modes in a coupled quantum-dot&ndash;superconducting-nanowire hybrid system,&rdquo; Phys. Rev. B 109, 075416 (2024), <a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.109.075416">https://journals.aps.org/prb/abstract/10.1103/PhysRevB.109.075416</a></p>
+
+    </article>
+</div>
+
+
+    </main>
+    <footer class="site-footer">
+</footer>
+
+</body>
+
+</html>

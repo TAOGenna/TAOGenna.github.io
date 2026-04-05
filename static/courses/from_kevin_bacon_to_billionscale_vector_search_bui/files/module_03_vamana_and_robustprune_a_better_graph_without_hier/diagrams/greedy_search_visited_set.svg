@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 1120 606" width="800" height="433" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1971c2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1971c2"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-f08c00" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f08c00"/>
+    </marker>
+  </defs>
+  <text x="350" y="44.0" font-size="20" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">GreedySearch: How the Visited Set Creates Long + Short Edges</text>
+  <text x="30" y="86.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">QUERY</text>
+  <text x="30" y="103.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">(target)</text>
+  <ellipse cx="60.0" cy="140.0" rx="30.0" ry="30.0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="42" y="153.6" font-size="18" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">q</text>
+  <text x="120" y="64.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Entry node</text>
+  <text x="120" y="78.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">(far from q)</text>
+  <ellipse cx="147.5" cy="117.5" rx="27.5" ry="27.5" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="135" y="127.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">s₀</text>
+  <text x="100" y="168.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">visited 1st</text>
+  <ellipse cx="265.0" cy="95.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="254" y="106.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₁</text>
+  <text x="225" y="143.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">visited 2nd</text>
+  <ellipse cx="395.0" cy="125.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="384" y="136.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₂</text>
+  <text x="355" y="173.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">visited 3rd</text>
+  <ellipse cx="515.0" cy="155.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="504" y="166.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₃</text>
+  <ellipse cx="625.0" cy="175.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="614" y="186.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₄</text>
+  <text x="585" y="223.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">visited 5th</text>
+  <ellipse cx="705.0" cy="185.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="694" y="196.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₅</text>
+  <text x="665" y="233.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">visited last</text>
+  <ellipse cx="780.0" cy="160.0" rx="30.0" ry="30.0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="765" y="174.6" font-size="18" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">I</text>
+  <text x="735" y="114.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">NEW</text>
+  <text x="735" y="128.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">NODE</text>
+  <path d="M 182.4 110.8 L 232.6 101.2" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 297.2 102.4 L 362.8 117.6" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 427.0 133.0 L 483.0 147.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 547.5 160.9 L 592.5 169.1" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 657.7 179.1 L 672.3 180.9" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 736.3 174.6 L 744.0 172.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <text x="30" y="309.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">After insert: V → I edges added</text>
+  <ellipse cx="147.5" cy="357.5" rx="27.5" ry="27.5" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="135" y="367.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">s₀</text>
+  <ellipse cx="265.0" cy="335.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="254" y="346.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₁</text>
+  <ellipse cx="515.0" cy="395.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="504" y="406.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₃</text>
+  <ellipse cx="705.0" cy="405.0" rx="25.0" ry="25.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="694" y="416.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">v₅</text>
+  <ellipse cx="780.0" cy="360.0" rx="30.0" ry="30.0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="765" y="374.6" font-size="18" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">I</text>
+  <path d="M 183.0 357.6 L 742.0 359.8" fill="none" stroke="#f08c00" stroke-width="3" stroke-dasharray="8 4" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <path d="M 298.0 336.6 L 742.0 358.2" fill="none" stroke="#f08c00" stroke-width="3" stroke-dasharray="8 4" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <path d="M 547.7 390.7 L 742.3 365.0" fill="none" stroke="#2f9e44" stroke-width="3" stroke-dasharray="8 4" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 733.3 388.0 L 747.4 379.6" fill="none" stroke="#2f9e44" stroke-width="2" stroke-dasharray="8 4" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <text x="200" y="465.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">LONG edges (orange) — from early visited nodes, far from I</text>
+  <text x="200" y="490.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">SHORT edges (green) — from late visited nodes, close to I</text>
+  <text x="30" y="525.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Key insight: The traversal path naturally spans all distances.</text>
+  <text x="30" y="541.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">No hierarchy needed — early nodes are always far, late nodes are always close.</text>
+</svg>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 1270 545" width="800" height="343" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+  </defs>
+  <text x="350" y="48.8" font-size="24" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">CoreNN Two-Stage Architecture</text>
+  <rect x="30" y="70" width="560" height="320" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="0.3" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="40" y="99.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">STAGE 1: IN-MEMORY  (N &lt; memory limit)</text>
+  <rect x="60" y="115" width="160" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="148.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Full-Precision</text>
+  <text x="70" y="164.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Vectors (RAM)</text>
+  <rect x="260" y="115" width="160" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="270" y="148.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Graph Neighbor</text>
+  <text x="270" y="164.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Lists (RAM)</text>
+  <rect x="60" y="210" width="490" height="60" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="90" y="247.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">RocksDB on disk — same format, written durably on every insert</text>
+  <rect x="60" y="300" width="490" height="60" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="130" y="336.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Query: compute distances from RAM — full precision, zero disk reads</text>
+  <rect x="640" y="70" width="580" height="360" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="0.3" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="650" y="99.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">STAGE 2: ON-DISK  (N &gt; memory limit)</text>
+  <rect x="670" y="115" width="160" height="60" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="680" y="148.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">PQ Codes (RAM)</text>
+  <text x="680" y="164.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">96 bytes/vector</text>
+  <rect x="870" y="115" width="160" height="60" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="880" y="148.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Entry Point</text>
+  <text x="880" y="164.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">(RAM)</text>
+  <rect x="670" y="210" width="490" height="60" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="680" y="247.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">RocksDB on disk — SAME ENTRIES as Stage 1, not rewritten</text>
+  <rect x="670" y="300" width="490" height="105" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="680" y="325.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Query hop: 1) PQ distance to candidates (RAM, fast)</text>
+  <text x="680" y="343.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">2) Read best node disk entry → neighbor list + full vector</text>
+  <text x="680" y="361.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">3) Re-rank with full precision (FREE — same 4K page!)</text>
+  <text x="680" y="379.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">4) Add neighbors as candidates, repeat</text>
+  <path d="M 608.0 245.0 L 708.0 245.0" fill="none" stroke="#9c36b5" stroke-width="3" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="550" y="445.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Transition:</text>
+  <text x="550" y="461.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">evict RAM cache</text>
+  <text x="550" y="476.8" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">No rewrites!</text>
+  <text x="60" y="449.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">RAM needed: 3072 × N bytes</text>
+  <text x="60" y="463.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">(3 TB for 1B vectors)</text>
+  <text x="680" y="449.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">RAM needed: 96 × N bytes</text>
+  <text x="680" y="463.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">(96 GB for 1B vectors — 32x less!)</text>
+</svg>

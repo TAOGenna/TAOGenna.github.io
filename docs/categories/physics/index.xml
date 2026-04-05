@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Physics on Kenyi Takagui-Perez</title>
+    <link>https://taogenna.github.io/categories/physics/</link>
+    <description>Recent content in Physics on Kenyi Takagui-Perez</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://taogenna.github.io/categories/physics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Advancements in Representing Atomic Environments for Machine Learning Interatomic Potentials</title>
+      <link>https://taogenna.github.io/writing/eeml/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://taogenna.github.io/writing/eeml/</guid>
+      <description>&lt;div style=&#34;text-align: center;&#34;&gt;&#xA;    Extended Abstract&#xA;&lt;/div&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Accurate and efficient interatomic potentials are crucial for simulating materials at the atomic level, and machine learning interatomic potentials (MLIPs) have emerged as a powerful alternative to traditional methods. A central aspect of MLIP development is the representation of local atomic environments, which significantly impacts the accuracy, transferability, and computational cost of the resulting potentials. This extended abstract reviews recent advancements in representing atomic environments for MLIPs.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
