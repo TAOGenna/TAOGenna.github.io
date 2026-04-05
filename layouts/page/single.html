@@ -4,7 +4,7 @@
     <h1>{{ .Title }}</h1>
 </section>
 
-<div class="page-content">
+<div class="page-content {{ with .Params.class }}{{ . }}{{ end }}">
     {{ .Content }}
 </div>
 

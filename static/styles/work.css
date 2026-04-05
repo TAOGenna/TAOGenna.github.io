@@ -201,6 +201,20 @@ h1 {
   max-width: 1400px;
 }
 
+.front-intro-photo {
+  float: right;
+  width: 300px;
+  margin-left: 48px;
+  margin-bottom: 24px;
+}
+
+.front-intro-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
 .front-text {
   font-size: 19px;
   max-width: 68ch;
@@ -398,40 +412,100 @@ ul.front-company-list {
   font-size: 17px;
 }
 
-/* Book list */
+/* Bookshelf */
 
-.book-list {
-  columns: 2;
-  column-gap: 3rem;
-  padding-left: 0;
-  list-style: none;
+.page-content.bookshelf {
+  max-width: 960px;
 }
 
-.book-list li {
-  break-inside: avoid;
-  padding: 6px 0;
-  border-bottom: 1px solid #f0f0f0;
-  line-height: 1.5em;
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px 48px;
+  margin-top: 20px;
+  margin-bottom: 48px;
 }
 
-.book-title {
-  font-weight: 600;
-  font-size: 17px;
+.book-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-cover {
+  width: 55%;
+  margin-bottom: 14px;
+}
+
+.book-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Placeholder covers (no image) */
+.book-cover:not(:has(img)) {
+  aspect-ratio: 2 / 3;
+  background: #f0ece6;
+  border: 1px solid #e8e4de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.book-cover span {
+  font-family: "Financier", Georgia, serif;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #999;
+  letter-spacing: 0.01em;
+}
+
+.book-card:nth-child(5n+2) .book-cover:not(:has(img)) { background: #eaeff2; border-color: #dde4e8; }
+.book-card:nth-child(5n+3) .book-cover:not(:has(img)) { background: #f2efe8; border-color: #e8e4dc; }
+.book-card:nth-child(5n+4) .book-cover:not(:has(img)) { background: #ece8f0; border-color: #e0dce6; }
+.book-card:nth-child(5n+5) .book-cover:not(:has(img)) { background: #e8ede9; border-color: #dce2dd; }
+
+.book-card .book-title {
+  font-weight: 700;
+  font-size: 16px;
   color: #333;
+  line-height: 1.35;
 }
 
-.book-author {
-  font-size: 15px;
+.book-card .book-author {
+  font-size: 13px;
   color: #a7a7a7;
+  margin-top: 4px;
 }
 
-.book-author::before {
-  content: "— ";
+.book-card .book-author::before {
+  content: "by ";
+}
+
+.book-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #777;
+  margin-top: 10px;
+  text-align: left;
+  align-self: stretch;
 }
 
 @media only screen and (max-width: 700px) {
-  .book-list {
-    columns: 1;
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 28px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .book-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    max-width: 240px;
   }
 }
 
@@ -751,6 +825,15 @@ article li a:hover {
   }
 }
 
+@media only screen and (max-width: 800px) {
+  .front-intro-photo {
+    float: none;
+    width: 240px;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+}
+
 @media only screen and (max-width: 1067px) {
   nav {
     padding-left: 20px;
@@ -776,6 +859,10 @@ article li a:hover {
 
   .page-content {
     margin-left: 40px;
+  }
+
+  .page-content.bookshelf {
+    max-width: calc(100% - 80px);
   }
 }
 
