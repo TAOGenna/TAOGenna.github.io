@@ -15,3 +15,7 @@
     </td>
   </tr>
 </table>
+
+---
+
+Design inspired by [Karina Nguyen's portfolio](https://github.com/karinanguyen/new-portfolio).
