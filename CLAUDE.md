@@ -25,6 +25,7 @@ content/
 ├── _index.md            # Homepage metadata
 ├── bookshelf.md         # Bookshelf page
 ├── misc.md              # Misc/courses page
+├── topcoder.md          # TopCoder Archive (generated — don't edit by hand)
 ├── projects/            # Project cards (one .md per project)
 │   ├── _index.md
 │   ├── distill.md
@@ -48,6 +49,7 @@ static/
 ├── assets/              # Course thumbnails
 ├── courses/             # Distill-generated courses (don't edit by hand)
 ├── fonts/               # Custom fonts (Suisse, Montreal, Domaine, Financier)
+├── data/                # TopCoder statements + editorials JSON (served to browser)
 ├── styles/work.css      # Main stylesheet
 └── .nojekyll            # Disables Jekyll on GitHub Pages
 docs/                    # Built site (served by GitHub Pages)
@@ -142,6 +144,37 @@ The Distill publish destination should point to `static/courses/` in this repo. 
 ```bash
 uv run distill publish --to /path/to/TAOGenna.github.io/static/courses
 ```
+
+## TopCoder Archive
+
+The `/topcoder/` page displays 61 TopCoder SRM Division I problem statements with editorials. The page is at `content/topcoder.md` (generated, don't edit by hand) and linked from Misc.
+
+**Data files (served by Hugo):**
+- `static/data/topcoder-statements.json` — 61 problem statements (HTML from vjudge)
+- `static/data/topcoder-editorials.json` — 60 SRM editorials (HTML from topcoder.com/thrive)
+
+**Local scripts (gitignored, in `scripts/`):**
+- `extract_vjudge.py` — Scrapes problem statements from vjudge private contests
+- `extract_editorials.py` — Scrapes SRM editorials from topcoder.com/thrive/articles/SRM%20{N}
+- `build_topcoder_page.py` — Generates `content/topcoder.md` and the static JSON files from scraped data
+
+**Local raw data (gitignored, in `data/`):**
+- `data/vjudge_problems/` — Raw HTML per problem + index.json + problem_srm_map.json
+- `data/editorials/` — Raw HTML per SRM editorial + index.json
+
+**Key URLs:**
+- vjudge contests: 317361, 317362, 317363 (private, owned by TAO_Genna)
+- vjudge contest data is in a `<textarea name="dataJson">` in the HTML page
+- vjudge description data is in a `<textarea class="data-json-container">` in the HTML page
+- Editorial URL pattern: `https://www.topcoder.com/thrive/articles/SRM%20{number}`
+- SRM numbers for each problem are in the vjudge contest JSON `properties` field
+
+**To add more problems:**
+1. Update `CONTEST_IDS` in `scripts/extract_vjudge.py` and `VJUDGE_COOKIE` with a fresh JSESSIONID
+2. Run `python scripts/extract_vjudge.py`
+3. Run `python scripts/extract_editorials.py`
+4. Run `python scripts/build_topcoder_page.py`
+5. Run `hugo` to rebuild
 
 ## Styling
 

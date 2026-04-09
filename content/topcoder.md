@@ -1,0 +1,479 @@
+---
+title: "TopCoder Archive"
+type: "page"
+class: "topcoder"
+---
+
+<p class="tc-subtitle">
+  <span>61</span> Division&nbsp;I problems from TopCoder's Single Round Matches, preserved from vjudge after the Arena was discontinued.
+</p>
+
+<div class="tc-search-container">
+  <svg class="tc-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+  <input type="text" class="tc-search-input" placeholder="Search problems..." id="tcSearchInput" autocomplete="off" spellcheck="false">
+  <div class="tc-result-count" id="tcResultCount"></div>
+</div>
+
+<ul class="tc-problem-list" id="tcProblemList">
+<li class="tc-problem-item" data-problem="winterandpresents" data-name="winterandpresents" data-srm="srm 601">
+  <span class="tc-problem-number">01</span>
+  <span class="tc-problem-name">WinterAndPresents</span>
+  <span class="tc-problem-srm">SRM 601 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="typocoderdiv1" data-name="typocoderdiv1" data-srm="srm 602">
+  <span class="tc-problem-number">02</span>
+  <span class="tc-problem-name">TypoCoderDiv1</span>
+  <span class="tc-problem-srm">SRM 602 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="maxmintreegame" data-name="maxmintreegame" data-srm="srm 603">
+  <span class="tc-problem-number">03</span>
+  <span class="tc-problem-name">MaxMinTreeGame</span>
+  <span class="tc-problem-srm">SRM 603 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="powerofthree" data-name="powerofthree" data-srm="srm 604">
+  <span class="tc-problem-number">04</span>
+  <span class="tc-problem-name">PowerOfThree</span>
+  <span class="tc-problem-srm">SRM 604 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="alienandhamburgers" data-name="alienandhamburgers" data-srm="srm 605">
+  <span class="tc-problem-number">05</span>
+  <span class="tc-problem-name">AlienAndHamburgers</span>
+  <span class="tc-problem-srm">SRM 605 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="ellysnumberguessing" data-name="ellysnumberguessing" data-srm="srm 606">
+  <span class="tc-problem-number">06</span>
+  <span class="tc-problem-name">EllysNumberGuessing</span>
+  <span class="tc-problem-srm">SRM 606 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="palindromicsubstringsdiv1" data-name="palindromicsubstringsdiv1" data-srm="srm 607">
+  <span class="tc-problem-number">07</span>
+  <span class="tc-problem-name">PalindromicSubstringsDiv1</span>
+  <span class="tc-problem-srm">SRM 607 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="mysticandcandies" data-name="mysticandcandies" data-srm="srm 608">
+  <span class="tc-problem-number">08</span>
+  <span class="tc-problem-name">MysticAndCandies</span>
+  <span class="tc-problem-srm">SRM 608 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="magicalstringdiv1" data-name="magicalstringdiv1" data-srm="srm 609">
+  <span class="tc-problem-number">09</span>
+  <span class="tc-problem-name">MagicalStringDiv1</span>
+  <span class="tc-problem-srm">SRM 609 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="thematrix" data-name="thematrix" data-srm="srm 610">
+  <span class="tc-problem-number">10</span>
+  <span class="tc-problem-name">TheMatrix</span>
+  <span class="tc-problem-srm">SRM 610 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="lcmset" data-name="lcmset" data-srm="srm 611">
+  <span class="tc-problem-number">11</span>
+  <span class="tc-problem-name">LCMSet</span>
+  <span class="tc-problem-srm">SRM 611 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="emoticonsdiv1" data-name="emoticonsdiv1" data-srm="srm 612">
+  <span class="tc-problem-number">12</span>
+  <span class="tc-problem-name">EmoticonsDiv1</span>
+  <span class="tc-problem-srm">SRM 612 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="tarofriends" data-name="tarofriends" data-srm="srm 613">
+  <span class="tc-problem-number">13</span>
+  <span class="tc-problem-name">TaroFriends</span>
+  <span class="tc-problem-srm">SRM 613 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="minimumsquare" data-name="minimumsquare" data-srm="srm 614">
+  <span class="tc-problem-number">14</span>
+  <span class="tc-problem-name">MinimumSquare</span>
+  <span class="tc-problem-srm">SRM 614 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="amebadiv1" data-name="amebadiv1" data-srm="srm 615">
+  <span class="tc-problem-number">15</span>
+  <span class="tc-problem-name">AmebaDiv1</span>
+  <span class="tc-problem-srm">SRM 615 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="wakingup" data-name="wakingup" data-srm="srm 616">
+  <span class="tc-problem-number">16</span>
+  <span class="tc-problem-name">WakingUp</span>
+  <span class="tc-problem-srm">SRM 616 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="family" data-name="family" data-srm="srm 618">
+  <span class="tc-problem-number">17</span>
+  <span class="tc-problem-name">Family</span>
+  <span class="tc-problem-srm">SRM 618 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="splitstonegame" data-name="splitstonegame" data-srm="srm 619">
+  <span class="tc-problem-number">18</span>
+  <span class="tc-problem-name">SplitStoneGame</span>
+  <span class="tc-problem-srm">SRM 619 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="radiorange" data-name="radiorange" data-srm="srm 621">
+  <span class="tc-problem-number">19</span>
+  <span class="tc-problem-name">RadioRange</span>
+  <span class="tc-problem-srm">SRM 621 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="uniformboard" data-name="uniformboard" data-srm="srm 623">
+  <span class="tc-problem-number">20</span>
+  <span class="tc-problem-name">UniformBoard</span>
+  <span class="tc-problem-srm">SRM 623 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="buildingheights" data-name="buildingheights" data-srm="srm 624">
+  <span class="tc-problem-number">21</span>
+  <span class="tc-problem-name">BuildingHeights</span>
+  <span class="tc-problem-srm">SRM 624 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="palindromepermutations" data-name="palindromepermutations" data-srm="srm 625">
+  <span class="tc-problem-number">22</span>
+  <span class="tc-problem-name">PalindromePermutations</span>
+  <span class="tc-problem-srm">SRM 625 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="happyletterdiv1" data-name="happyletterdiv1" data-srm="srm 627">
+  <span class="tc-problem-number">23</span>
+  <span class="tc-problem-name">HappyLetterDiv1</span>
+  <span class="tc-problem-srm">SRM 627 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="rectanglecovering" data-name="rectanglecovering" data-srm="srm 629">
+  <span class="tc-problem-number">24</span>
+  <span class="tc-problem-name">RectangleCovering</span>
+  <span class="tc-problem-srm">SRM 629 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="egalitarianism3" data-name="egalitarianism3" data-srm="srm 630">
+  <span class="tc-problem-number">25</span>
+  <span class="tc-problem-name">Egalitarianism3</span>
+  <span class="tc-problem-srm">SRM 630 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="catsonthelinediv1" data-name="catsonthelinediv1" data-srm="srm 631">
+  <span class="tc-problem-number">26</span>
+  <span class="tc-problem-name">CatsOnTheLineDiv1</span>
+  <span class="tc-problem-srm">SRM 631 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="potentialarithmeticsequence" data-name="potentialarithmeticsequence" data-srm="srm 632">
+  <span class="tc-problem-number">27</span>
+  <span class="tc-problem-name">PotentialArithmeticSequence</span>
+  <span class="tc-problem-srm">SRM 632 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="similarratinggraph" data-name="similarratinggraph" data-srm="srm 635">
+  <span class="tc-problem-number">28</span>
+  <span class="tc-problem-name">SimilarRatingGraph</span>
+  <span class="tc-problem-srm">SRM 635 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="alicegame" data-name="alicegame" data-srm="srm 639">
+  <span class="tc-problem-number">29</span>
+  <span class="tc-problem-name">AliceGame</span>
+  <span class="tc-problem-srm">SRM 639 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="januszthebusinessman" data-name="januszthebusinessman" data-srm="srm 645">
+  <span class="tc-problem-number">30</span>
+  <span class="tc-problem-name">JanuszTheBusinessman</span>
+  <span class="tc-problem-srm">SRM 645 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="theconsecutiveintegersdivone" data-name="theconsecutiveintegersdivone" data-srm="srm 646">
+  <span class="tc-problem-number">31</span>
+  <span class="tc-problem-name">TheConsecutiveIntegersDivOne</span>
+  <span class="tc-problem-srm">SRM 646 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="buildingtowerseasy" data-name="buildingtowerseasy" data-srm="srm 647">
+  <span class="tc-problem-number">32</span>
+  <span class="tc-problem-name">BuildingTowersEasy</span>
+  <span class="tc-problem-srm">SRM 647 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="ab" data-name="ab" data-srm="srm 648">
+  <span class="tc-problem-number">33</span>
+  <span class="tc-problem-name">AB</span>
+  <span class="tc-problem-srm">SRM 648 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="tarofillingastringdiv1" data-name="tarofillingastringdiv1" data-srm="srm 650">
+  <span class="tc-problem-number">34</span>
+  <span class="tc-problem-name">TaroFillingAStringDiv1</span>
+  <span class="tc-problem-srm">SRM 650 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="thepermutationgame" data-name="thepermutationgame" data-srm="srm 652">
+  <span class="tc-problem-number">35</span>
+  <span class="tc-problem-name">ThePermutationGame</span>
+  <span class="tc-problem-srm">SRM 652 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="countrygrouphard" data-name="countrygrouphard" data-srm="srm 653">
+  <span class="tc-problem-number">36</span>
+  <span class="tc-problem-name">CountryGroupHard</span>
+  <span class="tc-problem-srm">SRM 653 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="squarescores" data-name="squarescores" data-srm="srm 654">
+  <span class="tc-problem-number">37</span>
+  <span class="tc-problem-name">SquareScores</span>
+  <span class="tc-problem-srm">SRM 654 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="bichromepainting" data-name="bichromepainting" data-srm="srm 655">
+  <span class="tc-problem-number">38</span>
+  <span class="tc-problem-name">BichromePainting</span>
+  <span class="tc-problem-srm">SRM 655 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="randompancakestack" data-name="randompancakestack" data-srm="srm 656">
+  <span class="tc-problem-number">39</span>
+  <span class="tc-problem-name">RandomPancakeStack</span>
+  <span class="tc-problem-srm">SRM 656 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="problemsets" data-name="problemsets" data-srm="srm 657">
+  <span class="tc-problem-number">40</span>
+  <span class="tc-problem-name">ProblemSets</span>
+  <span class="tc-problem-srm">SRM 657 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="oddeventree" data-name="oddeventree" data-srm="srm 658">
+  <span class="tc-problem-number">41</span>
+  <span class="tc-problem-name">OddEvenTree</span>
+  <span class="tc-problem-srm">SRM 658 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="applesandorangeseasy" data-name="applesandorangeseasy" data-srm="srm 659">
+  <span class="tc-problem-number">42</span>
+  <span class="tc-problem-name">ApplesAndOrangesEasy</span>
+  <span class="tc-problem-srm">SRM 659 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="coversta" data-name="coversta" data-srm="srm 660">
+  <span class="tc-problem-number">43</span>
+  <span class="tc-problem-name">Coversta</span>
+  <span class="tc-problem-srm">SRM 660 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="missinglcm" data-name="missinglcm" data-srm="srm 661">
+  <span class="tc-problem-number">44</span>
+  <span class="tc-problem-name">MissingLCM</span>
+  <span class="tc-problem-srm">SRM 661 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="bearplays" data-name="bearplays" data-srm="srm 664">
+  <span class="tc-problem-number">45</span>
+  <span class="tc-problem-name">BearPlays</span>
+  <span class="tc-problem-srm">SRM 664 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="orderofoperations" data-name="orderofoperations" data-srm="srm 667">
+  <span class="tc-problem-number">46</span>
+  <span class="tc-problem-name">OrderOfOperations</span>
+  <span class="tc-problem-srm">SRM 667 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="painttheroom" data-name="painttheroom" data-srm="srm 668">
+  <span class="tc-problem-number">47</span>
+  <span class="tc-problem-name">PaintTheRoom</span>
+  <span class="tc-problem-srm">SRM 668 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="subdividedslimes" data-name="subdividedslimes" data-srm="srm 669">
+  <span class="tc-problem-number">48</span>
+  <span class="tc-problem-name">SubdividedSlimes</span>
+  <span class="tc-problem-srm">SRM 669 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="procrastination" data-name="procrastination" data-srm="srm 672">
+  <span class="tc-problem-number">49</span>
+  <span class="tc-problem-name">Procrastination</span>
+  <span class="tc-problem-srm">SRM 672 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="bearcavalry" data-name="bearcavalry" data-srm="srm 673">
+  <span class="tc-problem-number">50</span>
+  <span class="tc-problem-name">BearCavalry</span>
+  <span class="tc-problem-srm">SRM 673 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="vampiretree" data-name="vampiretree" data-srm="srm 674">
+  <span class="tc-problem-number">51</span>
+  <span class="tc-problem-name">VampireTree</span>
+  <span class="tc-problem-srm">SRM 674 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="treeandpathlength3" data-name="treeandpathlength3" data-srm="srm 675">
+  <span class="tc-problem-number">52</span>
+  <span class="tc-problem-name">TreeAndPathLength3</span>
+  <span class="tc-problem-srm">SRM 675 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="doubleoroneeasy" data-name="doubleoroneeasy" data-srm="srm 677">
+  <span class="tc-problem-number">53</span>
+  <span class="tc-problem-name">DoubleOrOneEasy</span>
+  <span class="tc-problem-srm">SRM 677 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="anewhope" data-name="anewhope" data-srm="srm 678">
+  <span class="tc-problem-number">54</span>
+  <span class="tc-problem-name">ANewHope</span>
+  <span class="tc-problem-srm">SRM 678 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="firingemployees" data-name="firingemployees" data-srm="srm 679">
+  <span class="tc-problem-number">55</span>
+  <span class="tc-problem-name">FiringEmployees</span>
+  <span class="tc-problem-srm">SRM 679 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="colorfulgarden" data-name="colorfulgarden" data-srm="srm 689">
+  <span class="tc-problem-number">56</span>
+  <span class="tc-problem-name">ColorfulGarden</span>
+  <span class="tc-problem-srm">SRM 689 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="sunnygraphs" data-name="sunnygraphs" data-srm="srm 691">
+  <span class="tc-problem-number">57</span>
+  <span class="tc-problem-name">Sunnygraphs</span>
+  <span class="tc-problem-srm">SRM 691 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="hardproof" data-name="hardproof" data-srm="srm 692">
+  <span class="tc-problem-number">58</span>
+  <span class="tc-problem-name">HardProof</span>
+  <span class="tc-problem-srm">SRM 692 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="divisiblesetdiv1" data-name="divisiblesetdiv1" data-srm="srm 697">
+  <span class="tc-problem-number">59</span>
+  <span class="tc-problem-name">DivisibleSetDiv1</span>
+  <span class="tc-problem-srm">SRM 697 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="othersxor" data-name="othersxor" data-srm="srm 699">
+  <span class="tc-problem-number">60</span>
+  <span class="tc-problem-name">OthersXor</span>
+  <span class="tc-problem-srm">SRM 699 &middot; Div I</span>
+</li>
+<li class="tc-problem-item" data-problem="aneasyproblem" data-name="aneasyproblem" data-srm="">
+  <span class="tc-problem-number">61</span>
+  <span class="tc-problem-name">AnEasyProblem</span>
+  <span class="tc-problem-srm"> &middot; Div I</span>
+</li>
+</ul>
+
+<div class="tc-empty-state" id="tcEmptyState">No problems match your search.</div>
+
+<div class="tc-modal-overlay" id="tcModalOverlay">
+  <div class="tc-modal-panel">
+    <div class="tc-modal-header">
+      <div class="tc-modal-title-group">
+        <div class="tc-modal-title" id="tcModalTitle"></div>
+        <div class="tc-modal-meta" id="tcModalMeta"></div>
+      </div>
+      <button class="tc-modal-close" id="tcModalClose" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+        </svg>
+      </button>
+    </div>
+    <div class="tc-modal-tabs">
+      <button class="tc-modal-tab active" data-tab="statement">Statement</button>
+      <button class="tc-modal-tab" data-tab="editorial">Editorial</button>
+    </div>
+    <div class="tc-modal-body">
+      <div class="tc-tab-content active" id="tcTabStatement">
+        <div class="tc-statement-content" id="tcModalStatement"></div>
+      </div>
+      <div class="tc-tab-content" id="tcTabEditorial">
+        <div class="tc-editorial-content" id="tcModalEditorial"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var statementsData = null;
+  var editorialsData = null;
+  var currentProblemTitle = '';
+  var overlay = document.getElementById('tcModalOverlay');
+  var modalTitle = document.getElementById('tcModalTitle');
+  var modalMeta = document.getElementById('tcModalMeta');
+  var modalStatement = document.getElementById('tcModalStatement');
+  var modalEditorial = document.getElementById('tcModalEditorial');
+  var modalBody = document.querySelector('.tc-modal-body');
+
+  function loadJSON(url, cb) {
+    fetch(url).then(function(r) { return r.json(); }).then(cb);
+  }
+
+  function ensureData(cb) {
+    if (statementsData && editorialsData) return cb();
+    var loaded = 0;
+    function check() { if (++loaded === 2) cb(); }
+    if (!statementsData) {
+      loadJSON('/data/topcoder-statements.json', function(d) { statementsData = d; check(); });
+    } else check();
+    if (!editorialsData) {
+      loadJSON('/data/topcoder-editorials.json', function(d) { editorialsData = d; check(); });
+    } else check();
+  }
+
+  document.querySelectorAll('.tc-problem-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var pid = item.getAttribute('data-problem');
+      ensureData(function() {
+        var stmt = statementsData[pid];
+        if (!stmt) return;
+        currentProblemTitle = stmt.title;
+        modalTitle.textContent = stmt.title;
+        modalMeta.textContent = stmt.meta;
+        modalStatement.innerHTML = stmt.html;
+
+        var srm = stmt.srm;
+        if (srm && editorialsData[String(srm)]) {
+          modalEditorial.innerHTML = editorialsData[String(srm)];
+        } else {
+          modalEditorial.innerHTML = '<p style="color:#999">No editorial available for this round.</p>';
+        }
+
+        // Reset to Statement tab
+        document.querySelectorAll('.tc-modal-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.tc-tab-content').forEach(function(c) { c.classList.remove('active'); });
+        document.querySelector('[data-tab="statement"]').classList.add('active');
+        document.getElementById('tcTabStatement').classList.add('active');
+
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  });
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('tcModalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Tab switching
+  function scrollToAnchor(title) {
+    // The editorial has <a id="ProblemTitle"> anchors
+    var anchor = modalEditorial.querySelector('#' + CSS.escape(title));
+    if (anchor) {
+      // Scroll the modal body so the anchor is near the top
+      setTimeout(function() {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  document.querySelectorAll('.tc-modal-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.tc-modal-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.tc-tab-content').forEach(function(c) { c.classList.remove('active'); });
+      tab.classList.add('active');
+      var tabName = tab.getAttribute('data-tab');
+      document.getElementById('tcTab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add('active');
+
+      // Auto-scroll to problem section in editorial
+      if (tabName === 'editorial' && currentProblemTitle) {
+        scrollToAnchor(currentProblemTitle);
+      }
+      // Reset scroll for statement tab
+      if (tabName === 'statement') {
+        modalBody.scrollTop = 0;
+      }
+    });
+  });
+
+  // Search
+  var searchInput = document.getElementById('tcSearchInput');
+  var resultCount = document.getElementById('tcResultCount');
+  var emptyState = document.getElementById('tcEmptyState');
+  var items = document.querySelectorAll('.tc-problem-item');
+
+  searchInput.addEventListener('input', function() {
+    var q = searchInput.value.toLowerCase().trim();
+    var visible = 0;
+    items.forEach(function(item) {
+      var name = item.getAttribute('data-name');
+      var srm = item.getAttribute('data-srm');
+      var match = !q || name.indexOf(q) !== -1 || srm.indexOf(q) !== -1;
+      item.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    resultCount.textContent = q ? visible + ' problem' + (visible !== 1 ? 's' : '') + ' found' : '';
+    emptyState.style.display = visible === 0 ? 'block' : 'none';
+  });
+})();
+</script>

@@ -1,0 +1,4 @@
+# Extraction scripts and raw scraped data (keep locally, not in repo)
+scripts/
+/data/
+mockup_*.html

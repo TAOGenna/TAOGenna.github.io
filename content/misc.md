@@ -76,3 +76,7 @@ type: "page"
 ## Online
 
 - [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning), Andrew Ng
+
+## Competitive Programming
+
+- [TopCoder Archive](/topcoder/) — 61 SRM Division I problems
