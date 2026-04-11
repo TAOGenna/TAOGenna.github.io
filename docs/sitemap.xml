@@ -2,53 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://taogenna.github.io/tags/code/</loc>
+    <loc>http://localhost:1313/tags/code/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/tags/math/</loc>
+    <loc>http://localhost:1313/tags/math/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/writing/ppca-gen/</loc>
+    <loc>http://localhost:1313/writing/ppca-gen/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/writing/</loc>
+    <loc>http://localhost:1313/writing/</loc>
     <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/writing/eeml/</loc>
+    <loc>http://localhost:1313/writing/eeml/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/writing/hartree-fock/</loc>
+    <loc>http://localhost:1313/writing/hartree-fock/</loc>
     <lastmod>2025-01-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/writing/oqs/</loc>
+    <loc>http://localhost:1313/writing/oqs/</loc>
     <lastmod>2023-07-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://taogenna.github.io/bookshelf/</loc>
+    <loc>http://localhost:1313/projects/comma-compression/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/categories/</loc>
+    <loc>http://localhost:1313/bookshelf/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/distill/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/inversion-ionograms/</loc>
+    <loc>http://localhost:1313/projects/distill/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/ionogramnet/</loc>
+    <loc>http://localhost:1313/projects/inversion-ionograms/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/lseg/</loc>
+    <loc>http://localhost:1313/projects/ionogramnet/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/misc/</loc>
+    <loc>http://localhost:1313/projects/lseg/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/connect4/</loc>
+    <loc>http://localhost:1313/misc/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/neural-style-transfer/</loc>
+    <loc>http://localhost:1313/projects/connect4/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/projects/</loc>
+    <loc>http://localhost:1313/projects/neural-style-transfer/</loc>
   </url><url>
-    <loc>https://taogenna.github.io/topcoder/</loc>
+    <loc>http://localhost:1313/projects/</loc>
+  </url><url>
+    <loc>http://localhost:1313/topcoder/</loc>
   </url>
 </urlset>

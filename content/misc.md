@@ -80,3 +80,7 @@ type: "page"
 ## Competitive Programming
 
 - [TopCoder Archive](/topcoder/) — 61 SRM Division I problems
+
+## Other
+
+- [Harada 9x9](/m/9x9.html) — personal development mandala

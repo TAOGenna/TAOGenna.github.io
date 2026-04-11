@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Writing on Kenyi Takagui-Perez</title>
-    <link>https://taogenna.github.io/writing/</link>
+    <link>http://localhost:1313/writing/</link>
     <description>Recent content in Writing on Kenyi Takagui-Perez</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 20 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://taogenna.github.io/writing/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/writing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PPCA: The Minimal Generative Model</title>
-      <link>https://taogenna.github.io/writing/ppca-gen/</link>
+      <link>http://localhost:1313/writing/ppca-gen/</link>
       <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://taogenna.github.io/writing/ppca-gen/</guid>
+      <guid>http://localhost:1313/writing/ppca-gen/</guid>
       <description>&lt;h1 id=&#34;ppca-probabilistic-principal-component-analysis&#34;&gt;PPCA: Probabilistic Principal Component Analysis&lt;/h1&gt;&#xA;&lt;p&gt;PCA is one of those algorithms you learn early and then treat as a black box: center the data, compute the top eigenvectors of the sample covariance, project. But PCA &lt;em&gt;feels&lt;/em&gt; algebraic, where does it come from probabilistically? Probabilistic PCA (PPCA) answers that question: it is the &lt;strong&gt;maximum-likelihood solution of a simple linear Gaussian latent-variable model&lt;/strong&gt;. Understanding PPCA is a tiny, high-value step on the path to modern generative models (VAEs, normalizing flows): it isolates the linear + Gaussian case where every calculation is analytic, so you can see clearly how inference and likelihood tie together.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Advancements in Representing Atomic Environments for Machine Learning Interatomic Potentials</title>
-      <link>https://taogenna.github.io/writing/eeml/</link>
+      <link>http://localhost:1313/writing/eeml/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://taogenna.github.io/writing/eeml/</guid>
+      <guid>http://localhost:1313/writing/eeml/</guid>
       <description>&lt;div style=&#34;text-align: center;&#34;&gt;&#xA;    Extended Abstract&#xA;&lt;/div&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Accurate and efficient interatomic potentials are crucial for simulating materials at the atomic level, and machine learning interatomic potentials (MLIPs) have emerged as a powerful alternative to traditional methods. A central aspect of MLIP development is the representation of local atomic environments, which significantly impacts the accuracy, transferability, and computational cost of the resulting potentials. This extended abstract reviews recent advancements in representing atomic environments for MLIPs.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Application of the self-consistent Hartree-Fock method</title>
-      <link>https://taogenna.github.io/writing/hartree-fock/</link>
+      <link>http://localhost:1313/writing/hartree-fock/</link>
       <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>https://taogenna.github.io/writing/hartree-fock/</guid>
-      <description>&lt;p&gt;This is a summary of the computational method I used for my &lt;a href=&#34;https://taogenna.github.io/Files/master_thesis.pdf&#34;&gt;master&amp;rsquo;s thesis&lt;/a&gt; [1]. I will focus on the Hartree-Fock approximation.&lt;/p&gt;&#xA;&lt;h2 id=&#34;model&#34;&gt;Model&lt;/h2&gt;&#xA;&lt;p&gt;The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is&lt;/p&gt;&#xA;$$&#xA;\begin{align*}&#xA;H &amp;= \sum_{j=1}^{N-1} \left( -t c_{j+1}^\dagger c_j + \Delta c_{j+1}^\dagger c_j^\dagger + \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\&#xA; &amp;+ \epsilon_d d^\dagger d - t&#39; \left( d^\dagger c_1 + \text{H.c.} \right) \\&#xA; &amp;+ V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)&#xA;\end{align*}&#xA;$$&lt;p&gt;The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/writing/hartree-fock/</guid>
+      <description>&lt;p&gt;This is a summary of the computational method I used for my &lt;a href=&#34;http://localhost:1313/Files/master_thesis.pdf&#34;&gt;master&amp;rsquo;s thesis&lt;/a&gt; [1]. I will focus on the Hartree-Fock approximation.&lt;/p&gt;&#xA;&lt;h2 id=&#34;model&#34;&gt;Model&lt;/h2&gt;&#xA;&lt;p&gt;The problem we were trying to attack was the correct modeling of the Majorana zero modes in a superconducting nanowire with a quantum dot attached at one of the ends of the wire. The Hamiltonian describing the system is&lt;/p&gt;&#xA;$$&#xA;\begin{align*}&#xA;H &amp;= \sum_{j=1}^{N-1} \left( -t c_{j+1}^\dagger c_j + \Delta c_{j+1}^\dagger c_j^\dagger + \text{H.c.} \right) - \mu \sum_{j=1}^{N} c_j^\dagger c_j \\&#xA; &amp;+ \epsilon_d d^\dagger d - t&#39; \left( d^\dagger c_1 + \text{H.c.} \right) \\&#xA; &amp;+ V \left( n_d - \frac{1}{2} \right) \left( n_1 - \frac{1}{2} \right)&#xA;\end{align*}&#xA;$$&lt;p&gt;The line is the Hamiltonian for the Kitaev chain, the second for the quantum dot and its hopping with the first site of the nanowire, and the third one accounts for the Coulomb repulsion between the quantum dot and the first site.&lt;/p&gt;</description>
     </item>
     <item>
       <title>How to measure the non-Markovianity of a Quantum System?</title>
-      <link>https://taogenna.github.io/writing/oqs/</link>
+      <link>http://localhost:1313/writing/oqs/</link>
       <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
-      <guid>https://taogenna.github.io/writing/oqs/</guid>
+      <guid>http://localhost:1313/writing/oqs/</guid>
       <description>&lt;div style=&#34;text-align: center;&#34;&gt;&#xA;    Final term paper for the course of Open Quantum Systems.&#xA;&lt;/div&gt;&#xA;&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;&#xA;&lt;p&gt;Master equations govern the time evolution of a quantum system interacting with an environment and can be written in a variety of forms. Time-independent or memoryless master equations can be expressed in the well-known Lindblad form. In fact, any master equation local in time, Markovian or non-Markovian, can also be written in a Lindblad-like form. A diagonalization procedure results in a unique, canonical representation of the equation, which can be used to fully characterize the non-Markovianity of the time evolution. Several different measures of non-Markovianity have recently been presented that reflect, to different degrees, the appearance of negative decoherence rates in the Lindblad-like form of the master equation. We therefore propose to use the negative decoherence rates themselves as they appear in the canonical form of the master equation to fully characterize non-Markovianity.&lt;/p&gt;</description>
     </item>
   </channel>
