@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -25 1250 705" width="800" height="451" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+  </defs>
+  <text x="250" y="41.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Training vs. Evaluation: The Same Pipeline, Different Quantizer</text>
+  <rect x="20" y="50" width="900" height="280" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="0.2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="35" y="79.6" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">TRAINING  (gradient-based optimization)</text>
+  <rect x="20" y="360" width="900" height="280" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="35" y="389.6" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">EVALUATION  (actual compression codec)</text>
+  <rect x="50" y="130" width="100" height="70" rx="0" fill="#dee2e6" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="176.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">image</text>
+  <text x="70" y="194.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">x</text>
+  <rect x="200" y="130" width="110" height="70" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="215" y="173.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">encoder</text>
+  <text x="215" y="191.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">g_a(·; φ)</text>
+  <path d="M 150.0 165.0 L 250.0 165.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="360" y="130" width="80" height="70" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="378" y="176.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">latent</text>
+  <text x="378" y="194.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y</text>
+  <path d="M 310.0 165.0 L 410.0 165.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="490" y="120" width="120" height="90" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="3" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="504" y="161.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">+ Δy</text>
+  <text x="504" y="179.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">Δy~U(-½,½)</text>
+  <path d="M 440.0 165.0 L 540.0 165.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="660" y="130" width="80" height="70" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="672" y="176.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">noisy</text>
+  <text x="672" y="194.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">ỹ</text>
+  <path d="M 610.0 165.0 L 710.0 165.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="790" y="130" width="110" height="70" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="805" y="173.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">decoder</text>
+  <text x="805" y="191.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">g_s(·; θ)</text>
+  <path d="M 740.0 165.0 L 840.0 165.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="200" y="235" width="620" height="60" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="0.6" filter="url(#handdrawn)"/>
+  <text x="215" y="264.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">LOSS:  L = h[ỹ]  +  λ · MSE(x, x̂)          ← differentiable! gradients flow back to φ, θ</text>
+  <text x="215" y="287.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">        rate proxy      distortion</text>
+  <rect x="50" y="440" width="100" height="70" rx="0" fill="#dee2e6" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="486.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">image</text>
+  <text x="70" y="504.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">x</text>
+  <rect x="200" y="440" width="110" height="70" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="215" y="483.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">encoder</text>
+  <text x="215" y="501.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">g_a(·; φ)</text>
+  <path d="M 150.0 475.0 L 250.0 475.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="360" y="440" width="80" height="70" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="378" y="486.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">latent</text>
+  <text x="378" y="504.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y</text>
+  <path d="M 310.0 475.0 L 410.0 475.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="490" y="430" width="120" height="90" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="3" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="500" y="471.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">round(y)</text>
+  <text x="500" y="489.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">no noise!</text>
+  <path d="M 440.0 475.0 L 540.0 475.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="660" y="440" width="80" height="70" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="675" y="486.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">integer</text>
+  <text x="675" y="504.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">q</text>
+  <path d="M 610.0 475.0 L 710.0 475.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="790" y="440" width="110" height="70" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="805" y="483.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">decoder</text>
+  <text x="805" y="501.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">g_s(·; θ)</text>
+  <path d="M 740.0 475.0 L 840.0 475.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="200" y="540" width="620" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="0.6" filter="url(#handdrawn)"/>
+  <text x="215" y="569.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">METRIC:  R = H[q]  +  D = MSE(x, x̂)          ← actual bits, true distortion</text>
+  <text x="215" y="592.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">         real entropy    true distortion</text>
+  <rect x="940" y="200" width="250" height="260" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="960" y="234.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Why this works:</text>
+  <text x="955" y="257.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">h[ỹ] ≈ H[q]</text>
+  <text x="955" y="273.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">(key theorem)</text>
+  <text x="955" y="288.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start"></text>
+  <text x="955" y="304.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Proxy loss ≈</text>
+  <text x="955" y="320.0" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">actual loss</text>
+  <text x="955" y="335.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start"></text>
+  <text x="955" y="351.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Training with</text>
+  <text x="955" y="366.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">noise yields</text>
+  <text x="955" y="382.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">almost the same</text>
+  <text x="955" y="398.0" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">weights as if</text>
+  <text x="955" y="413.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">we could train</text>
+  <text x="955" y="429.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">with rounding</text>
+  <path d="M 920.0 230.0 L 1020.0 230.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 920.0 490.0 L 1020.0 490.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <text x="940" y="155.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Same weights φ, θ</text>
+  <text x="940" y="171.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">learned during training,</text>
+  <text x="940" y="186.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">frozen at eval time</text>
+</svg>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 -22 843 567" width="800" height="538" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+    <marker id="ah-f08c00" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f08c00"/>
+    </marker>
+  </defs>
+  <text x="80" y="44.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">The Rate-Distortion Frontier: What λ Controls</text>
+  <text x="80" y="74.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Each trained model gives ONE point on the R-D plane. Sweeping λ traces the frontier.</text>
+  <rect x="80" y="85" width="520" height="420" rx="0" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <path d="M 130.0 460.0 L 570.0 460.0" fill="none" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <path d="M 130.0 110.0 L 130.0 460.0" fill="none" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="310" y="493.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Rate R (bits per pixel)  →  more bits</text>
+  <text x="88" y="283.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Q</text>
+  <text x="88" y="299.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">u</text>
+  <text x="88" y="314.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">a</text>
+  <text x="88" y="330.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">l</text>
+  <text x="88" y="346.0" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">i</text>
+  <text x="88" y="361.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">t</text>
+  <text x="88" y="377.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y</text>
+  <text x="88" y="392.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">↑</text>
+  <text x="148" y="477.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">0.1</text>
+  <text x="238" y="477.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">0.5</text>
+  <text x="328" y="477.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">1.0</text>
+  <text x="448" y="477.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">2.0 bpp</text>
+  <text x="100" y="461.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">low</text>
+  <text x="100" y="291.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">mid</text>
+  <text x="100" y="131.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">high</text>
+  <ellipse cx="150.0" cy="427.0" rx="7.0" ry="7.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="200.0" cy="382.0" rx="7.0" ry="7.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="270.0" cy="317.0" rx="7.0" ry="7.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="350.0" cy="247.0" rx="7.0" ry="7.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="450.0" cy="182.0" rx="7.0" ry="7.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="169.0" cy="444.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="229.0" cy="414.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="309.0" cy="371.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="399.0" cy="316.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="499.0" cy="264.0" rx="6.0" ry="6.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="130" y="421.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">λ=0.001</text>
+  <text x="180" y="373.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">λ=0.01</text>
+  <text x="250" y="308.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">λ=0.05</text>
+  <text x="330" y="238.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">λ=0.2</text>
+  <text x="430" y="173.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">λ=1.0</text>
+  <text x="370" y="163.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">● Learned (ours)</text>
+  <text x="370" y="183.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">● JPEG baseline</text>
+  <text x="570" y="116.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">λ = 0.001</text>
+  <rect x="560" y="120" width="280" height="120" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="572" y="144.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Rate term dominates:</text>
+  <text x="572" y="158.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ encoder squeezes hard</text>
+  <text x="572" y="173.2" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ very few bits used</text>
+  <text x="572" y="187.6" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ digits blurry but</text>
+  <text x="572" y="202.0" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">   recognizable</text>
+  <text x="572" y="216.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="572" y="230.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">'I care mostly about file size'</text>
+  <text x="570" y="281.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">λ = 1.0</text>
+  <rect x="560" y="285" width="280" height="120" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="572" y="309.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Distortion term dominates:</text>
+  <text x="572" y="323.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ encoder preserves detail</text>
+  <text x="572" y="338.2" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ many bits used</text>
+  <text x="572" y="352.6" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">→ near-perfect digits</text>
+  <text x="572" y="367.0" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="572" y="381.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">'I care mostly about quality'</text>
+  <text x="570" y="450.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Gap = learning advantage over JPEG.</text>
+  <text x="570" y="466.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Larger on MS-SSIM than PSNR.</text>
+  <path d="M 560.0 175.0 L 440.0 423.0" fill="none" stroke="#f08c00" stroke-width="1" stroke-dasharray="8 4" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <path d="M 560.0 340.0 L 450.0 385.0" fill="none" stroke="#9c36b5" stroke-width="1" stroke-dasharray="8 4" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+</svg>

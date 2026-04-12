@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -25 1120 688" width="800" height="491" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="280" y="41.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Lattice Quantizer vs. Learned Nonlinear Transform Quantizer</text>
+  <rect x="20" y="50" width="500" height="480" rx="0" fill="#fff9db" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="30" y="86.6" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">NAIVE: Lattice (grid) Quantizer</text>
+  <text x="30" y="104.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Apply uniform grid directly to raw (x1, x2) data</text>
+  <rect x="35" y="115" width="470" height="280" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <path d="M 270.0 115.0 L 370.0 115.0" fill="none" stroke="#cccccc" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 35.0 255.0 L 135.0 255.0" fill="none" stroke="#cccccc" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 152.0 115.0 L 252.0 115.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 385.0 115.0 L 485.0 115.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 35.0 162.0 L 135.0 162.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 35.0 348.0 L 135.0 348.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <ellipse cx="141.0" cy="181.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="154.0" cy="171.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="166.0" cy="184.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="178.0" cy="198.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="196.0" cy="214.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="221.0" cy="228.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="251.0" cy="236.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="284.0" cy="241.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="316.0" cy="234.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="344.0" cy="221.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="366.0" cy="203.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="381.0" cy="182.0" rx="6.0" ry="6.0" fill="#1971c2" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="40" y="414.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">banana-shaped data</text>
+  <text x="40" y="434.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">grid cells that straddle the curve</text>
+  <text x="40" y="448.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">waste bits on empty space</text>
+  <text x="40" y="470.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">MSE ≈ 0.12  (HIGH distortion)</text>
+  <rect x="560" y="50" width="500" height="480" rx="0" fill="#f0fff4" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="570" y="86.6" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">LEARNED: Nonlinear Transform + Grid</text>
+  <text x="570" y="104.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Encoder f(x) maps banana → line, then grid quantizes</text>
+  <rect x="575" y="115" width="470" height="280" rx="0" fill="#ffffff" stroke="#1e1e1e" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <path d="M 810.0 115.0 L 910.0 115.0" fill="none" stroke="#cccccc" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 575.0 255.0 L 675.0 255.0" fill="none" stroke="#cccccc" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 693.0 115.0 L 793.0 115.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 925.0 115.0 L 1025.0 115.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 575.0 162.0 L 675.0 162.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <path d="M 575.0 348.0 L 675.0 348.0" fill="none" stroke="#dddddd" stroke-width="1" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <ellipse cx="626.0" cy="250.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="652.0" cy="254.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="678.0" cy="256.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="704.0" cy="257.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="730.0" cy="257.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="756.0" cy="258.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="782.0" cy="258.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="808.0" cy="257.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="834.0" cy="256.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="860.0" cy="255.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="886.0" cy="254.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="912.0" cy="252.0" rx="6.0" ry="6.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="580" y="414.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">encoder 'straightens' the banana</text>
+  <text x="580" y="428.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">data lies on a near-horizontal line</text>
+  <text x="580" y="451.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">every grid cell that the line passes</text>
+  <text x="580" y="465.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">through captures real data</text>
+  <text x="580" y="477.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">MSE ≈ 0.015  (10× lower distortion!)</text>
+  <text x="200" y="565.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">KEY INSIGHT (Ballé et al.):</text>
+  <text x="200" y="581.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">'We assume a fixed uniform scalar quantizer in the code space, and aim to have the nonlinear</text>
+  <text x="200" y="596.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">transformations warp the space in an appropriate way, effectively implementing a parametric</text>
+  <text x="200" y="612.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">form of vector quantization.'</text>
+</svg>
