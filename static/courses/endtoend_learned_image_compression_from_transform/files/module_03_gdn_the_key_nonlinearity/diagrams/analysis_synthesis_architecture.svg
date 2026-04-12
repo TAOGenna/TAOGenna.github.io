@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -25 1162 563" width="800" height="388" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1971c2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1971c2"/>
+    </marker>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+    <marker id="ah-f08c00" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f08c00"/>
+    </marker>
+  </defs>
+  <text x="250" y="39.0" font-size="20" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Analysis Transform g_a and Synthesis Transform g_s: Where GDN/IGDN Live</text>
+  <text x="20" y="95.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Image x</text>
+  <text x="20" y="111.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">256×256</text>
+  <rect x="20" y="108" width="70" height="70" rx="0" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="28" y="143.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">pixel</text>
+  <text x="28" y="156.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">values</text>
+  <text x="28" y="169.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">[0,255]</text>
+  <text x="130" y="68.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Analysis Transform  g_a(x; φ)</text>
+  <rect x="120" y="70" width="560" height="180" rx="0" fill="#e7f5ff" stroke="#1971c2" stroke-width="2" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <rect x="140" y="90" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="148" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv 9×9 (stride 4)</text>
+  <text x="148" y="129.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">128 filters → 64×64×128</text>
+  <text x="148" y="145.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">parameters on DCT basis</text>
+  <rect x="140" y="168" width="140" height="55" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="180" y="199.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">GDN #1</text>
+  <text x="148" y="217.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Gaussianize 128 channels</text>
+  <rect x="310" y="90" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="318" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv 5×5 (stride 2)</text>
+  <text x="318" y="129.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">128 filters → 32×32×128</text>
+  <text x="318" y="145.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">5×5×128 kernels</text>
+  <rect x="310" y="168" width="140" height="55" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="350" y="199.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">GDN #2</text>
+  <text x="318" y="217.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">joint across 128 channels</text>
+  <rect x="480" y="90" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="488" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv 5×5 (stride 2)</text>
+  <text x="488" y="129.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">128 filters → 16×16×128</text>
+  <text x="488" y="145.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">5×5×128 kernels</text>
+  <rect x="480" y="168" width="140" height="55" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="520" y="199.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">GDN #3</text>
+  <text x="488" y="217.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">output y: 16×16×128</text>
+  <text x="710" y="95.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">Quantize</text>
+  <rect x="700" y="100" width="90" height="150" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="710" y="145.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">ŷ =</text>
+  <text x="710" y="161.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">round(y)</text>
+  <text x="710" y="176.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">or y+U</text>
+  <text x="710" y="192.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#f08c00" text-anchor="start">(train)</text>
+  <text x="710" y="273.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">ŷ: 16×16×128</text>
+  <text x="710" y="286.4" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">≈ 32× smaller</text>
+  <text x="130" y="308.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Synthesis Transform  g_s(ŷ; θ)  — mirrors g_a in reverse</text>
+  <rect x="120" y="310" width="560" height="180" rx="0" fill="#ebfbee" stroke="#2f9e44" stroke-width="2" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <rect x="480" y="320" width="140" height="55" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="516" y="351.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">IGDN #1</text>
+  <text x="488" y="369.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">separate params from GDN#3</text>
+  <rect x="480" y="390" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="488" y="412.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Deconv 5×5 (up 2)</text>
+  <text x="488" y="429.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">128 filters → 32×32×128</text>
+  <rect x="310" y="320" width="140" height="55" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="346" y="351.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">IGDN #2</text>
+  <text x="318" y="369.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">approximate inverse of GDN#2</text>
+  <rect x="310" y="390" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="318" y="412.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Deconv 5×5 (up 2)</text>
+  <text x="318" y="429.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">128 filters → 64×64×128</text>
+  <rect x="140" y="320" width="140" height="55" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="176" y="351.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">IGDN #3</text>
+  <text x="148" y="369.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">trained SEPARATELY!</text>
+  <rect x="140" y="390" width="140" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="148" y="412.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Deconv 9×9 (up 4)</text>
+  <text x="148" y="429.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">1 filter → 256×256×1</text>
+  <text x="20" y="415.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Recon x̂</text>
+  <text x="20" y="431.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">256×256</text>
+  <rect x="20" y="428" width="70" height="70" rx="0" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="28" y="460.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">pixel</text>
+  <text x="28" y="473.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">values</text>
+  <text x="28" y="486.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">[0,255]</text>
+  <path d="M 97.9 136.6 L 132.1 131.6" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 210.0 158.0 L 210.0 160.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 279.2 164.8 L 305.1 153.2" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <path d="M 380.0 158.0 L 380.0 160.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 449.2 164.8 L 475.1 153.2" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <path d="M 550.0 158.0 L 550.0 160.0" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 628.0 187.3 L 692.0 180.6" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <path d="M 694.0 220.1 L 587.1 314.7" fill="none" stroke="#f08c00" stroke-width="2" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <path d="M 550.0 383.0 L 550.0 382.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 472.6 387.0 L 451.8 378.1" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 380.0 383.0 L 380.0 382.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 302.6 387.0 L 281.8 378.1" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 210.0 383.0 L 210.0 382.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 132.3 441.6 L 97.7 451.2" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <rect x="820" y="80" width="200" height="180" rx="0" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="830" y="105.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Parameter Counts</text>
+  <text x="830" y="121.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">(grayscale model)</text>
+  <text x="830" y="139.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">Convolutions: ~820K</text>
+  <text x="830" y="159.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#9c36b5" text-anchor="start">GDN β, γ (3 layers): ~35K</text>
+  <text x="830" y="179.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">IGDN β, γ (3 layers): ~35K</text>
+  <text x="830" y="205.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Total: ~855K params</text>
+  <text x="830" y="228.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">GDN params are tiny</text>
+  <text x="830" y="241.4" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">fraction (~4%) but</text>
+  <text x="830" y="254.6" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">provide huge compression</text>
+  <text x="830" y="267.8" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">gains!</text>
+  <text x="820" y="325.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">KEY: IGDN uses SEPARATE</text>
+  <text x="820" y="341.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">parameters from GDN.</text>
+  <text x="820" y="356.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Not an exact inverse.</text>
+  <text x="820" y="372.4" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Trained jointly end-to-end.</text>
+</svg>
