@@ -6,17 +6,27 @@
 
 <div id="gallery-grid">
     {{ range ( .Pages.ByParam "order" ) }}
+    {{ $ext := path.Ext .Params.Image | strings.TrimPrefix "." | lower }}
+    {{ $isVideo := in (slice "mp4" "webm" "mov" "ogv") $ext }}
     <div class="card show">
         {{ if .Params.External }}
         <a href="{{ .Params.External }}" target="_blank">
             <div class="card_img_zoom_container">
+                {{ if $isVideo }}
+                <video class="card_img_container" src="/Files/{{ .Params.Image }}" autoplay muted loop playsinline preload="metadata"></video>
+                {{ else }}
                 <img class="card_img_container" src="/Files/{{ .Params.Image }}" alt="{{ .Title }}" />
+                {{ end }}
             </div>
             <p class="definition">{{ .Title }}</p>
         </a>
         {{ else }}
         <div class="card_img_zoom_container">
+            {{ if $isVideo }}
+            <video class="card_img_container" src="/Files/{{ .Params.Image }}" autoplay muted loop playsinline preload="metadata"></video>
+            {{ else }}
             <img class="card_img_container" src="/Files/{{ .Params.Image }}" alt="{{ .Title }}" />
+            {{ end }}
         </div>
         <p class="definition">{{ .Title }}</p>
         {{ end }}
