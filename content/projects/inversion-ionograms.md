@@ -1,6 +1,6 @@
 ---
 title: "Inversion algorithm for plasma frequency profiles from ionograms"
-image: "inras.jpeg"
+image: "inversion_progress.mp4"
 description: "Multi-quasi-parabolic method for ionospheric E and F layer modeling · Python"
 year: "2024"
 type: "physics"
