@@ -4,7 +4,7 @@ image: "comma_comp.jpg"
 description: "Neural compression via arithmetic coding and language model probabilities"
 year: "2025"
 type: "ai"
-order: 2
+order: 3
 external: "https://github.com/TAOGenna"
 draft: true
 ---
