@@ -123,11 +123,16 @@ h1 {
   aspect-ratio: 460 / 260;
 }
 
+/* Toggle: set to 0% to disable the grayscale-until-hover effect on project thumbnails. */
+:root {
+  --project-thumb-grayscale: 0%;
+}
+
 .card_img_container {
   display: block;
   width: 100%;
   height: 100%;
-  filter: grayscale(100%);
+  filter: grayscale(var(--project-thumb-grayscale));
   cursor: crosshair;
   object-fit: cover;
   transition: transform 0.5s, filter 0.5s;
