@@ -1,6 +1,6 @@
 ---
 title: "Neural Style Transfer (Gatys et al.)"
-image: "neural_style_transition.gif"
+image: "style_transfer_progress.mp4"
 description: "Artistic texture extraction via Gram matrices and VGG-19 features · PyTorch"
 year: "2023"
 type: "ai"
