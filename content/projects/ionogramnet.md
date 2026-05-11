@@ -1,7 +1,7 @@
 ---
 title: "IonogramNET: ionospheric echo detection with CNNs"
 image: "ionogram_segmentation.png"
-description: "Encoder-decoder CNN for extracting echo traces from Jicamarca Observatory ionograms · PyTorch"
+description: "Encoder-decoder CNN for extracting echo traces from Jicamarca Observatory ionograms"
 year: "2022"
 type: "physics"
 order: 8

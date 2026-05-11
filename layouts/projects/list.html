@@ -30,7 +30,7 @@
         </div>
         <p class="definition">{{ .Title }}</p>
         {{ end }}
-        <p class="more-details">{{ .Params.Description }} · {{ .Params.Year }}{{ if .Params.Demo }} · <a href="{{ .Params.Demo }}" class="demo-link">View output</a>{{ end }}</p>
+        <p class="more-details">{{ .Params.Description }} · {{ .Params.Year }}{{ if .Params.Role }} · <span class="role-badge">{{ .Params.Role }}</span>{{ end }}{{ if .Params.Demo }} · <a href="{{ .Params.Demo }}" class="demo-link">View output</a>{{ end }}</p>
     </div>
     {{ end }}
 </div>

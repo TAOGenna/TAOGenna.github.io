@@ -1,7 +1,7 @@
 ---
 title: "Monte Carlo Tree Search for Connect4"
 image: "connect4_progress.mp4"
-description: "Playable game with an AI opponent powered by MCTS and UCB · Python"
+description: "Playable game with an AI opponent powered by MCTS and UCB"
 year: "2023"
 type: "ai"
 order: 6
