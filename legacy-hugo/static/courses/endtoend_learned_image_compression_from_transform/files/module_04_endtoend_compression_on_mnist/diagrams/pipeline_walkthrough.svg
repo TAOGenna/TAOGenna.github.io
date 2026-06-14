@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 -20 1124 580" width="800" height="412" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-e03131" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e03131"/>
+    </marker>
+  </defs>
+  <text x="60" y="44.0" font-size="20" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">The Analysis-Synthesis Pipeline: MNIST Digit '7' End-to-End</text>
+  <text x="60" y="86.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Input x</text>
+  <rect x="60" y="88" width="100" height="100" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="73" y="139.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">28×28</text>
+  <text x="73" y="153.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">pixels</text>
+  <text x="220" y="70.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Stage 1: Conv(K=9, C=32, ↓4) + GDN</text>
+  <rect x="220" y="80" width="160" height="120" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="233" y="109.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv2d(1→32,</text>
+  <text x="233" y="123.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">kernel=9×9,</text>
+  <text x="233" y="138.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=4)</text>
+  <text x="233" y="152.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">→ GDN</text>
+  <text x="233" y="167.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 7×7×32</text>
+  <text x="450" y="70.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Stage 2: Conv(K=5, C=32, ↓2) + GDN</text>
+  <rect x="450" y="80" width="160" height="120" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="463" y="109.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv2d(32→32,</text>
+  <text x="463" y="123.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">kernel=5×5,</text>
+  <text x="463" y="138.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=2)</text>
+  <text x="463" y="152.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">→ GDN</text>
+  <text x="463" y="167.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 4×4×32</text>
+  <text x="680" y="70.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Stage 3: Conv(K=5, C=32, ↓2) + GDN</text>
+  <rect x="680" y="80" width="160" height="120" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="693" y="109.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Conv2d(32→32,</text>
+  <text x="693" y="123.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">kernel=5×5,</text>
+  <text x="693" y="138.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=2)</text>
+  <text x="693" y="152.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">→ GDN</text>
+  <text x="693" y="167.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 2×2×32</text>
+  <text x="693" y="181.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">= 128 values</text>
+  <text x="915" y="86.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">Latent y</text>
+  <text x="915" y="103.6" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">(2×2×32)</text>
+  <rect x="910" y="95" width="100" height="80" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="916" y="123.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">[-1.3, 2.1,</text>
+  <text x="916" y="136.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> 0.8,-0.4,</text>
+  <text x="916" y="149.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> 3.2, 1.7</text>
+  <text x="916" y="162.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> ...]</text>
+  <path d="M 168.0 138.6 L 212.0 139.1" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 388.0 140.0 L 442.0 140.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 618.0 140.0 L 672.0 140.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 848.0 137.8 L 902.0 136.4" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="60" y="230.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Analysis g_a: 28×28 = 784 values  →  2×2×32 = 128 values  (6× compression in # of values)</text>
+  <text x="910" y="210.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Quantize ŷ</text>
+  <text x="910" y="226.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">(round or</text>
+  <text x="910" y="241.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">add noise)</text>
+  <rect x="910" y="240" width="100" height="70" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="916" y="268.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">[-1, 2,</text>
+  <text x="916" y="281.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> 1, 0,</text>
+  <text x="916" y="294.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> 3, 2</text>
+  <text x="916" y="307.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"> ...]</text>
+  <path d="M 960.0 183.0 L 960.0 232.0" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <text x="1025" y="269.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Rate R:</text>
+  <text x="1025" y="283.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">-log p(ŷ)</text>
+  <text x="1025" y="298.2" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">bits/symbol</text>
+  <text x="60" y="315.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Synthesis g_s  (mirror of analysis — IGDN + ConvTranspose2d with ↑2 upsampling at each stage)</text>
+  <rect x="680" y="328" width="160" height="120" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="693" y="349.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">IGDN +</text>
+  <text x="693" y="363.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ConvT2d</text>
+  <text x="693" y="378.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">(32→32,</text>
+  <text x="693" y="392.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=2)</text>
+  <text x="693" y="407.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 4×4×32</text>
+  <rect x="450" y="328" width="160" height="120" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="463" y="349.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">IGDN +</text>
+  <text x="463" y="363.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ConvT2d</text>
+  <text x="463" y="378.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">(32→32,</text>
+  <text x="463" y="392.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=2)</text>
+  <text x="463" y="407.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 7×7×32</text>
+  <rect x="220" y="328" width="160" height="120" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="233" y="349.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">IGDN +</text>
+  <text x="233" y="363.8" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ConvT2d</text>
+  <text x="233" y="378.2" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">(32→1,</text>
+  <text x="233" y="392.6" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">stride=4)</text>
+  <text x="233" y="407.0" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">out: 28×28×1</text>
+  <text x="64" y="356.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Output x̂</text>
+  <text x="64" y="373.6" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">(28×28)</text>
+  <rect x="60" y="368" width="100" height="100" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="74" y="419.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Recon.</text>
+  <text x="74" y="433.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">28×28</text>
+  <path d="M 903.0 307.2 L 847.0 338.9" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 672.0 388.0 L 618.0 388.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 442.0 388.0 L 388.0 388.0" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 212.1 401.9 L 167.9 408.9" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <text x="60" y="495.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Distortion D = MSE(x, x̂)  ←  gradients flow back through synthesis and analysis</text>
+  <text x="60" y="516.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Objective: minimize  L = R + λ·D  (λ controls the rate-distortion tradeoff)</text>
+  <text x="390" y="260.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">← Analysis transform g_a (encoder) →</text>
+  <text x="370" y="475.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">← Synthesis transform g_s (decoder) →</text>
+</svg>

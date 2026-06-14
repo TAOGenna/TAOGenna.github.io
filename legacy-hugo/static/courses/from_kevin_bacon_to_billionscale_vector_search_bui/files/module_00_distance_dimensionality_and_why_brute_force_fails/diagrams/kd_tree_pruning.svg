@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 -25 984 598" width="800" height="486" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="200" y="39.0" font-size="20" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">k-d Tree Pruning: Works in 2D, Fails in High Dimensions</text>
+  <text x="80" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">LOW DIMENSIONS (2D) — Pruning WORKS</text>
+  <rect x="80" y="80" width="320" height="280" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <path d="M 240.0 80.0 L 340.0 80.0" fill="none" stroke="#1971c2" stroke-width="2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="150" y="374.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">split: x &lt; 0.5</text>
+  <ellipse cx="182.0" cy="182.0" rx="7.0" ry="7.0" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="155" y="171.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">query q</text>
+  <ellipse cx="170.0" cy="220.0" rx="5.0" ry="5.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="145" y="242.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">nearest</text>
+  <text x="145" y="254.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">neighbor</text>
+  <ellipse cx="284.0" cy="134.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="304.0" cy="204.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="264.0" cy="274.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="324.0" cy="164.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="183.0" cy="193.0" rx="40.0" ry="40.0" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="85" y="399.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">d_best = 40px (dist to nearest neighbor)</text>
+  <text x="85" y="413.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Hyperplane distance = |q.x - 0.5| = 70px</text>
+  <text x="85" y="428.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">70 &gt; 40? YES! Prune right subtree! ✓</text>
+  <text x="260" y="303.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">RIGHT SUBTREE</text>
+  <text x="260" y="316.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">PRUNED (skip!)</text>
+  <rect x="242" y="80" width="158" height="280" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="0.3" filter="url(#handdrawn)"/>
+  <text x="550" y="74.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">HIGH DIMENSIONS (128D) — Pruning FAILS</text>
+  <rect x="550" y="80" width="320" height="280" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <path d="M 710.0 80.0 L 810.0 80.0" fill="none" stroke="#1971c2" stroke-width="2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="620" y="374.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">split: x_7 &lt; 0.5</text>
+  <ellipse cx="650.0" cy="182.0" rx="7.0" ry="7.0" fill="#9c36b5" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="625" y="171.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">query q</text>
+  <ellipse cx="745.0" cy="205.0" rx="5.0" ry="5.0" fill="#e03131" stroke="#e03131" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="745" y="204.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">nearest</text>
+  <text x="745" y="216.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">neighbor</text>
+  <ellipse cx="764.0" cy="134.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="784.0" cy="254.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="824.0" cy="174.0" rx="4.0" ry="4.0" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="663.0" cy="215.0" rx="100.0" ry="100.0" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="555" y="399.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">d_best = 110px  (all 128 dims contribute!)</text>
+  <text x="555" y="413.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Hyperplane distance = |q.x_7 - 0.5| = 10px</text>
+  <text x="555" y="428.2" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">10 &gt; 110? NO! Must explore right subtree.</text>
+  <text x="555" y="442.6" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">At d=128, this check almost ALWAYS fails.</text>
+  <text x="220" y="480.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">KEY INSIGHT: d_best scales as sqrt(d) * sigma.   Hyperplane distance scales as sigma (single dim).</text>
+  <text x="220" y="505.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Ratio: hyperplane_dist / d_best ≈ 1/sqrt(d)  →  0 as d grows.</text>
+  <text x="220" y="530.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">The pruning condition NEVER fires. k-d tree visits every node. O(n) per query.</text>
+</svg>

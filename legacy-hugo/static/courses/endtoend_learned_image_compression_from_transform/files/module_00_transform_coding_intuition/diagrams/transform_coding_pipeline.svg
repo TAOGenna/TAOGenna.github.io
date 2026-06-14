@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 1437 442" width="800" height="246" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+  <text x="350" y="48.8" font-size="24" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">The Transform Coding Pipeline</text>
+  <text x="30" y="94.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">SIGNAL IN</text>
+  <rect x="30" y="100" width="150" height="100" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="40" y="131.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">x = [0.85, 0.92, 0.71,</text>
+  <text x="40" y="144.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0.43, 0.08, -0.31,</text>
+  <text x="40" y="157.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">-0.59, -0.72, -0.61,</text>
+  <text x="40" y="170.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">-0.28, 0.18, 0.61]</text>
+  <text x="40" y="207.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">12 samples of sin(3Hz)</text>
+  <rect x="240" y="110" width="130" height="70" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="253" y="138.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">ANALYSIS</text>
+  <text x="253" y="154.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">TRANSFORM g_a</text>
+  <text x="253" y="176.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">y = Wx (linear)</text>
+  <path d="M 188.0 147.9 L 232.0 146.8" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="425" y="94.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">LATENT y</text>
+  <rect x="425" y="100" width="150" height="100" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="435" y="128.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">y = [4.21, -0.03,</text>
+  <text x="435" y="141.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0.87, 0.02,</text>
+  <text x="435" y="154.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">-0.04, 0.01,</text>
+  <text x="435" y="167.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0.00, -0.02, ...]</text>
+  <text x="435" y="204.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">energy concentrated!</text>
+  <path d="M 378.0 146.9 L 417.0 147.9" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="635" y="110" width="130" height="70" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="648" y="138.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">QUANTIZER Q</text>
+  <text x="648" y="162.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ŷ = round(y)</text>
+  <text x="648" y="180.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">integer buckets</text>
+  <path d="M 583.0 147.9 L 627.0 146.8" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="825" y="94.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">QUANTIZED ŷ</text>
+  <rect x="825" y="100" width="150" height="100" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="835" y="128.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ŷ = [4, 0,</text>
+  <text x="835" y="141.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">1, 0,</text>
+  <text x="835" y="154.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0, 0,</text>
+  <text x="835" y="167.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0, 0, ...]</text>
+  <text x="835" y="195.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">only 2 nonzero! → few bits</text>
+  <path d="M 773.0 146.8 L 817.0 147.9" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <rect x="1035" y="110" width="130" height="70" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="1048" y="138.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">SYNTHESIS</text>
+  <text x="1048" y="154.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">TRANSFORM g_s</text>
+  <text x="1048" y="176.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">x̂ = W⁻¹ŷ</text>
+  <path d="M 983.0 147.9 L 1027.0 146.8" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="1225" y="94.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">RECONSTRUCTION</text>
+  <rect x="1225" y="100" width="150" height="100" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="1235" y="131.2" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">x̂ ≈ [0.84, 0.91, 0.70,</text>
+  <text x="1235" y="144.4" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">0.42, 0.08, -0.30,</text>
+  <text x="1235" y="157.6" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">-0.58, -0.71, -0.60,</text>
+  <text x="1235" y="170.8" font-size="11" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">-0.27, 0.17, 0.60]</text>
+  <text x="1235" y="207.0" font-size="10" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">MSE ≈ 0.0001</text>
+  <path d="M 1173.0 146.8 L 1217.0 147.9" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="30" y="244.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">KEY INSIGHT: The transform concentrates signal energy.</text>
+  <text x="30" y="258.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Most of the signal lives in coefficient [0] = 4.21 (the DC component + 3Hz sine).</text>
+  <text x="30" y="273.2" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">All high-freq coefficients ≈ 0 → round to 0 → free!</text>
+  <rect x="425" y="280" width="550" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="440" y="307.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">RATE: only 2 coefficients need bits → ~4 bits total</text>
+  <text x="440" y="321.8" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">DISTORTION: MSE ≈ 0.0001 (excellent reconstruction)</text>
+  <text x="30" y="379.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">JPEG does this with a fixed DCT basis (left). Ballé et al. LEARN the transforms jointly to minimize R + λD (right).</text>
+  <text x="182" y="273.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">LINEAR (JPEG)</text>
+  <text x="182" y="286.4" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">fixed DCT</text>
+  <text x="182" y="299.6" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">basis</text>
+  <text x="1003" y="273.2" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">NONLINEAR (learned)</text>
+  <text x="1003" y="286.4" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">g_a warps the space</text>
+  <text x="1003" y="299.6" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">for better quantization</text>
+</svg>

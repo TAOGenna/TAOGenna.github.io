@@ -1,0 +1,165 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+
+const online = [
+	{
+		title: 'Deep Learning Specialization',
+		by: 'Andrew Ng',
+		href: 'https://www.coursera.org/specializations/deep-learning'
+	}
+]
+
+const coursework = [
+	{
+		label: 'MSc — Instituto Balseiro',
+		terms: [
+			{ term: 'Third Semester', courses: ['Photonics in Microwave Systems', 'Laser Physics'] },
+			{
+				term: 'Second Semester',
+				courses: [
+					'Open Quantum Systems',
+					'Topological Matter (Jorge Facio)',
+					'Quantum Many-Body Theory (Armando Aligia)',
+					'Introduction to Material Science and Chemistry'
+				]
+			},
+			{
+				term: 'First Semester',
+				courses: ['Quantum Field Theory (Mazzitelli)', 'Quantum Theory of Solids (Pablo Cornaglia)']
+			}
+		]
+	},
+	{
+		label: 'Undergraduate — PUCP',
+		terms: [
+			{
+				term: 'Sixth Year',
+				courses: [
+					'Electromagnetism II',
+					'Quantum Field Theory I & II (auditing, University of São Paulo)',
+					'Experimental Physics I',
+					'Physics Seminar',
+					'Research Studies I & II'
+				]
+			},
+			{
+				term: 'Fifth Year',
+				courses: [
+					'Optics and Photonics',
+					'Solid State Physics',
+					'Computational Techniques in Physics',
+					'Quantum Mechanics II',
+					'Thermodynamics and Statistical Mechanics',
+					'Elementary Particles'
+				]
+			},
+			{
+				term: 'Fourth Year',
+				courses: [
+					'Applied Differential Equations',
+					'Non-Linear Dynamics',
+					'Quantum Mechanics I',
+					'Classical Mechanics I & II',
+					'Modern Physics',
+					'Topics in General Physics',
+					'Physics 4 — Optics'
+				]
+			},
+			{
+				term: 'Third Year',
+				courses: [
+					'Mathematical Tools for Physics',
+					'Electromagnetism I',
+					'Electronics',
+					'Series and Transformations',
+					'Digital Systems',
+					'Analog Circuits',
+					'Theory of Electromagnetic Fields'
+				]
+			},
+			{
+				term: 'Second Year',
+				courses: [
+					'Electric Circuits I',
+					'Calculus 3 & 4',
+					'Physics 3 — Electricity and Magnetism',
+					'Digital Design',
+					'Electronic Innovation'
+				]
+			}
+		]
+	}
+]
+
+const other = [
+	{
+		title: 'TopCoder Archive',
+		note: '61 SRM Division I problems',
+		href: '/topcoder/index.html'
+	},
+	{ title: 'Harada 9×9', note: 'a personal development mandala', href: '/m/9x9.html' }
+]
+---
+
+<PageLayout meta={{ title: 'Misc' }}>
+	<div class='mx-auto flex w-full max-w-[44rem] flex-col gap-y-12'>
+		<div>
+			<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Misc</h1>
+			<p class='mt-1 font-garamond text-lg text-muted-foreground'>
+				Coursework, competitions, and other things.
+			</p>
+		</div>
+
+		<section class='flex flex-col gap-y-3'>
+			<h2 class='font-cormorant text-2xl font-semibold text-gold'>Online courses</h2>
+			<ul class='flex flex-col gap-y-1 font-garamond text-lg'>
+				{
+					online.map((c) => (
+						<li>
+							<a class='illuminated-link font-medium text-foreground' href={c.href}>
+								{c.title}
+							</a>
+							<span class='text-muted-foreground'> · {c.by}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		{
+			coursework.map((school) => (
+				<section class='flex flex-col gap-y-4'>
+					<h2 class='font-cormorant text-2xl font-semibold text-gold'>{school.label}</h2>
+					<div class='flex flex-col gap-y-4'>
+						{school.terms.map((t) => (
+							<div class='flex flex-col gap-y-1'>
+								<h3 class='font-garamond text-sm font-semibold uppercase tracking-wide text-muted-foreground'>
+									{t.term}
+								</h3>
+								<p class='font-garamond text-lg leading-relaxed text-foreground'>
+									{t.courses.join(' · ')}
+								</p>
+							</div>
+						))}
+					</div>
+				</section>
+			))
+		}
+
+		<section class='flex flex-col gap-y-3'>
+			<h2 class='font-cormorant text-2xl font-semibold text-gold'>Other</h2>
+			<ul class='flex flex-col gap-y-1 font-garamond text-lg'>
+				{
+					other.map((o) => (
+						<li>
+							<a class='illuminated-link font-medium text-foreground' href={o.href}>
+								{o.title}
+							</a>
+							<span class='text-muted-foreground'> · {o.note}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</div>
+</PageLayout>

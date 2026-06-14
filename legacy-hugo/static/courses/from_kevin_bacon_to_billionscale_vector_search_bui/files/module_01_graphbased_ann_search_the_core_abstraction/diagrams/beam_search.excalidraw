@@ -1,0 +1,739 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "mcp-excalidraw-server",
+  "elements": [
+    {
+      "id": "mnhvam6amz1wnxe0iag",
+      "type": "text",
+      "x": 280,
+      "y": 15,
+      "strokeColor": "#1e1e1e",
+      "text": "Beam Search: Expanding the Frontier vs. Greedy",
+      "fontSize": 22,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aelnrqc3c0rg",
+      "type": "text",
+      "x": 30,
+      "y": 55,
+      "strokeColor": "#e03131",
+      "text": "GREEDY SEARCH (beam_width=1)",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aig021nirch",
+      "type": "text",
+      "x": 30,
+      "y": 75,
+      "strokeColor": "#e03131",
+      "text": "Single candidate — fast but fragile",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "g_entry",
+      "type": "ellipse",
+      "x": 40,
+      "y": 110,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aqyqz1jry1ak",
+      "type": "text",
+      "x": 53,
+      "y": 126,
+      "strokeColor": "#1971c2",
+      "text": "E",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "g_a",
+      "type": "ellipse",
+      "x": 130,
+      "y": 90,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6anynsak3x3ws",
+      "type": "text",
+      "x": 143,
+      "y": 106,
+      "strokeColor": "#f08c00",
+      "text": "A",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "g_b",
+      "type": "ellipse",
+      "x": 140,
+      "y": 165,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6apjcgrcm5epo",
+      "type": "text",
+      "x": 153,
+      "y": 181,
+      "strokeColor": "#e03131",
+      "text": "B",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "g_c",
+      "type": "ellipse",
+      "x": 240,
+      "y": 80,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a3ulzm505k0q",
+      "type": "text",
+      "x": 253,
+      "y": 96,
+      "strokeColor": "#e03131",
+      "text": "C",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a5scmuwuo067",
+      "type": "text",
+      "x": 248,
+      "y": 63,
+      "strokeColor": "#e03131",
+      "text": "wrong!",
+      "fontSize": 10,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "g_d",
+      "type": "ellipse",
+      "x": 240,
+      "y": 160,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6adnyakdv2v",
+      "type": "text",
+      "x": 253,
+      "y": 176,
+      "strokeColor": "#2f9e44",
+      "text": "D",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6awrvv740bva",
+      "type": "text",
+      "x": 245,
+      "y": 212,
+      "strokeColor": "#2f9e44",
+      "text": "TRUE NN",
+      "fontSize": 10,
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a9v5t3z56cy5",
+      "type": "arrow",
+      "x": 91.28561180551858,
+      "y": 125.49208626544032,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          31.42877638896283,
+          -6.984172530880642
+        ]
+      ],
+      "start": {
+        "id": "g_entry"
+      },
+      "end": {
+        "id": "g_a"
+      },
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aw50wik7hz8",
+      "type": "arrow",
+      "x": 88.2864772602994,
+      "y": 146.4575624931647,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#adb5bd",
+      "strokeWidth": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          47.42704547940117,
+          26.084875013670626
+        ]
+      ],
+      "start": {
+        "id": "g_entry"
+      },
+      "end": {
+        "id": "g_b"
+      },
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6awlflp0w861t",
+      "type": "arrow",
+      "x": 181.8767961940311,
+      "y": 109.28392761872445,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          50.2464076119378,
+          -4.567855237448896
+        ]
+      ],
+      "start": {
+        "id": "g_a"
+      },
+      "end": {
+        "id": "g_c"
+      },
+      "createdAt": "2026-04-02T19:28:12.230Z",
+      "updatedAt": "2026-04-02T19:28:12.230Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6apaxive6ue1",
+      "type": "arrow",
+      "x": 177.30984463196322,
+      "y": 128.10626476579478,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#adb5bd",
+      "strokeWidth": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          59.38031073607357,
+          37.78747046841045
+        ]
+      ],
+      "start": {
+        "id": "g_a"
+      },
+      "end": {
+        "id": "g_d"
+      },
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a45s4lhysh2x",
+      "type": "text",
+      "x": 40,
+      "y": 240,
+      "strokeColor": "#e03131",
+      "text": "Greedily took E→A (nearest neighbor)\nthen A→C (nearest from A)\nBut D was reachable via B!\nBeam_width=1 gets stuck at C.",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a4l8r1vk53cc",
+      "type": "text",
+      "x": 400,
+      "y": 55,
+      "strokeColor": "#2f9e44",
+      "text": "BEAM SEARCH (beam_width=3)",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aj97qfmbqiz",
+      "type": "text",
+      "x": 400,
+      "y": 75,
+      "strokeColor": "#2f9e44",
+      "text": "3 candidates maintained — finds the true NN!",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "b_entry",
+      "type": "ellipse",
+      "x": 410,
+      "y": 110,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6aodp3yja1j6q",
+      "type": "text",
+      "x": 423,
+      "y": 126,
+      "strokeColor": "#1971c2",
+      "text": "E",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "b_a",
+      "type": "ellipse",
+      "x": 500,
+      "y": 90,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ai86zpeyopwh",
+      "type": "text",
+      "x": 513,
+      "y": 106,
+      "strokeColor": "#f08c00",
+      "text": "A",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "b_b",
+      "type": "ellipse",
+      "x": 510,
+      "y": 165,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ah7tbguksdp5",
+      "type": "text",
+      "x": 523,
+      "y": 181,
+      "strokeColor": "#f08c00",
+      "text": "B",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "b_c",
+      "type": "ellipse",
+      "x": 610,
+      "y": 80,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ab9ae5mnnvvb",
+      "type": "text",
+      "x": 623,
+      "y": 96,
+      "strokeColor": "#e03131",
+      "text": "C",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "b_d",
+      "type": "ellipse",
+      "x": 610,
+      "y": 160,
+      "width": 44,
+      "height": 44,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 3,
+      "createdAt": "2026-04-02T19:28:12.231Z",
+      "updatedAt": "2026-04-02T19:28:12.231Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ah5nkb0ksnsj",
+      "type": "text",
+      "x": 623,
+      "y": 176,
+      "strokeColor": "#2f9e44",
+      "text": "D",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.232Z",
+      "updatedAt": "2026-04-02T19:28:12.232Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ax1nzipl2529",
+      "type": "text",
+      "x": 615,
+      "y": 212,
+      "strokeColor": "#2f9e44",
+      "text": "TRUE NN ✓",
+      "fontSize": 10,
+      "createdAt": "2026-04-02T19:28:12.232Z",
+      "updatedAt": "2026-04-02T19:28:12.232Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6azhos497irz",
+      "type": "arrow",
+      "x": 461.2856118055186,
+      "y": 125.4920862654403,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          31.428776388962774,
+          -6.984172530880613
+        ]
+      ],
+      "start": {
+        "id": "b_entry"
+      },
+      "end": {
+        "id": "b_a"
+      },
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a2c8ic2wkirl",
+      "type": "arrow",
+      "x": 458.2864772602994,
+      "y": 146.4575624931647,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          47.427045479401215,
+          26.084875013670626
+        ]
+      ],
+      "start": {
+        "id": "b_entry"
+      },
+      "end": {
+        "id": "b_b"
+      },
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6as7h7dq5um5q",
+      "type": "arrow",
+      "x": 551.876796194031,
+      "y": 109.28392761872445,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          50.24640761193791,
+          -4.567855237448896
+        ]
+      ],
+      "start": {
+        "id": "b_a"
+      },
+      "end": {
+        "id": "b_c"
+      },
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6afo761rkdqwh",
+      "type": "arrow",
+      "x": 547.3098446319632,
+      "y": 128.10626476579478,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          59.380310736073625,
+          37.78747046841045
+        ]
+      ],
+      "start": {
+        "id": "b_a"
+      },
+      "end": {
+        "id": "b_d"
+      },
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6a43jieu7zwxo",
+      "type": "arrow",
+      "x": 561.9625701663354,
+      "y": 185.50187149168323,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40.07485966732929,
+          -2.0037429833664646
+        ]
+      ],
+      "start": {
+        "id": "b_b"
+      },
+      "end": {
+        "id": "b_d"
+      },
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6adufpla9ysej",
+      "type": "text",
+      "x": 400,
+      "y": 240,
+      "strokeColor": "#2f9e44",
+      "text": "Beam = {A, B} kept both E’s neighbors.\nExpanded A: added C, D to beam.\nExpanded B: also found D!\nD confirmed via 2 paths → returned. ✓",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6atgmghas7dy",
+      "type": "rectangle",
+      "x": 20,
+      "y": 320,
+      "width": 950,
+      "height": 130,
+      "backgroundColor": "#f8f9fa",
+      "strokeColor": "#adb5bd",
+      "strokeWidth": 1,
+      "strokeStyle": "dashed",
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ajllz1z6xxo",
+      "type": "text",
+      "x": 30,
+      "y": 330,
+      "strokeColor": "#1e1e1e",
+      "text": "BEAM WIDTH vs. RECALL@10 (empirical, 5K vectors, d=64, M=10)",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6av1b7b6c82h",
+      "type": "text",
+      "x": 40,
+      "y": 355,
+      "strokeColor": "#1e1e1e",
+      "text": "beam_width=  1  |  10  |  25  |  50  | 100  | 200",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ajj4850rh8pj",
+      "type": "text",
+      "x": 40,
+      "y": 380,
+      "strokeColor": "#2f9e44",
+      "text": "recall@10 = 0.50 | 0.68 | 0.78 | 0.85 | 0.91 | 0.95",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ayyjysuvoix",
+      "type": "text",
+      "x": 40,
+      "y": 405,
+      "strokeColor": "#1971c2",
+      "text": "nodes_vis =  12  |  45  |  95  | 175  | 320  | 580  (out of 5,000 total = 11.6% max!)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6an92i4wrxioh",
+      "type": "text",
+      "x": 40,
+      "y": 430,
+      "strokeColor": "#9c36b5",
+      "text": "↑ The key insight: even beam_width=200 visits only 11.6% of nodes. Sublinear by design.",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    },
+    {
+      "id": "mnhvam6ayte7nlyyljo",
+      "type": "text",
+      "x": 500,
+      "y": 330,
+      "strokeColor": "#0c8599",
+      "text": "Production ANN systems expose beam_width as the\nprimary latency-recall knob (ef_search in HNSW,\nL in DiskANN). Increase for more accuracy,\ndecrease for lower latency.",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:28:12.233Z",
+      "updatedAt": "2026-04-02T19:28:12.233Z",
+      "version": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

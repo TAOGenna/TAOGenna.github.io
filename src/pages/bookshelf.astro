@@ -1,0 +1,14 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import BookShelf from '@/components/BookShelf.astro'
+---
+
+<PageLayout meta={{ title: 'Bookshelf' }}>
+	<div class='mx-auto w-full max-w-[44rem]'>
+		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Bookshelf</h1>
+		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
+			Books I've read and started, by year.
+		</p>
+		<BookShelf />
+	</div>
+</PageLayout>

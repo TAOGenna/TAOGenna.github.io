@@ -1,0 +1,576 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "mcp-excalidraw-server",
+  "elements": [
+    {
+      "id": "mnhx0rvumavj85ij9z",
+      "type": "text",
+      "x": 280,
+      "y": 15,
+      "strokeColor": "#1e1e1e",
+      "text": "RobustPrune: How Alpha Controls Long-Edge Preservation",
+      "fontSize": 20,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu760polhkezy",
+      "type": "text",
+      "x": 50,
+      "y": 55,
+      "strokeColor": "#e03131",
+      "text": "alpha = 1.0 (aggressive pruning)",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvux6ezd8v23pk",
+      "type": "text",
+      "x": 580,
+      "y": 55,
+      "strokeColor": "#2f9e44",
+      "text": "alpha = 2.0 (slack preserves long edges)",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "p_left",
+      "type": "ellipse",
+      "x": 60,
+      "y": 160,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvudjmtj6v51p4",
+      "type": "text",
+      "x": 80,
+      "y": 182,
+      "strokeColor": "#f08c00",
+      "text": "p",
+      "fontSize": 18,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvur9iydsqzp8q",
+      "type": "text",
+      "x": 55,
+      "y": 228,
+      "strokeColor": "#f08c00",
+      "text": "source node",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "c_star_left",
+      "type": "ellipse",
+      "x": 200,
+      "y": 140,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu9nb8gdmp4vu",
+      "type": "text",
+      "x": 213,
+      "y": 157,
+      "strokeColor": "#2f9e44",
+      "text": "c*",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuhunaz08gism",
+      "type": "text",
+      "x": 188,
+      "y": 103,
+      "strokeColor": "#2f9e44",
+      "text": "closest candidate\ndist(p,c*)=1.0",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "q_near_left",
+      "type": "ellipse",
+      "x": 310,
+      "y": 140,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu14wvudl4z0y",
+      "type": "text",
+      "x": 326,
+      "y": 157,
+      "strokeColor": "#e03131",
+      "text": "q",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvudfv8prl9zwb",
+      "type": "text",
+      "x": 295,
+      "y": 103,
+      "strokeColor": "#e03131",
+      "text": "candidate\ndist(p,q)=2.0\ndist(c*,q)=1.0",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "q_far_left",
+      "type": "ellipse",
+      "x": 200,
+      "y": 270,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvukmcxvqztx6",
+      "type": "text",
+      "x": 216,
+      "y": 287,
+      "strokeColor": "#e03131",
+      "text": "r",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu375xiedebzk",
+      "type": "text",
+      "x": 185,
+      "y": 333,
+      "strokeColor": "#e03131",
+      "text": "candidate\ndist(p,r)=5.0\ndist(c*,r)=4.5",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu4jjxlkww9le",
+      "type": "arrow",
+      "x": 127.50123415011448,
+      "y": 183.86343441179943,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 3,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          64.96471815701541,
+          -10.630590243875218
+        ]
+      ],
+      "start": {
+        "id": "p_left"
+      },
+      "end": {
+        "id": "c_star_left"
+      },
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvutxq2x0jkg1l",
+      "type": "arrow",
+      "x": 263,
+      "y": 167.5,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#9c36b5",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          39,
+          0
+        ]
+      ],
+      "start": {
+        "id": "c_star_left"
+      },
+      "end": {
+        "id": "q_near_left"
+      },
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuufdul8pue6q",
+      "type": "text",
+      "x": 115,
+      "y": 375,
+      "strokeColor": "#e03131",
+      "text": "PRUNED: dist(p,q)=2.0 >= 1.0 * dist(c*,q)=1.0  ✗\nPRUNED: dist(p,r)=5.0 >= 1.0 * dist(c*,r)=4.5  ✗\nOnly c* survives",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvus1dxepqtudm",
+      "type": "text",
+      "x": 145,
+      "y": 430,
+      "strokeColor": "#e03131",
+      "text": "Result: 1 edge only (tight cluster, no long reach)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "p_right",
+      "type": "ellipse",
+      "x": 610,
+      "y": 160,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvubhhvhbc9ly8",
+      "type": "text",
+      "x": 630,
+      "y": 182,
+      "strokeColor": "#f08c00",
+      "text": "p",
+      "fontSize": 18,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvunaeacjt5h2e",
+      "type": "text",
+      "x": 605,
+      "y": 228,
+      "strokeColor": "#f08c00",
+      "text": "source node",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "c_star_right",
+      "type": "ellipse",
+      "x": 750,
+      "y": 140,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuchs0zlylywe",
+      "type": "text",
+      "x": 763,
+      "y": 157,
+      "strokeColor": "#2f9e44",
+      "text": "c*",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvudbxh96k30zm",
+      "type": "text",
+      "x": 738,
+      "y": 103,
+      "strokeColor": "#2f9e44",
+      "text": "closest candidate\ndist(p,c*)=1.0",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "q_near_right",
+      "type": "ellipse",
+      "x": 860,
+      "y": 140,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuj13g4hxfcd",
+      "type": "text",
+      "x": 876,
+      "y": 157,
+      "strokeColor": "#e03131",
+      "text": "q",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu7xmohn2gmel",
+      "type": "text",
+      "x": 845,
+      "y": 103,
+      "strokeColor": "#e03131",
+      "text": "candidate\ndist(p,q)=2.0\ndist(c*,q)=1.0",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "q_far_right",
+      "type": "ellipse",
+      "x": 750,
+      "y": 270,
+      "width": 55,
+      "height": 55,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvukn89u3hwie9",
+      "type": "text",
+      "x": 766,
+      "y": 287,
+      "strokeColor": "#2f9e44",
+      "text": "r",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu3lkvr14tllv",
+      "type": "text",
+      "x": 735,
+      "y": 333,
+      "strokeColor": "#2f9e44",
+      "text": "candidate\ndist(p,r)=5.0\ndist(c*,r)=4.5",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuzw3j6qzxx8",
+      "type": "arrow",
+      "x": 677.5012341501146,
+      "y": 183.86343441179943,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 3,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          64.96471815701534,
+          -10.630590243875218
+        ]
+      ],
+      "start": {
+        "id": "p_right"
+      },
+      "end": {
+        "id": "c_star_right"
+      },
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuer6ocyml99u",
+      "type": "arrow",
+      "x": 669.9366723202526,
+      "y": 213.40503472310655,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 3,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          79.59617327530088,
+          62.229735469780735
+        ]
+      ],
+      "start": {
+        "id": "p_right"
+      },
+      "end": {
+        "id": "q_far_right"
+      },
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu16wi8jg8g6b",
+      "type": "arrow",
+      "x": 813,
+      "y": 167.5,
+      "width": 0,
+      "height": 0,
+      "strokeColor": "#9c36b5",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          39,
+          0
+        ]
+      ],
+      "start": {
+        "id": "c_star_right"
+      },
+      "end": {
+        "id": "q_near_right"
+      },
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuf65cxhlzu9h",
+      "type": "text",
+      "x": 635,
+      "y": 375,
+      "strokeColor": "#2f9e44",
+      "text": "PRUNED: dist(p,q)=2.0 >= 2.0 * dist(c*,q)=1.0  check: 2.0 >= 2.0 ✗\nKEPT:   dist(p,r)=5.0 >= 2.0 * dist(c*,r)=4.5  check: 5.0 >= 9.0 ✓\nBoth c* and r survive",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvuykj1a3h26k",
+      "type": "text",
+      "x": 645,
+      "y": 430,
+      "strokeColor": "#2f9e44",
+      "text": "Result: 2 edges — c* (close) + r (long reach!)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvug3l9es9ukoc",
+      "type": "line",
+      "x": 530,
+      "y": 80,
+      "width": 0,
+      "height": 400,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1,
+      "strokeStyle": "dashed",
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu483r0uy6b3w",
+      "type": "text",
+      "x": 200,
+      "y": 465,
+      "strokeColor": "#1e1e1e",
+      "text": "Pruning condition: REMOVE candidate q if  dist(p, q) >= alpha * dist(c*, q)",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    },
+    {
+      "id": "mnhx0rvu6jomrb7kb7g",
+      "type": "text",
+      "x": 200,
+      "y": 490,
+      "strokeColor": "#9c36b5",
+      "text": "Higher alpha = more slack = more long edges survive = better far-away navigation (up to a point)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T20:16:32.300Z",
+      "updatedAt": "2026-04-02T20:16:32.300Z",
+      "version": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

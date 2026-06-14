@@ -1,0 +1,636 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "mcp-excalidraw-server",
+  "elements": [
+    {
+      "id": "mnvqo1rp6bshk6dvrjg",
+      "type": "text",
+      "x": 350,
+      "y": 20,
+      "strokeColor": "#1e1e1e",
+      "text": "The Transform Coding Pipeline",
+      "fontSize": 24,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.390Z",
+      "updatedAt": "2026-04-12T12:27:27.390Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rplynefqllte",
+      "type": "text",
+      "x": 30,
+      "y": 80,
+      "strokeColor": "#9c36b5",
+      "text": "SIGNAL IN",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.391Z",
+      "updatedAt": "2026-04-12T12:27:27.391Z",
+      "version": 1
+    },
+    {
+      "id": "input_box",
+      "type": "rectangle",
+      "x": 30,
+      "y": 100,
+      "width": 150,
+      "height": 100,
+      "backgroundColor": "#d0bfff",
+      "strokeColor": "#9c36b5",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.392Z",
+      "updatedAt": "2026-04-12T12:27:27.392Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rpldp2iolpq1i",
+      "type": "text",
+      "x": 40,
+      "y": 118,
+      "strokeColor": "#1e1e1e",
+      "text": "x = [0.85, 0.92, 0.71,\n0.43, 0.08, -0.31,\n-0.59, -0.72, -0.61,\n-0.28, 0.18, 0.61]",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.393Z",
+      "updatedAt": "2026-04-12T12:27:27.393Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rp58zwot0re2o",
+      "type": "text",
+      "x": 40,
+      "y": 195,
+      "strokeColor": "#9c36b5",
+      "text": "12 samples of sin(3Hz)",
+      "fontSize": 10,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.393Z",
+      "updatedAt": "2026-04-12T12:27:27.393Z",
+      "version": 1
+    },
+    {
+      "id": "encoder_box",
+      "type": "rectangle",
+      "x": 240,
+      "y": 110,
+      "width": 130,
+      "height": 70,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.394Z",
+      "updatedAt": "2026-04-12T12:27:27.394Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rprck3nmj6hcp",
+      "type": "text",
+      "x": 253,
+      "y": 123,
+      "strokeColor": "#e03131",
+      "text": "ANALYSIS\nTRANSFORM g_a",
+      "fontSize": 13,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.394Z",
+      "updatedAt": "2026-04-12T12:27:27.394Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rpezcqp6px6rm",
+      "type": "text",
+      "x": 253,
+      "y": 163,
+      "strokeColor": "#1e1e1e",
+      "text": "y = Wx (linear)",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.394Z",
+      "updatedAt": "2026-04-12T12:27:27.394Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rpdnyh9l6x5i5",
+      "type": "arrow",
+      "x": 187.997501171265,
+      "y": 147.9250624707184,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          44.00499765747003,
+          -1.1001249414367749
+        ]
+      ],
+      "start": {
+        "id": "input_box"
+      },
+      "end": {
+        "id": "encoder_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.395Z",
+      "updatedAt": "2026-04-12T12:27:27.395Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqnc00sef3rn",
+      "type": "text",
+      "x": 425,
+      "y": 80,
+      "strokeColor": "#e03131",
+      "text": "LATENT y",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.395Z",
+      "updatedAt": "2026-04-12T12:27:27.395Z",
+      "version": 1
+    },
+    {
+      "id": "latent_box",
+      "type": "rectangle",
+      "x": 425,
+      "y": 100,
+      "width": 150,
+      "height": 100,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.395Z",
+      "updatedAt": "2026-04-12T12:27:27.395Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqd8ifuos6zcp",
+      "type": "text",
+      "x": 435,
+      "y": 115,
+      "strokeColor": "#1e1e1e",
+      "text": "y = [4.21, -0.03,\n0.87, 0.02,\n-0.04, 0.01,\n0.00, -0.02, ...]",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.396Z",
+      "updatedAt": "2026-04-12T12:27:27.396Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqhhqfemgblln",
+      "type": "text",
+      "x": 435,
+      "y": 192,
+      "strokeColor": "#e03131",
+      "text": "energy concentrated!",
+      "fontSize": 10,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.396Z",
+      "updatedAt": "2026-04-12T12:27:27.396Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rql13sfbwfs4b",
+      "type": "arrow",
+      "x": 377.99737144727584,
+      "y": 146.87172747300707,
+      "width": 55,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          39.00525710544832,
+          1.0001347975756119
+        ]
+      ],
+      "start": {
+        "id": "encoder_box"
+      },
+      "end": {
+        "id": "latent_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.396Z",
+      "updatedAt": "2026-04-12T12:27:27.396Z",
+      "version": 1
+    },
+    {
+      "id": "quantizer_box",
+      "type": "rectangle",
+      "x": 635,
+      "y": 110,
+      "width": 130,
+      "height": 70,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.396Z",
+      "updatedAt": "2026-04-12T12:27:27.396Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqhpomfppbeb",
+      "type": "text",
+      "x": 648,
+      "y": 123,
+      "strokeColor": "#f08c00",
+      "text": "QUANTIZER Q",
+      "fontSize": 13,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.397Z",
+      "updatedAt": "2026-04-12T12:27:27.397Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqzchw9d3l7z9",
+      "type": "text",
+      "x": 648,
+      "y": 148,
+      "strokeColor": "#1e1e1e",
+      "text": "ŷ = round(y)",
+      "fontSize": 12,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.397Z",
+      "updatedAt": "2026-04-12T12:27:27.397Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqpovsrkg8wh",
+      "type": "text",
+      "x": 648,
+      "y": 168,
+      "strokeColor": "#f08c00",
+      "text": "integer buckets",
+      "fontSize": 10,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.398Z",
+      "updatedAt": "2026-04-12T12:27:27.398Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqfsfcj6uyrp",
+      "type": "arrow",
+      "x": 582.997501171265,
+      "y": 147.9250624707184,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          44.004997657470085,
+          -1.1001249414367749
+        ]
+      ],
+      "start": {
+        "id": "latent_box"
+      },
+      "end": {
+        "id": "quantizer_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.398Z",
+      "updatedAt": "2026-04-12T12:27:27.398Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqg1jdcfbi9x8",
+      "type": "text",
+      "x": 825,
+      "y": 80,
+      "strokeColor": "#f08c00",
+      "text": "QUANTIZED ŷ",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.398Z",
+      "updatedAt": "2026-04-12T12:27:27.398Z",
+      "version": 1
+    },
+    {
+      "id": "quant_latent_box",
+      "type": "rectangle",
+      "x": 825,
+      "y": 100,
+      "width": 150,
+      "height": 100,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.398Z",
+      "updatedAt": "2026-04-12T12:27:27.398Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqbatgisg58h8",
+      "type": "text",
+      "x": 835,
+      "y": 115,
+      "strokeColor": "#1e1e1e",
+      "text": "ŷ = [4, 0,\n1, 0,\n0, 0,\n0, 0, ...]",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.398Z",
+      "updatedAt": "2026-04-12T12:27:27.398Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqydcmfrhj42m",
+      "type": "text",
+      "x": 835,
+      "y": 183,
+      "strokeColor": "#f08c00",
+      "text": "only 2 nonzero! → few bits",
+      "fontSize": 10,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqxxek87zs6yp",
+      "type": "arrow",
+      "x": 772.997501171265,
+      "y": 146.8249375292816,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          44.004997657470085,
+          1.1001249414367749
+        ]
+      ],
+      "start": {
+        "id": "quantizer_box"
+      },
+      "end": {
+        "id": "quant_latent_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "decoder_box",
+      "type": "rectangle",
+      "x": 1035,
+      "y": 110,
+      "width": 130,
+      "height": 70,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqp8ttlph0wv9",
+      "type": "text",
+      "x": 1048,
+      "y": 123,
+      "strokeColor": "#2f9e44",
+      "text": "SYNTHESIS\nTRANSFORM g_s",
+      "fontSize": 13,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rq4cxfgiwqrwk",
+      "type": "text",
+      "x": 1048,
+      "y": 163,
+      "strokeColor": "#1e1e1e",
+      "text": "x̂ = W⁻¹ŷ",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqdd6f53cy5oa",
+      "type": "arrow",
+      "x": 982.997501171265,
+      "y": 147.9250624707184,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          44.004997657470085,
+          -1.1001249414367749
+        ]
+      ],
+      "start": {
+        "id": "quant_latent_box"
+      },
+      "end": {
+        "id": "decoder_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqa8i4242od8a",
+      "type": "text",
+      "x": 1225,
+      "y": 80,
+      "strokeColor": "#2f9e44",
+      "text": "RECONSTRUCTION",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "output_box",
+      "type": "rectangle",
+      "x": 1225,
+      "y": 100,
+      "width": 150,
+      "height": 100,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.399Z",
+      "updatedAt": "2026-04-12T12:27:27.399Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqki4m1pmzcip",
+      "type": "text",
+      "x": 1235,
+      "y": 118,
+      "strokeColor": "#1e1e1e",
+      "text": "x̂ ≈ [0.84, 0.91, 0.70,\n0.42, 0.08, -0.30,\n-0.58, -0.71, -0.60,\n-0.27, 0.17, 0.60]",
+      "fontSize": 11,
+      "fontFamily": 3,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rq3tjvm5u2mzb",
+      "type": "text",
+      "x": 1235,
+      "y": 195,
+      "strokeColor": "#2f9e44",
+      "text": "MSE ≈ 0.0001",
+      "fontSize": 10,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqr74ovqk8erg",
+      "type": "arrow",
+      "x": 1172.997501171265,
+      "y": 146.8249375292816,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          44.004997657470085,
+          1.1001249414367749
+        ]
+      ],
+      "start": {
+        "id": "decoder_box"
+      },
+      "end": {
+        "id": "output_box"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rq6ibniap30fc",
+      "type": "text",
+      "x": 30,
+      "y": 230,
+      "strokeColor": "#1971c2",
+      "text": "KEY INSIGHT: The transform concentrates signal energy.\nMost of the signal lives in coefficient [0] = 4.21 (the DC component + 3Hz sine).\nAll high-freq coefficients ≈ 0 → round to 0 → free!",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqahqao2s4rgt",
+      "type": "rectangle",
+      "x": 425,
+      "y": 280,
+      "width": 550,
+      "height": 60,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "strokeWidth": 1,
+      "roughness": 0,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqr8rec2uw4bo",
+      "type": "text",
+      "x": 440,
+      "y": 293,
+      "strokeColor": "#1971c2",
+      "text": "RATE: only 2 coefficients need bits → ~4 bits total\nDISTORTION: MSE ≈ 0.0001 (excellent reconstruction)",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqf8sjytjxuy9",
+      "type": "text",
+      "x": 30,
+      "y": 365,
+      "strokeColor": "#1e1e1e",
+      "text": "JPEG does this with a fixed DCT basis (left). Ballé et al. LEARN the transforms jointly to minimize R + λD (right).",
+      "fontSize": 12,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqdft7e1dl1jb",
+      "type": "text",
+      "x": 182,
+      "y": 260,
+      "strokeColor": "#e03131",
+      "text": "LINEAR (JPEG)\nfixed DCT\nbasis",
+      "fontSize": 11,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.400Z",
+      "updatedAt": "2026-04-12T12:27:27.400Z",
+      "version": 1
+    },
+    {
+      "id": "mnvqo1rqx7a8yfn0k0j",
+      "type": "text",
+      "x": 1003,
+      "y": 260,
+      "strokeColor": "#2f9e44",
+      "text": "NONLINEAR (learned)\ng_a warps the space\nfor better quantization",
+      "fontSize": 11,
+      "fontFamily": 2,
+      "createdAt": "2026-04-12T12:27:27.401Z",
+      "updatedAt": "2026-04-12T12:27:27.401Z",
+      "version": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

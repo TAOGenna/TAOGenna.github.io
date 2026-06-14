@@ -1,0 +1,84 @@
+---
+interface Props {
+	href?: string
+	label?: string
+	size?: number
+}
+const { href = '/work', label = 'MORE · ', size = 132 } = Astro.props
+const text = label.repeat(6)
+---
+
+<a
+	href={href}
+	class='more-work group'
+	aria-label='See more work'
+	style={`width:${size}px;height:${size}px;`}
+>
+	<svg viewBox='0 0 200 200' class='more-work__ring' aria-hidden='true'>
+		<defs>
+			<path id='mw-circle' d='M 100,100 m -70,0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0'></path>
+		</defs>
+		<text class='more-work__text' font-size='13.5' letter-spacing='1'>
+			<textPath href='#mw-circle' startOffset='0'>{text}</textPath>
+		</text>
+	</svg>
+	<span class='more-work__hub' aria-hidden='true'>→</span>
+</a>
+
+<style>
+	.more-work {
+		position: relative;
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.3s ease;
+	}
+	.more-work:hover {
+		transform: scale(1.05);
+	}
+	.more-work__ring {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		transform-origin: center;
+		animation: mw-spin 16s linear infinite;
+	}
+	.more-work__text {
+		fill: hsl(var(--bronze));
+		font-family: 'Cormorant Garamond Variable', serif;
+		font-weight: 600;
+		text-transform: uppercase;
+	}
+	.more-work__hub {
+		position: relative;
+		display: flex;
+		height: 36%;
+		width: 36%;
+		align-items: center;
+		justify-content: center;
+		border-radius: 9999px;
+		border: 1px solid hsl(var(--gold) / 0.45);
+		background: hsl(var(--gold) / 0.12);
+		color: hsl(var(--gold));
+		font-size: 1.15rem;
+		transition: transform 0.3s ease;
+	}
+	.more-work:hover .more-work__ring {
+		animation-duration: 6s;
+	}
+	.more-work:hover .more-work__hub {
+		transform: translate(2px, -2px) rotate(-45deg);
+	}
+	@keyframes mw-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.more-work__ring {
+			animation: none;
+		}
+	}
+</style>

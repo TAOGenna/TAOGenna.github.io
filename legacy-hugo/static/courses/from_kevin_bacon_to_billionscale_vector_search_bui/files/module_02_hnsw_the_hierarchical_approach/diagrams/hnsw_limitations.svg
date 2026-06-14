@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -25 1150 574" width="800" height="399" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="200" y="41.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">HNSW at Billion Scale: Three Fatal Limitations</text>
+  <rect x="20" y="60" width="330" height="320" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="30" y="92.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">LIMITATION 1: Memory-Only</text>
+  <text x="30" y="117.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">1B vectors × 768 dims × 4 bytes</text>
+  <text x="30" y="137.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">= 3.072 TB RAM for vectors alone</text>
+  <text x="30" y="163.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">+ graph edges (M=16):</text>
+  <text x="30" y="183.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">1B × 16 × 4 bytes = 64 GB</text>
+  <text x="30" y="204.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">+ 20% overhead = ~3.7 TB total</text>
+  <rect x="30" y="215" width="5" height="40" rx="0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="42" y="240.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">SSD: $85/month</text>
+  <rect x="30" y="265" width="290" height="40" rx="0" fill="#e03131" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="35" y="293.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#ffffff" text-anchor="start">RAM: $29,600/month    → 350× more expensive</text>
+  <text x="30" y="332.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Memory: 100ns    SSD: 20,000ns (200× slower)</text>
+  <text x="30" y="363.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Can't serve from SSD — latency blows up</text>
+  <rect x="370" y="60" width="330" height="320" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="380" y="92.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">LIMITATION 2: No True Deletions</text>
+  <text x="380" y="117.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">hnswlib uses 'soft delete' — marks node</text>
+  <text x="380" y="137.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">as deleted, filters at query time.</text>
+  <text x="380" y="166.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">At 10% deletion rate:</text>
+  <text x="380" y="187.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">50 hops per search × 10% = 5 wasted hops</text>
+  <text x="380" y="207.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">= 10% more latency, 0% useful work</text>
+  <text x="380" y="233.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">"Ghost" nodes:</text>
+  <ellipse cx="391.0" cy="251.0" rx="11.0" ry="11.0" fill="#aaa" stroke="#aaa" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="410" y="260.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#aaa" text-anchor="start">DELETED (still in graph!)</text>
+  <ellipse cx="391.0" cy="283.0" rx="11.0" ry="11.0" fill="#2f9e44" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="410" y="292.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">LIVE (useful)</text>
+  <text x="380" y="323.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Updates = delete + insert — also broken.</text>
+  <text x="380" y="343.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Can't change a vector's value in-place.</text>
+  <text x="380" y="363.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">Accumulates over time → 20%, 30%, ...</text>
+  <rect x="720" y="60" width="370" height="320" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="730" y="92.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">LIMITATION 3: Monolithic Storage</text>
+  <text x="730" y="117.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">hnswlib saves via memory dump.</text>
+  <text x="730" y="137.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Any mutation → full rewrite:</text>
+  <text x="730" y="164.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">Insert 10 vectors into 250 GB index:</text>
+  <rect x="730" y="172" width="340" height="32" rx="0" fill="#e03131" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="738" y="197.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#ffffff" text-anchor="start">Step 1: Read 250 GB from disk → RAM</text>
+  <rect x="730" y="212" width="340" height="32" rx="0" fill="#f08c00" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="738" y="237.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#ffffff" text-anchor="start">Step 2: Insert 10 vectors (&lt;1 MB actual)</text>
+  <rect x="730" y="252" width="340" height="32" rx="0" fill="#e03131" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="738" y="277.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#ffffff" text-anchor="start">Step 3: Dump 250 GB back to disk</text>
+  <text x="730" y="311.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">500 GB I/O for &lt; 1 MB of real changes</text>
+  <text x="730" y="333.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">At 2 GB/s SSD: 250 seconds of I/O!</text>
+  <text x="730" y="363.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Impossible for real-time index updates.</text>
+  <rect x="20" y="400" width="1070" height="90" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="3" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="35" y="434.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">DiskANN + Vamana Solution (Modules 3-5):</text>
+  <text x="35" y="458.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">✔ Single flat graph on SSD with tunable long edges → fewer hops → fewer disk reads</text>
+  <text x="35" y="481.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">✔ True deletion via graph contraction + RobustPrune  |  ✔ Per-node RocksDB entries: O(1) mutation cost</text>
+  <text x="35" y="506.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Result: 3 TB RAM cluster → 96 GB RAM single machine  =  ~40× cheaper</text>
+</svg>

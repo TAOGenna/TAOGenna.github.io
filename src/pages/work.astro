@@ -1,0 +1,27 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import { work } from '@/data/work'
+---
+
+<PageLayout meta={{ title: 'Work' }}>
+	<div class='mx-auto w-full max-w-[60rem]'>
+		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Adventures</h1>
+		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
+			A collection
+		</p>
+		<div class='columns-2 gap-4 sm:columns-3 [&>*]:mb-4'>
+			{
+				work.map((item) => (
+					<figure class='break-inside-avoid overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
+						<img src={item.image} alt={item.title} loading='lazy' class='block w-full' />
+						{item.title && (
+							<figcaption class='px-3 py-2 font-garamond text-sm text-muted-foreground'>
+								{item.title}
+							</figcaption>
+						)}
+					</figure>
+				))
+			}
+		</div>
+	</div>
+</PageLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 -20 1148 763" width="800" height="532" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="80" y="46.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Training vs Inference: Why Uniform Noise Replaces Rounding</text>
+  <text x="80" y="84.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">THE PROBLEM: round() has zero gradient almost everywhere</text>
+  <rect x="80" y="88" width="480" height="200" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="100" y="116.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">INFERENCE (what we want)</text>
+  <text x="100" y="137.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ŷ = round(y)    # e.g. y=2.7 → ŷ=3</text>
+  <text x="100" y="170.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Gradient of round:</text>
+  <text x="100" y="190.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">d(round(y))/dy  =  0  almost everywhere</text>
+  <text x="100" y="206.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">                   undefined at integers</text>
+  <text x="100" y="221.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start"></text>
+  <text x="100" y="237.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">→ No gradient flows back to encoder!</text>
+  <text x="100" y="253.0" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">→ Cannot train with SGD.</text>
+  <text x="620" y="84.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">THE FIX: add U(-0.5, 0.5) uniform noise during training</text>
+  <rect x="620" y="88" width="500" height="200" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="640" y="116.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">TRAINING (the proxy)</text>
+  <text x="640" y="137.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">ỹ = y + Δy   where Δy ~ U(-0.5, 0.5)</text>
+  <text x="640" y="170.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">Gradient of noisy pass:</text>
+  <text x="640" y="190.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">d(ỹ)/dy  =  1  everywhere</text>
+  <text x="640" y="206.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start"></text>
+  <text x="640" y="221.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">→ Gradients flow freely!</text>
+  <text x="640" y="237.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">→ Can train with SGD.</text>
+  <text x="640" y="253.0" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">→ Marginal density p_ỹ(n) ≈ P_q(n) at integers.</text>
+  <text x="567" y="196.8" font-size="24" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">vs.</text>
+  <text x="80" y="339.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">KEY INSIGHT: The distributions match at integer points</text>
+  <rect x="80" y="350" width="460" height="200" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="100" y="377.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Discrete distribution of quantized code q</text>
+  <text x="100" y="400.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">P_q(n) = P(round(y) = n)</text>
+  <text x="100" y="416.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">       = P(n - 0.5 ≤ y &lt; n + 0.5)</text>
+  <text x="100" y="431.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">       = integral of p_y(t) from n-0.5 to n+0.5</text>
+  <text x="100" y="447.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="100" y="463.0" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">This is the true bit cost we want to minimize.</text>
+  <text x="100" y="478.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">But: H[P_q] has no gradient w.r.t. y.</text>
+  <rect x="620" y="350" width="500" height="200" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="640" y="377.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Continuous distribution of noisy latent ỹ</text>
+  <text x="640" y="400.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">p_ỹ(t) = (p_y * U)(t)   [convolution]</text>
+  <text x="640" y="416.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="640" y="431.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">  At integer n:  p_ỹ(n)  =  P_q(n)  ✓</text>
+  <text x="640" y="447.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="640" y="463.0" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">So: h[p_ỹ] ≈ H[P_q]   (differential entropy ≈</text>
+  <text x="640" y="478.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">                         discrete entropy)</text>
+  <text x="640" y="494.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start"></text>
+  <text x="640" y="509.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Gradients of h[p_ỹ] w.r.t. y work fine!</text>
+  <text x="80" y="594.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">In code — switch via training flag:</text>
+  <rect x="80" y="600" width="700" height="90" rx="0" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="1" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="95" y="627.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">def quantize(self, y, training):</text>
+  <text x="95" y="643.2" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">    if training:</text>
+  <text x="95" y="658.8" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">        return y + torch.empty_like(y).uniform_(-0.5, 0.5)  # noise proxy</text>
+  <text x="95" y="674.4" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">    else:</text>
+  <text x="95" y="690.0" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">        return torch.round(y)                                 # actual rounding</text>
+  <text x="800" y="599.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">note: noise mode uses h[p_ỹ]</text>
+  <text x="800" y="619.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">as the rate proxy (differential entropy</text>
+  <text x="800" y="636.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">of the noisy latent)</text>
+  <text x="800" y="659.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">round mode uses actual bits</text>
+  <text x="800" y="676.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">assigned by an entropy coder</text>
+</svg>

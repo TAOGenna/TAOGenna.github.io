@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 1220 601" width="800" height="394" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-1e1e1e" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+  <rect x="30" y="30" width="520" height="480" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="70" y="66.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">round(y)  —  the staircase</text>
+  <text x="70" y="84.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">gradient = 0 almost everywhere</text>
+  <rect x="650" y="30" width="520" height="480" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="685" y="66.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">y + Δy  —  the smooth proxy</text>
+  <text x="685" y="84.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">gradient flows freely everywhere</text>
+  <text x="570" y="241.6" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">replace</text>
+  <text x="570" y="263.2" font-size="18" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">   with</text>
+  <path d="M 565.0 260.0 L 665.0 260.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 80.0 420.0 L 180.0 420.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 100.0 440.0 L 200.0 440.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="460" y="449.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y</text>
+  <text x="60" y="106.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">q =</text>
+  <text x="60" y="123.6" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">round(y)</text>
+  <path d="M 130.0 380.0 L 230.0 380.0" fill="none" stroke="#e03131" stroke-width="3" filter="url(#handdrawn)"/>
+  <path d="M 200.0 380.0 L 300.0 380.0" fill="none" stroke="#e03131" stroke-width="3" stroke-dasharray="2 4" filter="url(#handdrawn)"/>
+  <path d="M 200.0 320.0 L 300.0 320.0" fill="none" stroke="#e03131" stroke-width="3" filter="url(#handdrawn)"/>
+  <path d="M 270.0 320.0 L 370.0 320.0" fill="none" stroke="#e03131" stroke-width="3" stroke-dasharray="2 4" filter="url(#handdrawn)"/>
+  <path d="M 270.0 260.0 L 370.0 260.0" fill="none" stroke="#e03131" stroke-width="3" filter="url(#handdrawn)"/>
+  <path d="M 340.0 260.0 L 440.0 260.0" fill="none" stroke="#e03131" stroke-width="3" stroke-dasharray="2 4" filter="url(#handdrawn)"/>
+  <path d="M 340.0 200.0 L 440.0 200.0" fill="none" stroke="#e03131" stroke-width="3" filter="url(#handdrawn)"/>
+  <path d="M 410.0 200.0 L 510.0 200.0" fill="none" stroke="#e03131" stroke-width="3" stroke-dasharray="2 4" filter="url(#handdrawn)"/>
+  <path d="M 410.0 140.0 L 510.0 140.0" fill="none" stroke="#e03131" stroke-width="3" filter="url(#handdrawn)"/>
+  <text x="140" y="405.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">∂q/∂y = 0</text>
+  <text x="210" y="345.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">∂q/∂y = 0</text>
+  <text x="280" y="285.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">∂q/∂y = 0</text>
+  <rect x="130" y="450" width="380" height="46" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="155" y="478.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">⚠  Optimizer is BLIND — no learning signal</text>
+  <path d="M 700.0 420.0 L 800.0 420.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <path d="M 720.0 440.0 L 820.0 440.0" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah-1e1e1e)" filter="url(#handdrawn)"/>
+  <text x="1080" y="449.2" font-size="16" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y</text>
+  <text x="680" y="106.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">ỹ =</text>
+  <text x="680" y="123.6" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">y + Δy</text>
+  <path d="M 750.0 390.0 L 850.0 390.0" fill="none" stroke="#2f9e44" stroke-width="3" filter="url(#handdrawn)"/>
+  <text x="780" y="355.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">∂ỹ/∂y = 1</text>
+  <text x="870" y="295.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">∂ỹ/∂y = 1</text>
+  <text x="960" y="235.6" font-size="13" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">∂ỹ/∂y = 1</text>
+  <text x="720" y="130.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">Δy ~ U(−0.5, 0.5)</text>
+  <text x="720" y="146.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">small random perturbation</text>
+  <text x="720" y="161.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">centered at zero</text>
+  <rect x="750" y="450" width="380" height="46" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="770" y="478.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">✓  Gradients flow — optimizer learns!</text>
+  <text x="200" y="548.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">Key insight: at INTEGER points, the density of ỹ = the PMF of q  →  same entropy, smooth gradients</text>
+</svg>

@@ -1,0 +1,23 @@
+---
+import { bookGroups } from '@/data/books'
+---
+
+<div class='flex flex-col gap-y-10'>
+	{
+		bookGroups.map((group) => (
+			<div class='flex flex-col gap-y-2'>
+				<h3 class='font-cormorant text-xl font-semibold text-gold'>{group.label}</h3>
+				<ul class='flex flex-col'>
+					{group.books.map((book) => (
+						<li class='flex items-baseline justify-between gap-4 border-b border-bronze/15 py-2.5'>
+							<span class='font-cormorant text-lg font-medium leading-tight text-foreground'>
+								{book.title}
+							</span>
+							<span class='shrink-0 text-sm text-muted-foreground'>{book.author}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</div>

@@ -1,0 +1,78 @@
+---
+import { work } from '@/data/work'
+import RotatingBadge from './RotatingBadge.astro'
+
+// Scattered "hand-placed" slots (percent coords within the canvas). Items cycle
+// through these, so adding a piece in work.ts just drops into the next slot.
+const slots = [
+	{ left: '1%', top: '12%', w: '30%', rot: -4, z: 2 },
+	{ left: '31%', top: '2%', w: '27%', rot: 3, z: 3 },
+	{ left: '58%', top: '11%', w: '25%', rot: -3, z: 2 },
+	{ left: '10%', top: '50%', w: '28%', rot: 5, z: 4 },
+	{ left: '40%', top: '47%', w: '31%', rot: -2, z: 3 },
+	{ left: '70%', top: '45%', w: '23%', rot: 4, z: 2 },
+	{ left: '24%', top: '27%', w: '21%', rot: 2, z: 1 }
+]
+---
+
+{/* md+ : scattered canvas */}
+<div class='relative mx-auto hidden h-[30rem] w-full overflow-hidden md:block lg:h-[34rem]'>
+	{
+		work.map((item, i) => {
+			const s = slots[i % slots.length]
+			return (
+				<a
+					href={item.href ?? '/work'}
+					class='collage-tile group absolute'
+					style={`left:${s.left};top:${s.top};width:${s.w};z-index:${s.z};--rot:${s.rot}deg;`}
+					aria-label={item.title}
+				>
+					<img
+						src={item.image}
+						alt={item.title}
+						loading='lazy'
+						class='block aspect-[4/3] w-full rounded-md border-4 border-card object-cover warm-shadow'
+					/>
+				</a>
+			)
+		})
+	}
+	<div class='absolute' style='right:2%;bottom:3%;z-index:20;'>
+		<RotatingBadge href='/work' />
+	</div>
+</div>
+
+{/* mobile : rotated flex-wrap */}
+<div class='flex flex-wrap items-center justify-center gap-4 md:hidden'>
+	{
+		work.map((item, i) => (
+			<a
+				href={item.href ?? '/work'}
+				class='collage-tile group w-2/5'
+				style={`--rot:${slots[i % slots.length].rot}deg;`}
+				aria-label={item.title}
+			>
+				<img
+					src={item.image}
+					alt={item.title}
+					loading='lazy'
+					class='block aspect-[4/3] w-full rounded-md border-4 border-card object-cover warm-shadow'
+				/>
+			</a>
+		))
+	}
+	<RotatingBadge href='/work' size={108} />
+</div>
+
+<style>
+	.collage-tile {
+		transform: rotate(var(--rot));
+		transition:
+			transform 0.3s ease,
+			filter 0.3s ease;
+	}
+	.collage-tile:hover {
+		transform: rotate(0deg) scale(1.05);
+		z-index: 40 !important;
+	}
+</style>

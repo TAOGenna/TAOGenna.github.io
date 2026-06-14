@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 -25 1277 532" width="800" height="333" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+  </defs>
+  <text x="300" y="41.4" font-size="22" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">CoreNN Storage Layout: 4K Page Exploitation</text>
+  <text x="60" y="79.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">NAIVE: Separate Storage (2 disk reads per expanded node)</text>
+  <rect x="60" y="90" width="200" height="80" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="120.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">neighbors[node_42]</text>
+  <text x="70" y="136.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">[17, 88, 203, ...]</text>
+  <text x="70" y="154.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">~200 bytes</text>
+  <rect x="310" y="90" width="200" height="80" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="320" y="120.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">vectors[node_42]</text>
+  <text x="320" y="136.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">[0.12, -0.34, ...]</text>
+  <text x="320" y="154.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">3072 bytes (768-dim)</text>
+  <rect x="60" y="200" width="200" height="40" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="70" y="229.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">SSD Page 1 (4096 bytes)</text>
+  <rect x="310" y="200" width="200" height="40" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="320" y="229.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">SSD Page 2 (4096 bytes)</text>
+  <text x="60" y="269.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Cost: 2 page reads = 2 disk ops = ~40,000 ns latency</text>
+  <text x="60" y="289.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">To get neighbor list AND re-rank vector for one expanded node</text>
+  <path d="M 160.0 170.0 L 260.0 170.0" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <path d="M 410.0 170.0 L 510.0 170.0" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="700" y="79.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">CORENN: Co-located Storage (1 disk read per expanded node)</text>
+  <rect x="700" y="90" width="520" height="130" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="710" y="115.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">DB entry for node_42:</text>
+  <text x="710" y="131.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">KEY:  [0x01][00 00 00 2A]  ← type prefix + 4-byte binary node ID</text>
+  <text x="710" y="149.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">VALUE:</text>
+  <rect x="750" y="148" width="220" height="30" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="760" y="170.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">float32 vector: 768 × 4 = 3072 bytes</text>
+  <rect x="975" y="148" width="60" height="30" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="982" y="169.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">count</text>
+  <text x="982" y="181.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">4 bytes</text>
+  <rect x="1040" y="148" width="160" height="30" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="1050" y="170.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">neighbor IDs: 50×4=200 bytes</text>
+  <text x="710" y="202.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Total: 3276 bytes — fits in ONE 4K SSD page!</text>
+  <rect x="700" y="240" width="520" height="40" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="810" y="269.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">SSD Page (4096 bytes)  —  contains the WHOLE entry</text>
+  <text x="700" y="309.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Cost: 1 page read = 1 disk op = ~20,000 ns latency</text>
+  <text x="700" y="329.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Get neighbor list AND full-precision vector in one shot!</text>
+  <path d="M 960.0 225.0 L 1060.0 225.0" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <text x="60" y="355.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Key insight: We needed the neighbor list anyway (to know where to go next).</text>
+  <text x="60" y="371.2" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">The vector comes along for free within the same 4K page.</text>
+  <text x="60" y="386.8" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">This enables implicit re-ranking without any extra I/O.</text>
+  <text x="60" y="415.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Binary key format (compact):</text>
+  <rect x="60" y="420" width="80" height="35" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="72" y="443.2" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">0x01</text>
+  <text x="72" y="456.4" font-size="11" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">1 byte</text>
+  <rect x="145" y="420" width="120" height="35" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="150" y="442.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">00 00 00 2A</text>
+  <text x="150" y="454.0" font-size="10" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">4 bytes (big-endian)</text>
+  <text x="280" y="444.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">← node 42 in binary. Not '4','2' (2 bytes) but 0x0000002A (4 bytes).</text>
+  <text x="280" y="464.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Saves 2+ bytes per key vs string format. At 1B entries that's 2+ GB less index size.</text>
+</svg>

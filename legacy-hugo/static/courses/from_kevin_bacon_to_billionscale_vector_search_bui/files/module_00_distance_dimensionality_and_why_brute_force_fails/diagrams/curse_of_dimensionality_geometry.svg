@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 -20 1104 558" width="800" height="404" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="350" y="44.0" font-size="20" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">High-Dimensional Geometry: Volume Concentrates at the Boundary</text>
+  <text x="80" y="89.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">2D Circle</text>
+  <ellipse cx="180.0" cy="210.0" rx="100.0" ry="100.0" fill="#ffc9c9" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="180.0" cy="210.0" rx="80.0" ry="80.0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="130" y="211.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">Center</text>
+  <text x="130" y="228.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1971c2" text-anchor="start">81%</text>
+  <text x="195" y="146.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Edge</text>
+  <text x="195" y="163.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">19%</text>
+  <text x="400" y="89.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">10D Ball</text>
+  <ellipse cx="500.0" cy="210.0" rx="100.0" ry="100.0" fill="#ffc9c9" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="500.0" cy="210.0" rx="80.0" ry="80.0" fill="#a5d8ff" stroke="#2f9e44" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="450" y="211.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">Center</text>
+  <text x="450" y="228.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#2f9e44" text-anchor="start">35%</text>
+  <text x="510" y="156.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Edge</text>
+  <text x="510" y="173.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">65%</text>
+  <text x="720" y="89.2" font-size="16" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">100D Ball</text>
+  <ellipse cx="820.0" cy="210.0" rx="100.0" ry="100.0" fill="#ffc9c9" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <ellipse cx="820.0" cy="210.0" rx="80.0" ry="80.0" fill="#ffc9c9" stroke="#9c36b5" stroke-width="2" filter="url(#handdrawn)"/>
+  <text x="770" y="199.4" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">Center</text>
+  <text x="770" y="213.8" font-size="12" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#9c36b5" text-anchor="start">&lt;0.01%</text>
+  <text x="840" y="156.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">Edge</text>
+  <text x="840" y="173.6" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">~100%</text>
+  <text x="80" y="346.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Formula: fraction in outer ε-shell = 1 - (1-ε)^d</text>
+  <text x="80" y="376.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">At d=100, ε=0.1:  1 - (0.9)^100 ≈ 99.997%</text>
+  <text x="80" y="411.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#1e1e1e" text-anchor="start">Key insight: ALL points are 'near the boundary' in high dimensions.</text>
+  <text x="80" y="436.8" font-size="14" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#e03131" text-anchor="start">So every point is about the same distance from every query — the nearest neighbor has no special proximity!</text>
+  <rect x="70" y="385" width="940" height="65" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="80" y="475.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">This is why k-d trees fail: they prune by assuming the 'other side' is clearly farther away.</text>
+  <text x="80" y="495.6" font-size="13" font-family="Virgil, Segoe Print, Comic Sans MS, cursive" fill="#f08c00" text-anchor="start">In high dimensions, nothing is clearly farther — so they visit every node.</text>
+</svg>

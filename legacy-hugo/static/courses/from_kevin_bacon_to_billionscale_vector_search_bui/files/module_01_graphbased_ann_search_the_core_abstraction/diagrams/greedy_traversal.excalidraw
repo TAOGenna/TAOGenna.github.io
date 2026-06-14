@@ -1,0 +1,662 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "mcp-excalidraw-server",
+  "elements": [
+    {
+      "id": "mnhv8hbwghrc3goahd8",
+      "type": "text",
+      "x": 350,
+      "y": 20,
+      "strokeColor": "#1e1e1e",
+      "text": "Greedy Graph Traversal: A Step-by-Step Walkthrough",
+      "fontSize": 22,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwzpqys59ibwk",
+      "type": "text",
+      "x": 30,
+      "y": 60,
+      "strokeColor": "#1971c2",
+      "text": "THE GRAPH (5 nodes, each with 2 edges)",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "node_entry",
+      "type": "ellipse",
+      "x": 80,
+      "y": 150,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw6b0pyx7vxoj",
+      "type": "text",
+      "x": 93,
+      "y": 168,
+      "strokeColor": "#1971c2",
+      "text": "E",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwz09v0e4i7z",
+      "type": "text",
+      "x": 60,
+      "y": 210,
+      "strokeColor": "#1971c2",
+      "text": "Entry node\nd=8.2 to Q",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "node_A",
+      "type": "ellipse",
+      "x": 220,
+      "y": 100,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwox3weoddvoq",
+      "type": "text",
+      "x": 233,
+      "y": 118,
+      "strokeColor": "#f08c00",
+      "text": "A",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwa0fmo2f8ycd",
+      "type": "text",
+      "x": 200,
+      "y": 160,
+      "strokeColor": "#f08c00",
+      "text": "d=5.1 to Q",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "node_B",
+      "type": "ellipse",
+      "x": 200,
+      "y": 240,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw053vgir9d3no",
+      "type": "text",
+      "x": 213,
+      "y": 258,
+      "strokeColor": "#f08c00",
+      "text": "B",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw1ag3ye8l6m7j",
+      "type": "text",
+      "x": 180,
+      "y": 300,
+      "strokeColor": "#f08c00",
+      "text": "d=9.7 to Q",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "node_C",
+      "type": "ellipse",
+      "x": 360,
+      "y": 120,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw8cru373qlub",
+      "type": "text",
+      "x": 373,
+      "y": 138,
+      "strokeColor": "#2f9e44",
+      "text": "C",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwg65ieer0jmh",
+      "type": "text",
+      "x": 340,
+      "y": 180,
+      "strokeColor": "#2f9e44",
+      "text": "d=2.3 to Q",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "node_D",
+      "type": "ellipse",
+      "x": 360,
+      "y": 240,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#ffc9c9",
+      "strokeColor": "#e03131",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:32.641Z",
+      "updatedAt": "2026-04-02T19:26:32.641Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwanq5wmeaxx",
+      "type": "text",
+      "x": 373,
+      "y": 258,
+      "strokeColor": "#e03131",
+      "text": "D",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwesj2h594lvh",
+      "type": "text",
+      "x": 340,
+      "y": 300,
+      "strokeColor": "#e03131",
+      "text": "d=4.8 to Q",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "node_query",
+      "type": "ellipse",
+      "x": 460,
+      "y": 155,
+      "width": 50,
+      "height": 50,
+      "backgroundColor": "#d0bfff",
+      "strokeColor": "#9c36b5",
+      "strokeWidth": 3,
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw2ih6hr1oshd",
+      "type": "text",
+      "x": 473,
+      "y": 173,
+      "strokeColor": "#9c36b5",
+      "text": "Q",
+      "fontSize": 16,
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwyvq2101obr",
+      "type": "text",
+      "x": 445,
+      "y": 215,
+      "strokeColor": "#9c36b5",
+      "text": "Query vector\n(target)",
+      "fontSize": 11,
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwck5h9f2en8w",
+      "type": "arrow",
+      "x": 136.07748308262964,
+      "y": 163.90089889906085,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          77.84503383474072,
+          -27.801797798121697
+        ]
+      ],
+      "start": {
+        "id": "node_entry"
+      },
+      "end": {
+        "id": "node_A"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw6bynxgngn9f",
+      "type": "arrow",
+      "x": 131.4,
+      "y": 194.8,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          67.19999999999999,
+          50.39999999999998
+        ]
+      ],
+      "start": {
+        "id": "node_entry"
+      },
+      "end": {
+        "id": "node_B"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw9jruchjjrsq",
+      "type": "arrow",
+      "x": 277.66833329081845,
+      "y": 129.6669047558312,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          74.6633334183631,
+          10.666190488337577
+        ]
+      ],
+      "start": {
+        "id": "node_A"
+      },
+      "end": {
+        "id": "node_C"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw3ml96icijna",
+      "type": "arrow",
+      "x": 268.3345237791561,
+      "y": 148.33452377915606,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          93.33095244168788,
+          93.33095244168788
+        ]
+      ],
+      "start": {
+        "id": "node_A"
+      },
+      "end": {
+        "id": "node_D"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbw7grrr9zv9e",
+      "type": "arrow",
+      "x": 258,
+      "y": 265,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          94,
+          0
+        ]
+      ],
+      "start": {
+        "id": "node_B"
+      },
+      "end": {
+        "id": "node_D"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8hbwyuln225vbpe",
+      "type": "arrow",
+      "x": 385,
+      "y": 178,
+      "width": 10,
+      "height": 10,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1.5,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          54
+        ]
+      ],
+      "start": {
+        "id": "node_C"
+      },
+      "end": {
+        "id": "node_D"
+      },
+      "createdAt": "2026-04-02T19:26:32.642Z",
+      "updatedAt": "2026-04-02T19:26:32.642Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3uj8bzzk2fj",
+      "type": "rectangle",
+      "x": 580,
+      "y": 60,
+      "width": 400,
+      "height": 330,
+      "backgroundColor": "#f8f9fa",
+      "strokeColor": "#adb5bd",
+      "strokeWidth": 1,
+      "strokeStyle": "dashed",
+      "createdAt": "2026-04-02T19:26:47.585Z",
+      "updatedAt": "2026-04-02T19:26:47.585Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv38wjg5mw5bx",
+      "type": "text",
+      "x": 590,
+      "y": 70,
+      "strokeColor": "#1e1e1e",
+      "text": "SEARCH LOG — 3 iterations",
+      "fontSize": 15,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3muu8tm791z",
+      "type": "rectangle",
+      "x": 590,
+      "y": 95,
+      "width": 380,
+      "height": 70,
+      "backgroundColor": "#a5d8ff",
+      "strokeColor": "#1971c2",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv30j7j7a2pp8g7",
+      "type": "text",
+      "x": 600,
+      "y": 103,
+      "strokeColor": "#1e1e1e",
+      "text": "Step 1: At entry node E (d=8.2 to Q)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv352vutylwx98",
+      "type": "text",
+      "x": 600,
+      "y": 122,
+      "strokeColor": "#1e1e1e",
+      "text": "  Neighbors: A (d=5.1), B (d=9.7)",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3lyfvcu3q1tm",
+      "type": "text",
+      "x": 600,
+      "y": 140,
+      "strokeColor": "#2f9e44",
+      "text": "  Best neighbor: A (5.1 < 8.2) → MOVE to A",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3bjoz7puovdt",
+      "type": "rectangle",
+      "x": 590,
+      "y": 175,
+      "width": 380,
+      "height": 70,
+      "backgroundColor": "#ffec99",
+      "strokeColor": "#f08c00",
+      "strokeWidth": 1.5,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3qy50rovnlff",
+      "type": "text",
+      "x": 600,
+      "y": 183,
+      "strokeColor": "#1e1e1e",
+      "text": "Step 2: At node A (d=5.1 to Q)",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv31fkkd3vm7ee",
+      "type": "text",
+      "x": 600,
+      "y": 202,
+      "strokeColor": "#1e1e1e",
+      "text": "  Neighbors: C (d=2.3), D (d=4.8)",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3a5f5cdxz6hi",
+      "type": "text",
+      "x": 600,
+      "y": 220,
+      "strokeColor": "#2f9e44",
+      "text": "  Best neighbor: C (2.3 < 5.1) → MOVE to C",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3z3635n02kq",
+      "type": "rectangle",
+      "x": 590,
+      "y": 255,
+      "width": 380,
+      "height": 90,
+      "backgroundColor": "#b2f2bb",
+      "strokeColor": "#2f9e44",
+      "strokeWidth": 2,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3r0k7wr4cr1a",
+      "type": "text",
+      "x": 600,
+      "y": 263,
+      "strokeColor": "#1e1e1e",
+      "text": "Step 3: At node C (d=2.3 to Q) ★ TRUE NN",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3zr314g1f0f",
+      "type": "text",
+      "x": 600,
+      "y": 283,
+      "strokeColor": "#1e1e1e",
+      "text": "  Neighbors: D (d=4.8)  [E and A already visited]",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv333w0zevtcw7",
+      "type": "text",
+      "x": 600,
+      "y": 302,
+      "strokeColor": "#e03131",
+      "text": "  D (4.8) > C (2.3) → NO improvement",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv36zohghjh4lb",
+      "type": "text",
+      "x": 600,
+      "y": 322,
+      "strokeColor": "#2f9e44",
+      "text": "  LOCAL MINIMUM REACHED → RETURN C ✓",
+      "fontSize": 13,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3uyu0dp64nc",
+      "type": "text",
+      "x": 590,
+      "y": 400,
+      "strokeColor": "#9c36b5",
+      "text": "Path: E → A → C   (3 hops, found true NN!)",
+      "fontSize": 14,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3prgjkbzo4s",
+      "type": "text",
+      "x": 590,
+      "y": 425,
+      "strokeColor": "#e03131",
+      "text": "Key invariant: visited = {E, A} prevents re-expanding them",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    },
+    {
+      "id": "mnhv8sv3pcevoane95",
+      "type": "text",
+      "x": 590,
+      "y": 450,
+      "strokeColor": "#e03131",
+      "text": "Stopping condition: no unvisited neighbor improves best_dist",
+      "fontSize": 12,
+      "createdAt": "2026-04-02T19:26:47.586Z",
+      "updatedAt": "2026-04-02T19:26:47.586Z",
+      "version": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  }
+}

@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import { cn } from '@/utils'
+import Tag from './Tag.astro'
+import HackerNewsScore from './HackerNewsScore'
+import CornerOrnament from './CornerOrnament.astro'
+
+const { class: className, href, heading, subheading, imagePath, videoPath, altText, tags, demo, demoLabel = 'See output', hackerNewsId } = Astro.props
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}')
+if (!videoPath && !images[imagePath])
+	throw new Error(`"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`)
+---
+
+<div
+	class={cn(
+		className,
+		'relative flex flex-col gap-y-3 rounded-lg border-2 border-bronze/20 bg-card warm-shadow',
+		href && 'transition-all duration-300 hover:border-gold/40 hover:warm-shadow-lg hover:-translate-y-1'
+	)}
+>
+	<CornerOrnament position='all' color='bronze' />
+	{
+		videoPath ? (
+			<video
+				src={videoPath}
+				class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
+				autoplay
+				loop
+				muted
+				playsinline
+				preload='metadata'
+				aria-label={altText}
+			/>
+		) : (
+			<Image
+				src={images[imagePath]()}
+				alt={altText}
+				class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
+				loading='eager'
+			/>
+		)
+	}
+	<div class='flex flex-col gap-y-0.5 px-5 py-4'>
+		<h1 class='font-cormorant text-xl font-semibold text-foreground'>{heading}</h1>
+		<h2 class='text-sm leading-relaxed text-muted-foreground'>{subheading}</h2>
+		{
+			(tags || demo) && (
+				<div class='mt-1.5 flex flex-row flex-wrap items-center gap-2'>
+					{tags?.map((t: any) => (
+						<Tag text={t.text} color={t.color} />
+					))}
+					{demo && (
+						<a
+							href={demo}
+							class='relative z-10 rounded-md border border-gold/60 px-2 py-[1px] text-xs font-medium text-gold transition-colors hover:bg-gold/10'
+						>
+							{demoLabel} ↗
+						</a>
+					)}
+				</div>
+			)
+		}
+		{hackerNewsId && <HackerNewsScore className='mt-2' id={hackerNewsId} client:load />}
+	</div>
+
+	{/* Stretched primary link — keeps the whole card clickable without nesting anchors */}
+	{href && <a href={href} class='absolute inset-0' aria-label={heading} />}
+
+	<slot />
+</div>

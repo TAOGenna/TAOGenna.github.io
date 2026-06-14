@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -20 888 728" width="800" height="656" style="background: white;">
+  <defs>
+    <filter id="handdrawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3"
+                    result="noise" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="ah-0c8599" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0c8599"/>
+    </marker>
+    <marker id="ah-1971c2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1971c2"/>
+    </marker>
+    <marker id="ah-2f9e44" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f9e44"/>
+    </marker>
+    <marker id="ah-9c36b5" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c36b5"/>
+    </marker>
+    <marker id="ah-e03131" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e03131"/>
+    </marker>
+    <marker id="ah-f08c00" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f08c00"/>
+    </marker>
+  </defs>
+  <text x="350" y="46.4" font-size="22" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">GDN: How Divisive Normalization Works</text>
+  <text x="30" y="81.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1971c2" text-anchor="start">INPUT: filter responses at location (m,n)</text>
+  <rect x="30" y="90" width="100" height="60" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="55" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#1971c2" text-anchor="start">ch 1 (i=1)</text>
+  <text x="60" y="139.2" font-size="16" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">w₁ = 2.3</text>
+  <rect x="145" y="90" width="100" height="60" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="170" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#2f9e44" text-anchor="start">ch 2 (i=2)</text>
+  <text x="160" y="139.2" font-size="16" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">w₂ = -1.8</text>
+  <rect x="260" y="90" width="100" height="60" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="285" y="112.4" font-size="12" font-family="Cascadia Code, Fira Code, monospace" fill="#e03131" text-anchor="start">ch 3 (i=3)</text>
+  <text x="275" y="139.2" font-size="16" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">w₃ = 3.1</text>
+  <text x="378" y="126.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">... (C=128 channels)</text>
+  <text x="30" y="196.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">STEP 1: compute denominator for channel i=1</text>
+  <rect x="30" y="205" width="440" height="110" rx="0" fill="#ffec99" stroke="#f08c00" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="231.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">Σⱼ γ₁ⱼ · wⱼ²  =  γ₁₁·w₁²  +  γ₁₂·w₂²  +  γ₁₃·w₃²  + ...</text>
+  <text x="50" y="254.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">          =  0.4·(2.3)²  +  0.1·(-1.8)²  +  0.3·(3.1)²  + ...</text>
+  <text x="50" y="277.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">          =  0.4·5.29  +  0.1·3.24  +  0.3·9.61  + ...</text>
+  <text x="50" y="300.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">          ≈  2.116  +  0.324  +  2.883  + ...  ≈  6.8</text>
+  <text x="50" y="316.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#c07000" text-anchor="start">γ is symmetric (γᵢⱼ = γⱼᵢ), so ALL channels influence channel i's normalization</text>
+  <text x="30" y="356.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#9c36b5" text-anchor="start">STEP 2: add bias β₁ and take sqrt  →  final denominator</text>
+  <rect x="30" y="362" width="440" height="55" rx="0" fill="#d0bfff" stroke="#9c36b5" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="391.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">denom₁ = √(β₁ + Σⱼ γ₁ⱼ·wⱼ²)  =  √(1.0 + 6.8)  =  √7.8  ≈  2.79</text>
+  <text x="50" y="412.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6a1f9a" text-anchor="start">β₁ &gt; 0 ensures we never divide by zero  (β is learned, constrained ≥ 2⁻⁵)</text>
+  <text x="30" y="456.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#0c8599" text-anchor="start">STEP 3: divide  →  normalized output</text>
+  <rect x="30" y="462" width="440" height="55" rx="0" fill="#99e9f2" stroke="#0c8599" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="50" y="494.2" font-size="16" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₁ = w₁ / denom₁  =  2.3 / 2.79  ≈  0.82</text>
+  <text x="50" y="513.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#0c5e6e" text-anchor="start">output magnitude is bounded — high-energy neighborhoods get more suppressed</text>
+  <text x="30" y="556.8" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#1e1e1e" text-anchor="start">STEP 4: repeat for every channel  →  GDN output vector</text>
+  <rect x="30" y="562" width="100" height="50" rx="0" fill="#a5d8ff" stroke="#1971c2" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="60" y="598.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₁ = 0.82</text>
+  <rect x="145" y="562" width="100" height="50" rx="0" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="165" y="598.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₂ = -0.44</text>
+  <rect x="260" y="562" width="100" height="50" rx="0" fill="#ffc9c9" stroke="#e03131" stroke-width="2" opacity="1.0" filter="url(#handdrawn)"/>
+  <text x="278" y="598.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₃ = 0.61</text>
+  <text x="378" y="594.4" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#888" text-anchor="start">... (128 channels)</text>
+  <text x="30" y="647.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">KEY INSIGHT: each channel's output depends on ALL channels' inputs at (m,n).</text>
+  <text x="30" y="663.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">This captures cross-channel dependencies — impossible with pointwise ReLU.</text>
+  <rect x="530" y="90" width="260" height="250" rx="0" fill="#fff3bf" stroke="#f08c00" stroke-width="2" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="570" y="118.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#f08c00" text-anchor="start">vs. ReLU (pointwise)</text>
+  <text x="545" y="146.8" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₁ = max(0, w₁) = 2.3</text>
+  <text x="545" y="163.6" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₂ = max(0, w₂) = 0.0</text>
+  <text x="545" y="180.4" font-size="14" font-family="Cascadia Code, Fira Code, monospace" fill="#1e1e1e" text-anchor="start">u₃ = max(0, w₃) = 3.1</text>
+  <text x="545" y="225.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">✗ ignores channel 2 entirely</text>
+  <text x="545" y="241.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">   (negative → dead)</text>
+  <text x="545" y="273.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">✗ u₃=3.1 stays large even if</text>
+  <text x="545" y="289.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">   ALL other channels are huge</text>
+  <text x="545" y="304.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">   (no gain control!)</text>
+  <text x="545" y="325.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">✗ output statistics remain</text>
+  <text x="545" y="341.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">   heavy-tailed → bad for</text>
+  <text x="545" y="356.8" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#e03131" text-anchor="start">   entropy coding</text>
+  <rect x="530" y="360" width="260" height="200" rx="0" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2" opacity="1.0" stroke-dasharray="8 4" filter="url(#handdrawn)"/>
+  <text x="590" y="388.0" font-size="15" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">GDN (joint)</text>
+  <text x="545" y="413.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">✓ all channels suppress each other</text>
+  <text x="545" y="429.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">   (local gain control)</text>
+  <text x="545" y="455.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">✓ output approx Gaussian even</text>
+  <text x="545" y="471.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">   when inputs are heavy-tailed</text>
+  <text x="545" y="493.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">✓ fewer stages needed for</text>
+  <text x="545" y="509.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">   same R-D performance</text>
+  <text x="545" y="533.6" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">✓ spatially adaptive</text>
+  <text x="545" y="549.2" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#2f9e44" text-anchor="start">   (unlike batch norm)</text>
+  <path d="M 122.6 155.1 L 177.0 199.9" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#ah-1971c2)" filter="url(#handdrawn)"/>
+  <path d="M 209.7 157.4 L 225.5 197.6" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ah-2f9e44)" filter="url(#handdrawn)"/>
+  <path d="M 294.0 157.4 L 276.7 197.6" fill="none" stroke="#e03131" stroke-width="2" marker-end="url(#ah-e03131)" filter="url(#handdrawn)"/>
+  <path d="M 250.0 323.0 L 250.0 354.0" fill="none" stroke="#f08c00" stroke-width="2" marker-end="url(#ah-f08c00)" filter="url(#handdrawn)"/>
+  <path d="M 250.0 425.0 L 250.0 454.0" fill="none" stroke="#9c36b5" stroke-width="2" marker-end="url(#ah-9c36b5)" filter="url(#handdrawn)"/>
+  <path d="M 195.1 521.0 L 130.5 558.0" fill="none" stroke="#0c8599" stroke-width="2" marker-end="url(#ah-0c8599)" filter="url(#handdrawn)"/>
+</svg>

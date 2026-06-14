@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import FormattedDate from '../FormattedDate.astro'
+
+interface Props {
+	content: CollectionEntry<'post'>
+	hideAuthorDate?: boolean
+}
+
+const {
+	content: { data, render },
+	hideAuthorDate = false
+} = Astro.props
+
+const { remarkPluginFrontmatter } = await render()
+
+const dateTimeOptions: Intl.DateTimeFormatOptions = {
+	month: 'long'
+}
+---
+
+{
+	data.coverImage && (
+		<div class='aspect-h-9 aspect-w-16 mb-6'>
+			<Image
+				alt={data.coverImage.alt}
+				class='rounded-2xl object-cover'
+				fetchpriority='high'
+				loading='eager'
+				src={data.coverImage.src}
+			/>
+		</div>
+	)
+}
+{data.draft ? <span class='text-red-500'>(Draft)</span> : null}
+<h1 class='mt-2 md:text-5xl text-4xl sm:mb-1 leading-tight font-cormorant font-semibold'>
+	{data.title}
+</h1>
+{!hideAuthorDate && (
+	<div class='mt-4 flex flex-wrap items-center gap-x-3 gap-y-2'>
+		<p class='text-xs'>
+			Kenyi Takagui-Perez · <FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} /> · {remarkPluginFrontmatter.minutesRead}
+		</p>
+	</div>
+)}
