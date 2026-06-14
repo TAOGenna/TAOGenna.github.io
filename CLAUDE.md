@@ -1,204 +1,82 @@
-Built with [Hugo](https://gohugo.io/). Style inspired by [karinanguyen.com](https://karinanguyen.com/).
+Personal site, built with [Astro](https://astro.build/) + Tailwind. Based on the
+[astro-theme-resume](https://github.com/ThariqS/astro-theme-resume) theme (thariq.io),
+adapted with a Professional/Personal mode toggle.
 
 ## Local development
 
 ```bash
-hugo server -D
+bun install
+bunx astro dev        # http://localhost:4321/
 ```
 
-Open http://localhost:1313/
+The homepage has a mode toggle driven by a `?mode=` query param
+(`?mode=professional` or `?mode=personal`). Default is `personal`.
 
-## Build and deploy
+## Build & deploy
 
 ```bash
-hugo
-git add -A && git commit -m "Update site" && git push
+bunx astro build      # static output -> dist/
 ```
 
-Output goes to `docs/` (configured for GitHub Pages). Make sure GitHub Pages is set to serve from the `docs/` folder on the `main` branch (Settings > Pages > Source > Deploy from a branch > `main` / `docs`).
+Deployed to **GitHub Pages via GitHub Actions** (`.github/workflows/deploy.yml`).
+Pushing to `main` triggers a build + deploy. Repo Settings → Pages → Source must be
+set to **GitHub Actions**. Output is static (`output: 'static'`, site
+`https://taogenna.github.io`).
+
+## Mode toggle (Professional / Personal)
+
+- Personal mode = light theme; Professional mode = dark theme.
+- Elements tagged `data-mode="professional"` or `data-mode="personal"` are shown/hidden
+  by a script in `src/pages/index.astro`. `ThemeProvider.astro` maps mode → light/dark.
+- `ModeToggle.astro` (header) and `FlippableProfile.astro` (the photo) both drive/read
+  the mode via `?mode=` and dispatch `mode-change` / `theme-change` events.
 
 ## Project structure
 
 ```
-config.toml              # Hugo config (base URL, title, publish dir, markdown settings)
-content/
-├── _index.md            # Homepage metadata
-├── bookshelf.md         # Bookshelf page
-├── misc.md              # Misc/courses page
-├── topcoder.md          # TopCoder Archive (generated — don't edit by hand)
-├── projects/            # Project cards (one .md per project)
-│   ├── _index.md
-│   ├── distill.md
-│   └── ...
-└── writing/             # Blog posts (one .md per post)
-    ├── _index.md
-    ├── hartree-fock.md
-    ├── ppca-gen/        # Page bundle (post with images)
-    │   ├── index.md
-    │   └── ppca_output.png
-    └── ...
-layouts/
-├── _default/            # Base templates (baseof, list, single)
-├── partials/            # Shared components (head, header, footer)
-├── projects/            # Project gallery template
-├── writing/             # Writing list + article templates
-├── page/                # Standalone page template (bookshelf, misc)
-└── shortcodes/          # Hugo shortcodes (figure)
-static/
-├── Files/               # Images, PDFs, CV
-├── assets/              # Course thumbnails
-├── courses/             # Distill-generated courses (don't edit by hand)
-├── fonts/               # Custom fonts (Suisse, Montreal, Domaine, Financier)
-├── data/                # TopCoder statements + editorials JSON (served to browser)
-├── styles/work.css      # Main stylesheet
-└── .nojekyll            # Disables Jekyll on GitHub Pages
-docs/                    # Built site (served by GitHub Pages)
+src/
+├── pages/
+│   ├── index.astro       # home (mode toggle, About, projects, writing, misc/reading links)
+│   ├── bookshelf.astro   # reading list (data from src/data/books.ts)
+│   ├── work.astro        # "Adventures" gallery (data from src/data/work.ts)
+│   ├── misc.astro        # coursework, online courses, links
+│   └── blog/             # blog routes (renders src/content/post)
+├── components/
+│   ├── ProjectCard.astro # project tile (image OR videoPath, tags, optional demo pill)
+│   ├── Collage.astro + RotatingBadge.astro  # personal "Adventures" collage (hidden for now)
+│   ├── BookShelf.astro, Section.astro, GeometricDivider.astro, ...
+├── content/post/         # blog posts (.md) — frontmatter schema in src/content/config.ts
+├── data/                 # books.ts, work.ts
+├── assets/               # images optimized by Astro <Image> (referenced from components)
+└── site.config.ts        # site meta + expressive-code (syntax theme) options
+
+public/                   # served as-is (not optimized)
+├── courses/              # Distill-generated courses (static HTML)
+├── topcoder/ + data/ + styles/ + fonts/ + m/   # ported legacy pages (TopCoder archive, Harada 9x9)
+├── work/                 # collage/gallery images
+├── images/books/         # book covers
+└── projects/             # project demo videos (.mp4) used by ProjectCard videoPath
+
+legacy-hugo/              # the previous Hugo site, archived (not built/served)
 ```
 
-## Writing a new blog post
+## Adding content
 
-Create a markdown file in `content/writing/`:
+- **Blog post**: create `src/content/post/<slug>.md` with frontmatter
+  (`title` ≤60 chars, `description` 50–160 chars, `publishDate`, `tags`). Math via
+  `$...$` / `$$...$$` (remark-math + rehype-katex). Co-locate images and use `![](./img.png)`.
+- **Project card**: add a `<ProjectCard>` in `index.astro`. Use `imagePath='/src/assets/x'`
+  for a still, or `videoPath='/projects/x.mp4'` (served from `public/`) for an autoplay clip.
+  Optional `tags={[{text,color}]}` and `demo='/path'` (gold "See output" pill).
+- **Book**: add to `src/data/books.ts` (drop the cover into `public/images/books/`).
+- **Work / Adventures item**: add to `src/data/work.ts` (drop image into `public/work/`).
+  The collage block is currently commented out in `index.astro`.
+- **Misc / coursework**: edit the arrays at the top of `src/pages/misc.astro`.
 
-```markdown
----
-title: "Your Post Title"
-date: 2026-04-04
-categories: ["math"]
----
+## Notes
 
-Your content here. Regular markdown works: **bold**, *italic*,
-[links](https://...), code blocks, images.
-
-Inline math: $E = mc^2$
-
-Display math:
-
-$$
-\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
-$$
-```
-
-The post auto-appears in the Writing list sorted by date.
-
-**Posts with images** — use a [page bundle](https://gohugo.io/content-management/page-bundles/):
-
-```
-content/writing/my-new-post/
-├── index.md        # use index.md, not my-new-post.md
-├── diagram.png
-└── photo.jpg
-```
-
-Reference images in markdown as `![alt](diagram.png)` or with the figure shortcode:
-
-```
-{{</* figure src="diagram.png" alt="description" caption="Caption text" class="align-center" */>}}
-```
-
-After writing, rebuild and push:
-
-```bash
-hugo && git add -A && git commit -m "New post: title" && git push
-```
-
-## Adding a project
-
-Create a markdown file in `content/projects/`:
-
-```markdown
----
-title: "Project Name"
-image: "my-image.jpg"
-description: "Short description shown under the card"
-year: "2025"
-type: "ai"
-order: 1
-external: "https://github.com/..."
-demo: "/some-link/"          # optional — shows "View output" link on the card
----
-```
-
-Place the project image in `static/Files/`. The `order` field controls display order (lower = first).
-
-## Editing the homepage
-
-The homepage content (bio, publications, contact links) lives directly in `layouts/index.html`, not in a content file. Edit that template to update your bio or add publications.
-
-## Editing Bookshelf / Misc
-
-These are plain markdown files at `content/bookshelf.md` and `content/misc.md`. Just edit and rebuild.
-
-## Distill courses
-
-The `static/courses/` directory is auto-generated by [Distill](https://github.com/TAOGenna/Distill). Don't edit it by hand.
-
-To update after generating new courses:
-
-**Mac:**
-```bash
-cd ~/Desktop/kenyi/projects/Distill
-uv run distill publish
-```
-
-**Windows WSL:**
-```bash
-cd ~/kenyi/projects/Distill
-uv run distill publish
-```
-
-The Distill publish destination should point to `static/courses/` in this repo. To change it:
-
-**Mac:**
-```bash
-uv run distill publish --to ~/Desktop/kenyi/projects/TAOGenna.github.io/static/courses
-```
-
-**Windows WSL:**
-```bash
-uv run distill publish --to ~/kenyi/projects/TAOGenna.github.io/static/courses
-```
-
-## TopCoder Archive
-
-The `/topcoder/` page displays 61 TopCoder SRM Division I problem statements with editorials. The page is at `content/topcoder.md` (generated, don't edit by hand) and linked from Misc.
-
-**Data files (served by Hugo):**
-- `static/data/topcoder-statements.json` — 61 problem statements (HTML from vjudge)
-- `static/data/topcoder-editorials.json` — 60 SRM editorials (HTML from topcoder.com/thrive)
-
-**Local scripts (gitignored, in `scripts/`):**
-- `extract_vjudge.py` — Scrapes problem statements from vjudge private contests
-- `extract_editorials.py` — Scrapes SRM editorials from topcoder.com/thrive/articles/SRM%20{N}
-- `build_topcoder_page.py` — Generates `content/topcoder.md` and the static JSON files from scraped data
-
-**Local raw data (gitignored, in `data/`):**
-- `data/vjudge_problems/` — Raw HTML per problem + index.json + problem_srm_map.json
-- `data/editorials/` — Raw HTML per SRM editorial + index.json
-
-**Key URLs:**
-- vjudge contests: 317361, 317362, 317363 (private, owned by TAO_Genna)
-- vjudge contest data is in a `<textarea name="dataJson">` in the HTML page
-- vjudge description data is in a `<textarea class="data-json-container">` in the HTML page
-- Editorial URL pattern: `https://www.topcoder.com/thrive/articles/SRM%20{number}`
-- SRM numbers for each problem are in the vjudge contest JSON `properties` field
-
-**To add more problems:**
-1. Update `CONTEST_IDS` in `scripts/extract_vjudge.py` and `VJUDGE_COOKIE` with a fresh JSESSIONID
-2. Run `python scripts/extract_vjudge.py`
-3. Run `python scripts/extract_editorials.py`
-4. Run `python scripts/build_topcoder_page.py`
-5. Run `hugo` to rebuild
-
-## Styling
-
-All styles live in `static/styles/work.css`. Key conventions:
-
-- Homepage/projects/writing-list use left-aligned layout (`margin-left: 130px`)
-- Blog articles use centered layout (`max-width: 900px; margin: 0 auto`)
-- Bookshelf/misc use left-aligned layout via `.page-content`
-- Yellow `#fff495` for hover accents
-- Responsive breakpoints: 1600, 1400, 1200, 1067, 820, 800, 650, 600px
-
-## Fonts
-
-Custom fonts in `static/fonts/` — Suisse International (body), PP Neue Montreal (titles), Domaine Sans Display, Financier Display. Georgia is used for navigation links.
+- Code highlighting: Expressive Code with `light-plus` / `dark-plus`, gated on the `.dark`
+  class (config in `src/site.config.ts`). `useDarkModeMediaQuery` is off so code theme
+  follows the site toggle, not the OS.
+- `/courses/` and `/topcoder/` are directory pages; links use explicit `index.html`
+  so they resolve in the Astro dev server (GitHub Pages resolves directories natively).
