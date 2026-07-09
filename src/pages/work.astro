@@ -2,61 +2,142 @@
 import PageLayout from '../layouts/BaseLayout.astro'
 import PlayBadge from '../components/PlayBadge.astro'
 import { work } from '@/data/work'
+
+const SOUNDCLOUD_SRC =
+	'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Frenzo-kenyi-takagui-perez%2Fhotel-california-cover&color=%23a97e3f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false'
+
+// Hand-placed slots for the scattered desktop "wall" (by index into `work`).
+// Deliberately uneven sizes + small rotations so it reads as a pinboard, not a grid.
+const slots = [
+	{ style: 'left:75%; top:11%; width:20%;', ratio: '3 / 4', rot: 3 }, // 0 ink drawing (portrait)
+	{ style: 'left:1%; top:15%; width:31%;', ratio: '16 / 10', rot: -3 }, // 1 guitar (video)
+	{ style: 'left:33%; top:0%; width:40%;', ratio: '4 / 3', rot: 1 }, // 2 Bariloche (big)
+	{ style: 'left:30%; top:56%; width:29%;', ratio: '16 / 10', rot: 2 }, // 3 piano (video)
+	{ style: 'left:2%; top:53%; width:26%;', ratio: '1 / 1', rot: -2 } // 4 Balseiro
+]
+const musicSlot = { style: 'left:62%; top:61%; width:33%;', rot: 2 }
 ---
 
 <PageLayout meta={{ title: 'Work' }}>
-	<div class='mx-auto w-full max-w-[60rem]'>
+	<div class='mx-auto w-full max-w-[72rem]'>
 		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Adventures</h1>
-		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
-			Art, places, and music.
+		<p class='mb-8 mt-1 font-garamond text-lg text-muted-foreground'>
+			Art, places, and a bit of music — a wall of things I've made and been to.
 		</p>
-		<div class='columns-2 gap-4 sm:columns-3 [&>*]:mb-4'>
+
+		{/* lg+ : scattered pinboard */}
+		<div class='relative mx-auto hidden h-[46rem] w-full lg:block'>
 			{
-				work.map((item) => {
-					const figure = (
-						<figure class='break-inside-avoid overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
-							<div class='relative'>
-								<img src={item.image} alt={item.title} loading='lazy' class='block w-full' />
-								{item.video && <PlayBadge />}
-							</div>
-							{item.title && (
-								<figcaption class='px-3 py-2 font-garamond text-sm text-muted-foreground'>
-									{item.title}
-								</figcaption>
-							)}
-						</figure>
-					)
-					return item.href ? (
+				work.map((item, i) => {
+					const s = slots[i % slots.length]
+					return (
 						<a
-							class='group block'
-							href={item.href}
+							href={item.href ?? '#'}
+							aria-label={item.title}
+							class='pin group absolute block'
+							style={`${s.style} z-index:${6 - i}; --rot:${s.rot}deg;`}
 							target={item.video ? '_blank' : undefined}
 							rel={item.video ? 'noopener noreferrer' : undefined}
 						>
-							{figure}
+							<div class='rounded-2xl bg-card p-1.5 shadow-xl ring-1 ring-black/5'>
+								<div class='relative overflow-hidden rounded-xl' style={`aspect-ratio:${s.ratio};`}>
+									<img
+										src={item.image}
+										alt={item.title}
+										loading='lazy'
+										class='h-full w-full object-cover'
+									/>
+									{item.video && <PlayBadge />}
+								</div>
+								<figcaption class='px-1.5 pb-0.5 pt-2 font-garamond text-sm text-muted-foreground'>
+									{item.title}
+								</figcaption>
+							</div>
 						</a>
-					) : (
-						figure
 					)
 				})
 			}
+			{/* music: just another tile */}
+			<div class='pin absolute' style={`${musicSlot.style} --rot:${musicSlot.rot}deg; z-index:1;`}>
+				<div class='rounded-2xl bg-card p-1.5 shadow-xl ring-1 ring-black/5'>
+					<iframe
+						title='Hotel California — my cover'
+						class='block w-full rounded-xl'
+						height='166'
+						frameborder='no'
+						scrolling='no'
+						loading='lazy'
+						allow='autoplay'
+						src={SOUNDCLOUD_SRC}
+					></iframe>
+					<figcaption class='px-1.5 pb-0.5 pt-2 font-garamond text-sm text-muted-foreground'>
+						Hotel California — my cover
+					</figcaption>
+				</div>
+			</div>
 		</div>
 
-		<h2 class='mt-14 font-cormorant text-3xl font-semibold text-foreground'>Music</h2>
-		<p class='mb-6 mt-1 font-garamond text-lg text-muted-foreground'>
-			Hotel California — my cover.
-		</p>
-		<figure class='max-w-[40rem] overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
-			<iframe
-				title='Hotel California — cover'
-				class='block w-full'
-				height='166'
-				frameborder='no'
-				scrolling='no'
-				loading='lazy'
-				allow='autoplay'
-				src='https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Frenzo-kenyi-takagui-perez%2Fhotel-california-cover&color=%23a97e3f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false'
-			></iframe>
-		</figure>
+		{/* < lg : masonry fallback (still loose, not a rigid grid) */}
+		<div class='columns-2 gap-4 [&>*]:mb-4 lg:hidden'>
+			{
+				work.map((item) => {
+					const media = (
+						<div class='rounded-2xl bg-card p-1.5 shadow-lg ring-1 ring-black/5'>
+							<div class='relative overflow-hidden rounded-xl'>
+								<img src={item.image} alt={item.title} loading='lazy' class='block w-full' />
+								{item.video && <PlayBadge />}
+							</div>
+							<figcaption class='px-1.5 pb-0.5 pt-2 font-garamond text-sm text-muted-foreground'>
+								{item.title}
+							</figcaption>
+						</div>
+					)
+					return (
+						<div class='break-inside-avoid'>
+							{item.href ? (
+								<a
+									class='group block'
+									href={item.href}
+									target={item.video ? '_blank' : undefined}
+									rel={item.video ? 'noopener noreferrer' : undefined}
+								>
+									{media}
+								</a>
+							) : (
+								media
+							)}
+						</div>
+					)
+				})
+			}
+			<div class='break-inside-avoid rounded-2xl bg-card p-1.5 shadow-lg ring-1 ring-black/5'>
+				<iframe
+					title='Hotel California — my cover'
+					class='block w-full rounded-xl'
+					height='166'
+					frameborder='no'
+					scrolling='no'
+					loading='lazy'
+					allow='autoplay'
+					src={SOUNDCLOUD_SRC}
+				></iframe>
+				<figcaption class='px-1.5 pb-0.5 pt-2 font-garamond text-sm text-muted-foreground'>
+					Hotel California — my cover
+				</figcaption>
+			</div>
+		</div>
 	</div>
 </PageLayout>
+
+<style>
+	.pin {
+		transform: rotate(var(--rot));
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+	.pin:hover {
+		transform: rotate(0deg) scale(1.03);
+		z-index: 40 !important;
+	}
+</style>
