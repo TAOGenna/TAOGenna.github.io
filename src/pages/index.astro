@@ -156,10 +156,11 @@ const publications = [
 					))
 				}
 			</div>
-			<div class='mt-10 flex justify-center'>
-				<RotatingBadge href='/projects' label='More Work · ' repeat={4} size={140} />
-			</div>
 		</Section>
+
+		<div class='mt-10 flex justify-center' data-mode='professional'>
+			<RotatingBadge href='/projects' label='More Work · ' repeat={4} size={140} />
+		</div>
 
 		{
 			allPostsByDate.length > 0 && (

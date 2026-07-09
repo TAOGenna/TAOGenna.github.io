@@ -8,13 +8,13 @@ interface Props {
 const { showModeToggle = false } = Astro.props
 ---
 
-<header class='mb-12 flex w-full flex-wrap pb-3 text-sm sm:flex-nowrap'>
+<header class='mb-12 w-full pb-3 text-sm'>
 	<nav
-		class='align-start relative mx-auto flex w-full items-center justify-between'
+		class='relative mx-auto grid w-full grid-cols-[1fr_auto_1fr] items-center'
 		aria-label='global'
 	>
 		<!-- Left section -->
-		<div class='z-10 flex flex-1 items-center justify-start pb-8'>
+		<div class='z-10 flex items-center justify-start pb-8'>
 			<a
 				href='/'
 				class='flex-none font-garamond text-[1.25rem] font-medium transition-colors hover:text-gold'
@@ -23,17 +23,13 @@ const { showModeToggle = false } = Astro.props
 			</a>
 		</div>
 
-		<!-- Center section - absolutely positioned to be truly centered -->
-		{
-			showModeToggle && (
-				<div class='z-0 flex w-full justify-center'>
-					<ModeToggle />
-				</div>
-			)
-		}
+		<!-- Center section - equal 1fr columns on each side keep this truly centered -->
+		<div class='z-0 flex justify-center pb-8'>
+			{showModeToggle && <ModeToggle />}
+		</div>
 
 		<!-- Right section -->
-		<div class='z-10 flex flex-1 flex-row items-center justify-end gap-x-6 pb-8 sm:gap-x-8'>
+		<div class='z-10 flex flex-row items-center justify-end gap-x-6 pb-8 sm:gap-x-8'>
 		</div>
 	</nav>
 </header>
