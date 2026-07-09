@@ -1,17 +1,25 @@
 ---
 import { cn } from '@/utils'
 
-const { class: className, text, color } = Astro.props
+const { class: className, text, color, outline = false } = Astro.props
 ---
 
-<span
-	class={cn(
-		className,
-		'flex flex-col gap-y-3 px-2 rounded-md text-xs text-white bg-primary-foreground '
-	)}
-	style={{
-		backgroundColor: color
-	}}
->
-	{text}
-</span>
+{
+	outline ? (
+		<span
+			class={cn(
+				className,
+				'rounded-md border border-border bg-transparent px-2 text-xs text-muted-foreground'
+			)}
+		>
+			{text}
+		</span>
+	) : (
+		<span
+			class={cn(className, 'flex flex-col gap-y-3 rounded-md bg-primary-foreground px-2 text-xs text-white')}
+			style={{ backgroundColor: color }}
+		>
+			{text}
+		</span>
+	)
+}

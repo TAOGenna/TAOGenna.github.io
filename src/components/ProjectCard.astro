@@ -8,7 +8,8 @@ import CornerOrnament from './CornerOrnament.astro'
 
 const { class: className, href, heading, subheading, imagePath, videoPath, altText, tags, demo, demoLabel = 'See output', hackerNewsId } = Astro.props
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}')
-if (!videoPath && !images[imagePath])
+// A card may have a video, an image, or neither yet (a pending thumbnail).
+if (imagePath && !images[imagePath])
 	throw new Error(`"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`)
 ---
 
@@ -32,13 +33,20 @@ if (!videoPath && !images[imagePath])
 				preload='metadata'
 				aria-label={altText}
 			/>
-		) : (
+		) : imagePath ? (
 			<Image
 				src={images[imagePath]()}
 				alt={altText}
 				class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
 				loading='eager'
 			/>
+		) : (
+			<div
+				class='flex h-48 w-full items-center justify-center rounded-t-lg bg-gradient-to-br from-bronze/10 via-card to-gold/10'
+				aria-hidden='true'
+			>
+				<span class='font-cormorant text-sm italic text-muted-foreground/70'>thumbnail soon</span>
+			</div>
 		)
 	}
 	<div class='flex flex-col gap-y-0.5 px-5 py-4'>
@@ -48,7 +56,7 @@ if (!videoPath && !images[imagePath])
 			(tags || demo) && (
 				<div class='mt-1.5 flex flex-row flex-wrap items-center gap-2'>
 					{tags?.map((t: any) => (
-						<Tag text={t.text} color={t.color} />
+						<Tag text={t.text} color={t.color} outline={t.outline} />
 					))}
 					{demo && (
 						<a

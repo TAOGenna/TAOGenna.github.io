@@ -2,31 +2,67 @@
 import PageLayout from '../layouts/BaseLayout.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 import { projects } from '@/data/projects'
+import { getAllPosts, sortMDByDate } from '@/utils'
 
 const meta = {
 	title: 'Projects',
-	description: "Everything I've built — research reproductions, AI tools, and experiments."
+	description: "Everything I've built and written — research reproductions, AI tools, and notes."
 }
+
+// Writing cards, mixed into the same grid as the projects. Hartree-Fock is
+// intentionally excluded (its method already lives inside the Majorana
+// project). Thumbnails are pending, so these render a placeholder for now.
+const WRITING_EXCLUDE = new Set(['hartree-fock-method'])
+const WRITING_TAG = { text: 'Writing', outline: true }
+const WRITING_IMAGE: Record<string, string> = {
+	ppca: '/src/assets/writing_ppca.png',
+	'atomic-environments-mlip': '/src/assets/writing_ml_potentials.png',
+	'non-markovianity': '/src/assets/writing_non_markovianity.png'
+}
+
+const projectCards = projects.map((p) => ({
+	heading: p.heading,
+	href: p.href,
+	subheading: p.subheading,
+	imagePath: p.imagePath,
+	videoPath: p.videoPath,
+	altText: p.altText,
+	tags: p.tags,
+	demo: p.demo
+}))
+
+const writingCards = sortMDByDate(await getAllPosts())
+	.filter((p) => !p.data.tags.includes('hidden') && !WRITING_EXCLUDE.has(p.slug))
+	.map((p) => ({
+		heading: p.data.title,
+		href: `/blog/${p.slug}/`,
+		subheading: p.data.description,
+		altText: p.data.title,
+		imagePath: WRITING_IMAGE[p.slug],
+		tags: [WRITING_TAG]
+	}))
+
+const cards = [...projectCards, ...writingCards]
 ---
 
 <PageLayout meta={meta}>
-	<div class='mx-auto w-full max-w-[68rem]'>
+	<div class='mx-auto w-full max-w-[80rem]'>
 		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Stuff I've Made</h1>
 		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
-			Research reproductions, AI tools, and experiments.
+			Research reproductions, AI tools, experiments, and notes.
 		</p>
-		<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+		<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
 			{
-				projects.map((p) => (
+				cards.map((c) => (
 					<ProjectCard
-						heading={p.heading}
-						href={p.href}
-						subheading={p.subheading}
-						imagePath={p.imagePath}
-						videoPath={p.videoPath}
-						altText={p.altText}
-						tags={p.tags}
-						demo={p.demo}
+						heading={c.heading}
+						href={c.href}
+						subheading={c.subheading}
+						imagePath={c.imagePath}
+						videoPath={c.videoPath}
+						altText={c.altText}
+						tags={c.tags}
+						demo={c.demo}
 						class='w-full'
 					/>
 				))
