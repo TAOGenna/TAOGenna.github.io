@@ -1,6 +1,7 @@
 export interface ProjectTag {
 	text: string
-	color: string
+	color?: string
+	outline?: boolean
 }
 
 export interface Project {
@@ -106,5 +107,14 @@ export const projects: Project[] = [
 		videoPath: '/projects/maho_hero.mp4',
 		altText: 'MAHO garden of projects',
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
+	},
+	{
+		heading: 'Holographic Entanglement Entropy',
+		href: '/Files/bachelor_thesis.pdf',
+		subheading:
+			'Bachelor’s thesis on holographic entanglement entropy and the Ryu-Takayanagi prescription in AdS/CFT (PUCP, 2021).',
+		imagePath: '/src/assets/bachelor_thesis.png',
+		altText: 'Ryu-Takayanagi surface in AdS/CFT',
+		tags: [{ text: 'Thesis', outline: true }]
 	}
 ]
