@@ -1,16 +1,27 @@
 export interface WorkItem {
 	title: string
-	image: string // path under /public, e.g. /work/hamparte.png
-	href?: string // optional external/detail link
+	image: string // path under /public, e.g. /work/bariloche_lake.jpg
+	href?: string // optional external/detail link (e.g. a video)
+	video?: boolean // show a play badge; `href` should point to the video
 }
 
-// Add pieces here; drop the image file into /public/work/ with a matching name.
+// Personal "Adventures" — art, places, and music. Add pieces here; drop the
+// image file into /public/work/ with a matching name. For a video, set
+// `video: true` and point `href` at it (use a thumbnail as the image).
 export const work: WorkItem[] = [
-	{ title: 'Hamparte', image: '/work/hamparte.png' },
-	{ title: 'Connect 4', image: '/work/connect4_page.gif' },
-	{ title: 'Neural Style Transfer', image: '/work/neural_style_transition.gif' },
-	{ title: 'Majorana zero modes', image: '/work/hartree_fock_majorana.png' },
-	{ title: 'IonogramNET', image: '/work/ionogram_segmentation.png' },
-	{ title: 'LSeg', image: '/work/lseg_project.jpg' },
-	{ title: 'Comma compression', image: '/work/comma_comp.jpg' }
+	{ title: 'Ink drawing', image: '/work/art_deer.jpg' },
+	{
+		title: 'Playing guitar',
+		image: '/work/guitar_video.jpg',
+		href: 'https://www.youtube.com/watch?v=GmebmPBdBQQ',
+		video: true
+	},
+	{ title: 'Nahuel Huapi, Bariloche', image: '/work/bariloche_lake.jpg' },
+	{
+		title: 'Playing piano',
+		image: '/work/piano_video.jpg',
+		href: 'https://www.youtube.com/watch?v=YjEOuWM_Qeo',
+		video: true
+	},
+	{ title: 'Instituto Balseiro in winter', image: '/work/balseiro_snow.webp' }
 ]

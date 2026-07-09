@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../layouts/BaseLayout.astro'
+import PlayBadge from '../components/PlayBadge.astro'
 import { work } from '@/data/work'
 ---
 
@@ -7,21 +8,55 @@ import { work } from '@/data/work'
 	<div class='mx-auto w-full max-w-[60rem]'>
 		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Adventures</h1>
 		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
-			A collection
+			Art, places, and music.
 		</p>
 		<div class='columns-2 gap-4 sm:columns-3 [&>*]:mb-4'>
 			{
-				work.map((item) => (
-					<figure class='break-inside-avoid overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
-						<img src={item.image} alt={item.title} loading='lazy' class='block w-full' />
-						{item.title && (
-							<figcaption class='px-3 py-2 font-garamond text-sm text-muted-foreground'>
-								{item.title}
-							</figcaption>
-						)}
-					</figure>
-				))
+				work.map((item) => {
+					const figure = (
+						<figure class='break-inside-avoid overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
+							<div class='relative'>
+								<img src={item.image} alt={item.title} loading='lazy' class='block w-full' />
+								{item.video && <PlayBadge />}
+							</div>
+							{item.title && (
+								<figcaption class='px-3 py-2 font-garamond text-sm text-muted-foreground'>
+									{item.title}
+								</figcaption>
+							)}
+						</figure>
+					)
+					return item.href ? (
+						<a
+							class='group block'
+							href={item.href}
+							target={item.video ? '_blank' : undefined}
+							rel={item.video ? 'noopener noreferrer' : undefined}
+						>
+							{figure}
+						</a>
+					) : (
+						figure
+					)
+				})
 			}
 		</div>
+
+		<h2 class='mt-14 font-cormorant text-3xl font-semibold text-foreground'>Music</h2>
+		<p class='mb-6 mt-1 font-garamond text-lg text-muted-foreground'>
+			Hotel California — my cover.
+		</p>
+		<figure class='max-w-[40rem] overflow-hidden rounded-md border border-bronze/20 warm-shadow'>
+			<iframe
+				title='Hotel California — cover'
+				class='block w-full'
+				height='166'
+				frameborder='no'
+				scrolling='no'
+				loading='lazy'
+				allow='autoplay'
+				src='https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Frenzo-kenyi-takagui-perez%2Fhotel-california-cover&color=%23a97e3f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false'
+			></iframe>
+		</figure>
 	</div>
 </PageLayout>

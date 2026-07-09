@@ -28,14 +28,15 @@ export const projects: Project[] = [
 		altText: 'YaVendio'
 	},
 	{
-		heading: 'Distill',
-		href: 'https://github.com/TAOGenna/Distill',
-		subheading:
-			'AI that turns any URL into a full progressive course with lessons, exercises, and solutions.',
-		videoPath: '/projects/distill_small_demo.mp4',
-		altText: 'Distill demo',
-		demo: '/courses/index.html',
-		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
+		heading: 'Majorana zero modes',
+		href: 'https://arxiv.org/abs/2309.10888',
+		subheading: 'Self-consistent Hartree-Fock for a quantum-dot–superconducting-nanowire hybrid.',
+		videoPath: '/projects/majorana_sweep.mp4',
+		altText: 'Majorana zero modes',
+		tags: [
+			{ text: 'Phys. Rev. B', color: '#7f1d2e' },
+			{ text: 'arXiv', color: '#7f1d2e' }
+		]
 	},
 	{
 		heading: 'Olive',
@@ -71,6 +72,16 @@ export const projects: Project[] = [
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
 	},
 	{
+		heading: 'Distill',
+		href: 'https://github.com/TAOGenna/Distill',
+		subheading:
+			'AI that turns any URL into a full progressive course with lessons, exercises, and solutions.',
+		videoPath: '/projects/distill_small_demo.mp4',
+		altText: 'Distill demo',
+		demo: '/courses/index.html',
+		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
+	},
+	{
 		heading: 'Neural Style Transfer',
 		href: 'https://github.com/TAOGenna/pytorch-neural-style-transfer',
 		subheading: 'Artistic texture extraction via Gram matrices and VGG-19 features (Gatys et al.).',
@@ -86,17 +97,6 @@ export const projects: Project[] = [
 		imagePath: '/src/assets/ionogram_segmentation.png',
 		altText: 'Raw ionogram beside the U-Net predicted echo trace',
 		tags: [{ text: 'Paper reproduction', color: '#4338ca' }]
-	},
-	{
-		heading: 'Majorana zero modes',
-		href: 'https://arxiv.org/abs/2309.10888',
-		subheading: 'Self-consistent Hartree-Fock for a quantum-dot–superconducting-nanowire hybrid.',
-		videoPath: '/projects/majorana_sweep.mp4',
-		altText: 'Majorana zero modes',
-		tags: [
-			{ text: 'Phys. Rev. B', color: '#7f1d2e' },
-			{ text: 'arXiv', color: '#7f1d2e' }
-		]
 	},
 	{
 		heading: 'MAHO',

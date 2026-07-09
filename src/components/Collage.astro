@@ -1,6 +1,7 @@
 ---
 import { work } from '@/data/work'
 import RotatingBadge from './RotatingBadge.astro'
+import PlayBadge from './PlayBadge.astro'
 
 // Scattered "hand-placed" slots (percent coords within the canvas). Items cycle
 // through these, so adding a piece in work.ts just drops into the next slot.
@@ -26,6 +27,8 @@ const slots = [
 					class='collage-tile group absolute'
 					style={`left:${s.left};top:${s.top};width:${s.w};z-index:${s.z};--rot:${s.rot}deg;`}
 					aria-label={item.title}
+					target={item.video ? '_blank' : undefined}
+					rel={item.video ? 'noopener noreferrer' : undefined}
 				>
 					<img
 						src={item.image}
@@ -33,6 +36,7 @@ const slots = [
 						loading='lazy'
 						class='block aspect-[4/3] w-full rounded-md border-4 border-card object-cover warm-shadow'
 					/>
+					{item.video && <PlayBadge />}
 				</a>
 			)
 		})
@@ -48,9 +52,11 @@ const slots = [
 		work.map((item, i) => (
 			<a
 				href={item.href ?? '/work'}
-				class='collage-tile group w-2/5'
+				class='collage-tile group relative w-2/5'
 				style={`--rot:${slots[i % slots.length].rot}deg;`}
 				aria-label={item.title}
+				target={item.video ? '_blank' : undefined}
+				rel={item.video ? 'noopener noreferrer' : undefined}
 			>
 				<img
 					src={item.image}
@@ -58,6 +64,7 @@ const slots = [
 					loading='lazy'
 					class='block aspect-[4/3] w-full rounded-md border-4 border-card object-cover warm-shadow'
 				/>
+				{item.video && <PlayBadge />}
 			</a>
 		))
 	}
