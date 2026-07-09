@@ -7,6 +7,7 @@ import remarkUnwrapImages from 'remark-unwrap-images'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeExternalLinks from 'rehype-external-links'
+import { rehypeSidenotes } from './src/utils/rehypeSidenotes.ts'
 import expressiveCode from 'astro-expressive-code'
 import { expressiveCodeOptions } from './src/site.config'
 import icon from 'astro-icon'
@@ -38,6 +39,9 @@ export default defineConfig({
         rehypePlugins: [
             rehypeHeadingIds,
             rehypeKatex,
+            // Must run after rehypeKatex so math inside footnotes is rendered
+            // before the note is relocated into the margin.
+            rehypeSidenotes,
         ],
         remarkRehype: {
             footnoteLabelProperties: {

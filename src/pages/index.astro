@@ -8,6 +8,8 @@ import FlippableProfile from '@/components/FlippableProfile.astro'
 import Collage from '@/components/Collage.astro'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
+import { projects, HOMEPAGE_COUNT } from '@/data/projects'
+import RotatingBadge from '@/components/RotatingBadge.astro'
 
 const MAX_POSTS = 10
 const allPosts = await getAllPosts()
@@ -16,6 +18,33 @@ const allPostsByDate = [
 	...sortedPosts.filter((p) => p.data.pinned),
 	...sortedPosts.filter((p) => !p.data.pinned)
 ].slice(0, MAX_POSTS)
+
+// Peer-reviewed work first, then preprints. Self is bolded in the byline.
+const publications = [
+	{
+		title:
+			'Effect of interatomic repulsion on Majorana zero modes in a coupled quantum-dot–superconducting-nanowire hybrid system',
+		authors: ['R. Kenyi Takagui Perez', 'A. A. Aligia'],
+		venue: 'Phys. Rev. B 109, 075416',
+		year: 2024,
+		links: [
+			{ label: 'DOI', href: 'https://doi.org/10.1103/PhysRevB.109.075416' },
+			{ label: 'arXiv', href: 'https://arxiv.org/abs/2309.10888' },
+			{ label: 'PDF', href: 'https://arxiv.org/pdf/2309.10888' }
+		]
+	},
+	{
+		title:
+			'A note on an inversion algorithm for vertical ionograms for the prediction of plasma frequency profiles',
+		authors: ['R. Kenyi Takagui Perez'],
+		venue: 'arXiv preprint',
+		year: 2024,
+		links: [
+			{ label: 'arXiv', href: 'https://arxiv.org/abs/2411.09215' },
+			{ label: 'PDF', href: 'https://arxiv.org/pdf/2411.09215' }
+		]
+	}
+]
 ---
 
 <PageLayout meta={{ title: 'Home' }} showModeToggle={true}>
@@ -115,103 +144,30 @@ const allPostsByDate = [
 
 		<Section title="Stuff I've Made" data-mode='professional'>
 			<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-				<ProjectCard
-					heading='YaVendio'
-					href='https://yavendio.com'
-					subheading='Conversational AI agents that sell and support customers over WhatsApp.'
-					imagePath='/src/assets/yavendio.png'
-					altText='YaVendio'
-					class='w-full'
-				/>
-				<ProjectCard
-					heading='Distill'
-					href='https://github.com/TAOGenna/Distill'
-					subheading='AI that turns any URL into a full progressive course with lessons, exercises, and solutions.'
-					videoPath='/projects/distill_small_demo.mp4'
-					altText='Distill demo'
-					class='w-full'
-					demo='/courses/index.html'
-					tags={[{ text: 'Prototype', color: '#8a6d2f' }]}
-				/>
-				<ProjectCard
-					heading='Olive'
-					href='https://github.com/YaVendio/olive'
-					subheading='A decorator that exposes Python functions as remote tools for AI agents.'
-					imagePath='/src/assets/olive_architecture.png'
-					altText='Olive'
-					class='w-full'
-					tags={[{ text: 'OSS contributor', color: '#0f766e' }]}
-				/>
-				<ProjectCard
-					heading='Inversion of ionograms'
-					href='https://arxiv.org/abs/2411.09215'
-					subheading='Inversion algorithm for plasma frequency profiles.'
-					videoPath='/projects/inversion_progress.mp4'
-					altText='Ionogram inversion'
-					class='w-full'
-					tags={[{ text: 'arXiv', color: '#7f1d2e' }]}
-				/>
-				<ProjectCard
-					heading='Language-driven Segmentation'
-					href='https://github.com/TAOGenna/pytorch-language-driven-semantic-segmentation'
-					subheading='From-scratch DPT encoder + CLIP text encoder in a shared multimodal latent space (LSeg, ICML 2022).'
-					videoPath='/projects/lseg_progress.mp4'
-					altText='LSeg'
-					class='w-full'
-					tags={[{ text: 'Paper reproduction', color: '#4338ca' }]}
-				/>
-				<ProjectCard
-					heading='MCTS for Connect 4'
-					href='https://github.com/TAOGenna/Connect4-MonteCarlo'
-					subheading='A playable game with an AI opponent powered by Monte Carlo Tree Search and UCB.'
-					videoPath='/projects/connect4_progress.mp4'
-					altText='Connect 4'
-					class='w-full'
-					tags={[{ text: 'Prototype', color: '#8a6d2f' }]}
-				/>
-				<ProjectCard
-					heading='Neural Style Transfer'
-					href='https://github.com/TAOGenna/pytorch-neural-style-transfer'
-					subheading='Artistic texture extraction via Gram matrices and VGG-19 features (Gatys et al.).'
-					videoPath='/projects/style_transfer_progress.mp4'
-					altText='Neural style transfer'
-					class='w-full'
-					tags={[{ text: 'Paper reproduction', color: '#4338ca' }]}
-				/>
-				<ProjectCard
-					heading='IonogramNET'
-					href='https://github.com/TAOGenna/ionospheric-echo-detection-with-convolutional-neural-networks'
-					subheading='Encoder-decoder CNN for extracting echo traces from Jicamarca Observatory ionograms.'
-					imagePath='/src/assets/ionogram_segmentation.png'
-					altText='Raw ionogram beside the U-Net predicted echo trace'
-					class='w-full'
-					tags={[{ text: 'Paper reproduction', color: '#4338ca' }]}
-				/>
-				<ProjectCard
-					heading='Majorana zero modes'
-					href='https://arxiv.org/abs/2309.10888'
-					subheading='Self-consistent Hartree-Fock for a quantum-dot–superconducting-nanowire hybrid.'
-					videoPath='/projects/majorana_sweep.mp4'
-					altText='Majorana zero modes'
-					class='w-full'
-					tags={[{ text: 'Phys. Rev. B', color: '#7f1d2e' }, { text: 'arXiv', color: '#7f1d2e' }]}
-				/>
-				<ProjectCard
-					heading='MAHO'
-					href='https://maho.kenyi-rtp.workers.dev/'
-					subheading='Compiles your project markdown into a living garden, where each project is an island that blooms when you give it focused time and one honest line, and wilts when you don’t.'
-					videoPath='/projects/maho_hero.mp4'
-					altText='MAHO garden of projects'
-					class='w-full'
-					tags={[{ text: 'Prototype', color: '#8a6d2f' }]}
-				/>
+				{
+					projects.slice(0, HOMEPAGE_COUNT).map((p) => (
+						<ProjectCard
+							heading={p.heading}
+							href={p.href}
+							subheading={p.subheading}
+							imagePath={p.imagePath}
+							videoPath={p.videoPath}
+							altText={p.altText}
+							tags={p.tags}
+							demo={p.demo}
+							class='w-full'
+						/>
+					))
+				}
+			</div>
+			<div class='mt-10 flex justify-center'>
+				<RotatingBadge href='/projects' label='More Work · ' repeat={4} size={140} />
 			</div>
 		</Section>
 
 		{
 			allPostsByDate.length > 0 && (
 				<>
-					<GeometricDivider variant='mandala' data-mode='professional' />
 					<Section title='Writing' data-mode='professional'>
 						<ul class='flex flex-col gap-y-4'>
 							{allPostsByDate
@@ -224,6 +180,54 @@ const allPostsByDate = [
 				</>
 			)
 		}
+
+		<Section title='Publications' data-mode='professional'>
+			<ul class='flex flex-col gap-y-6'>
+				{
+					publications.map((pub) => (
+						<li class='flex flex-col gap-1'>
+							<div class='flex items-baseline justify-between gap-4'>
+								<a
+									class='illuminated-link font-cormorant text-lg font-semibold'
+									href={pub.links[0].href}
+									rel='noopener noreferrer'
+									target='_blank'
+								>
+									{pub.title}
+								</a>
+								<span class='shrink-0 text-sm text-muted-foreground'>{pub.year}</span>
+							</div>
+							<p class='text-sm leading-relaxed text-muted-foreground'>
+								{pub.authors.map((a, i) => (
+									<>
+										{i > 0 && ', '}
+										{a.includes('Takagui') ? (
+											<span class='font-medium text-foreground/80'>{a}</span>
+										) : (
+											a
+										)}
+									</>
+								))}
+								{' · '}
+								<span class='italic'>{pub.venue}</span>
+							</p>
+							<div class='mt-0.5 flex flex-wrap gap-x-4 gap-y-1 text-xs'>
+								{pub.links.map((l) => (
+									<a
+										class='text-muted-foreground underline decoration-border underline-offset-2 transition-colors hover:text-gold'
+										href={l.href}
+										rel='noopener noreferrer'
+										target='_blank'
+									>
+										{l.label} ↗
+									</a>
+								))}
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</Section>
 
 		<GeometricDivider variant='simple' data-mode='professional' />
 

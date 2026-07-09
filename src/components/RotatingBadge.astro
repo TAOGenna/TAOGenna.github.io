@@ -3,9 +3,10 @@ interface Props {
 	href?: string
 	label?: string
 	size?: number
+	repeat?: number
 }
-const { href = '/work', label = 'MORE · ', size = 132 } = Astro.props
-const text = label.repeat(6)
+const { href = '/work', label = 'MORE · ', size = 132, repeat = 6 } = Astro.props
+const text = label.repeat(repeat)
 ---
 
 <a

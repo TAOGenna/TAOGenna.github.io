@@ -1,0 +1,62 @@
+---
+import { siteConfig } from '@/site-config'
+
+interface Props {
+	title: string
+	publishDate: Date
+	slug: string
+	authors?: string
+}
+
+const { title, publishDate, slug, authors = 'Kenyi Takagui-Perez' } = Astro.props
+
+const year = publishDate.getFullYear()
+const url = `${siteConfig.url ?? 'https://taogenna.github.io'}/blog/${slug}`
+
+// Plaintext, e.g. "Kenyi Takagui-Perez. (2026). Title. https://…"
+const plaintext = `${authors}. (${year}). ${title}. ${url}`
+
+// BibTeX key: first-author surname + year (fallback to slug).
+const surname = authors.split(',')[0].trim().split(/\s+/).pop() ?? 'kenyi'
+const bibKey = `${surname.toLowerCase().replace(/[^a-z0-9]/g, '')}${year}`
+const bibtex = `@misc{${bibKey},
+  author = {${authors}},
+  title = {${title}},
+  year = {${year}},
+  howpublished = {\\url{${url}}}
+}`
+---
+
+<section class='mt-16 border-t border-border pt-6 font-sans not-prose'>
+	<h2 class='mb-4 text-sm font-semibold uppercase tracking-wide text-muted-foreground'>Citation</h2>
+	<p class='mb-2 text-xs text-muted-foreground'>Cited as:</p>
+	<div class='mb-6 rounded-md border border-border bg-muted/40 p-4 text-sm leading-relaxed'>
+		{plaintext}
+	</div>
+	<p class='mb-2 text-xs text-muted-foreground'>Or:</p>
+	<div class='relative'>
+		<pre
+			class='overflow-x-auto rounded-md border border-border bg-muted/40 p-4 text-xs leading-relaxed'><code>{bibtex}</code></pre>
+		<button
+			class='absolute end-3 top-3 rounded border border-border bg-background px-2 py-1 text-[0.65rem] text-muted-foreground transition-colors hover:text-foreground'
+			data-citation-copy
+			data-bibtex={bibtex}
+			type='button'>Copy</button>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll('[data-citation-copy]').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			const text = (btn as HTMLElement).dataset.bibtex ?? ''
+			try {
+				await navigator.clipboard.writeText(text)
+				const prev = btn.textContent
+				btn.textContent = 'Copied'
+				setTimeout(() => (btn.textContent = prev), 1500)
+			} catch {
+				/* clipboard unavailable */
+			}
+		})
+	})
+</script>

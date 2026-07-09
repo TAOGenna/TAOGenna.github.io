@@ -72,6 +72,7 @@ const config = {
 				// Spiritual journal fonts
 				serif: ['EB Garamond Variable', 'serif'],
 				garamond: ['EB Garamond Variable', 'serif'],
+				lora: ['Lora Variable', 'ui-serif', 'Georgia', 'serif'],
 				cormorant: ['Cormorant Garamond Variable', 'serif'],
 				newsreader: ['Newsreader Variable', 'serif'],
 				alegreya: ['Alegreya Variable', 'serif']

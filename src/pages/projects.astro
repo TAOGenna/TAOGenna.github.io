@@ -1,0 +1,36 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import { projects } from '@/data/projects'
+
+const meta = {
+	title: 'Projects',
+	description: "Everything I've built — research reproductions, AI tools, and experiments."
+}
+---
+
+<PageLayout meta={meta}>
+	<div class='mx-auto w-full max-w-[68rem]'>
+		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Stuff I've Made</h1>
+		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
+			Research reproductions, AI tools, and experiments.
+		</p>
+		<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+			{
+				projects.map((p) => (
+					<ProjectCard
+						heading={p.heading}
+						href={p.href}
+						subheading={p.subheading}
+						imagePath={p.imagePath}
+						videoPath={p.videoPath}
+						altText={p.altText}
+						tags={p.tags}
+						demo={p.demo}
+						class='w-full'
+					/>
+				))
+			}
+		</div>
+	</div>
+</PageLayout>

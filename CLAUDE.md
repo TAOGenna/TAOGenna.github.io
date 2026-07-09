@@ -65,6 +65,16 @@ legacy-hugo/              # the previous Hugo site, archived (not built/served)
 - **Blog post**: create `src/content/post/<slug>.md` with frontmatter
   (`title` ≤60 chars, `description` 50–160 chars, `publishDate`, `tags`). Math via
   `$...$` / `$$...$$` (remark-math + rehype-katex). Co-locate images and use `![](./img.png)`.
+  Post pages (`layouts/BlogPost.astro`) use a **hand-rolled type engine** ported from
+  rajan.sh — a `.blog-prose` CSS block (NOT `@tailwindcss/typography`) with a deliberately
+  flat scale: **Lora** body `1.05rem/1.85`, plain-foreground normal-weight headings only
+  modestly larger than body (content `h1`≈1.7rem so it never outsizes the Hero title).
+  Header is centered (`Hero.astro`, non-spiritual branch: Lora title + description subtitle
+  + author·date). TOC is a **left** sticky sidebar with scroll-spy (`TableOfContents.astro`).
+  renders as **Tufte-style margin sidenotes** (float into the right margin ≥1280px, inline
+  below otherwise) via `src/utils/rehypeSidenotes.ts` — no bottom footnotes section. Set
+  `citation: true` (optional `citationAuthors: "A, B"`) to append a citation block
+  (plaintext + BibTeX) built from title/date/URL by `components/blog/Citation.astro`.
 - **Project card**: add a `<ProjectCard>` in `index.astro`. Use `imagePath='/src/assets/x'`
   for a still, or `videoPath='/projects/x.mp4'` (served from `public/`) for an autoplay clip.
   Optional `tags={[{text,color}]}` and `demo='/path'` (gold "See output" pill).

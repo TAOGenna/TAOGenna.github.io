@@ -7,6 +7,7 @@ import Button from '@/components/Button.astro'
 import PageLayout from './BaseLayout.astro'
 import Label from '@/components/Label.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
+import Citation from '@/components/blog/Citation.astro'
 import '@fontsource/newsreader'
 import 'katex/dist/katex.min.css'
 
@@ -16,7 +17,7 @@ interface Props {
 
 const { post } = Astro.props
 const {
-	data: { description, ogImage, publishDate, title, updatedDate, tags },
+	data: { description, ogImage, publishDate, title, updatedDate, tags, citation, citationAuthors },
 	slug
 } = post
 
@@ -29,18 +30,115 @@ const isSpiritual = tags?.includes('spiritual') ?? false
 ---
 
 <style is:global>
-	article h2,
-	article h3,
-	article h4 {
-		font-family: 'Cormorant Garamond Variable', serif;
-		font-weight: 600;
-		color: hsl(var(--gold));
+	/* ---------------------------------------------------------------
+	   Reading engine — ported from rajan.sh's per-element type scale.
+	   Deliberately flat: headings are Lora, normal-weight, plain
+	   foreground, only modestly larger than body. No Tailwind `prose`.
+	   --------------------------------------------------------------- */
+	.blog-prose {
+		color: hsl(var(--foreground) / 0.82);
 	}
 
-	/* Spiritual posts use Newsreader for headings */
-	article[data-spiritual='true'] h2,
-	article[data-spiritual='true'] h3,
-	article[data-spiritual='true'] h4 {
+	.blog-prose :where(h1, h2, h3, h4) {
+		color: hsl(var(--foreground));
+		font-weight: 400;
+		line-height: 1.25;
+		text-wrap: balance;
+		scroll-margin-top: 6rem;
+	}
+	.blog-prose h1 {
+		font-size: 1.7rem;
+		margin: 3rem 0 1.25rem;
+	}
+	.blog-prose h2 {
+		font-size: 1.5rem;
+		margin: 3rem 0 1.25rem;
+	}
+	.blog-prose h3 {
+		font-size: 1.2rem;
+		font-weight: 500;
+		margin: 2.25rem 0 0.75rem;
+	}
+	.blog-prose h4 {
+		font-size: 1.05rem;
+		font-weight: 600;
+		margin: 1.75rem 0 0.5rem;
+	}
+	.blog-prose > :first-child {
+		margin-top: 0;
+	}
+
+	.blog-prose p {
+		margin: 0 0 1.4rem;
+		text-wrap: pretty;
+	}
+	.blog-prose ul,
+	.blog-prose ol {
+		margin: 1.5rem 0;
+		padding-left: 1.6rem;
+	}
+	.blog-prose ul {
+		list-style: disc;
+	}
+	.blog-prose ol {
+		list-style: decimal;
+	}
+	.blog-prose li {
+		margin-bottom: 0.4rem;
+		line-height: 1.75;
+		text-wrap: pretty;
+	}
+	.blog-prose li::marker {
+		color: hsl(var(--muted-foreground) / 0.6);
+	}
+	.blog-prose li > ul,
+	.blog-prose li > ol {
+		margin: 0.4rem 0;
+	}
+	.blog-prose blockquote {
+		margin: 2rem 0;
+		padding-left: 1.5rem;
+		border-left: 2px solid hsl(var(--border));
+		color: hsl(var(--foreground) / 0.7);
+	}
+	.blog-prose a {
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		text-decoration-thickness: 1px;
+	}
+	.blog-prose strong {
+		font-weight: 600;
+		color: hsl(var(--foreground));
+	}
+	.blog-prose :not(pre) > code {
+		background: hsl(var(--muted));
+		padding: 0.12em 0.36em;
+		border-radius: 4px;
+		font-size: 0.88em;
+	}
+	.blog-prose hr {
+		margin: 3rem 0;
+		border: 0;
+		border-top: 1px solid hsl(var(--border));
+	}
+	.blog-prose table {
+		width: 100%;
+		margin: 2rem 0;
+		font-size: 0.95rem;
+		border-collapse: collapse;
+	}
+	.blog-prose th,
+	.blog-prose td {
+		padding: 0.5rem 0.75rem;
+		border-bottom: 1px solid hsl(var(--border));
+		text-align: left;
+	}
+	.blog-prose th {
+		font-weight: 600;
+	}
+
+	/* Spiritual posts keep Newsreader headings + their airier size. */
+	.blog-prose.font-newsreader :where(h1, h2, h3, h4) {
 		font-family: 'Newsreader Variable', serif;
 	}
 
@@ -57,6 +155,65 @@ const isSpiritual = tags?.includes('spiritual') ?? false
 	/* Inline math shouldn't inflate line-height */
 	article .katex {
 		font-size: 1.05em;
+	}
+
+	.blog-prose.font-lora {
+		font-size: 1.05rem;
+		line-height: 1.85;
+	}
+	.blog-prose.font-newsreader {
+		font-size: 1.2rem;
+		line-height: 1.8;
+	}
+
+	/* --- Sidenotes (Tufte-style margin notes) --- */
+	article .sidenote-container {
+		position: relative;
+	}
+	article .sidenote-marker {
+		font-size: 0.72em;
+		line-height: 0;
+		vertical-align: super;
+	}
+	article .sidenote-ref {
+		color: hsl(var(--muted-foreground));
+		text-decoration: none;
+		padding: 0 0.12em;
+	}
+	article .sidenote-ref:hover {
+		color: hsl(var(--foreground));
+	}
+	article .sidenote-number {
+		color: hsl(var(--foreground));
+		font-weight: 600;
+		margin-right: 0.3em;
+	}
+	/* Narrow screens: show the note inline as an indented aside. */
+	article .sidenote {
+		display: block;
+		margin: 0.75rem 0 1.4rem;
+		padding-left: 1rem;
+		border-left: 2px solid hsl(var(--border));
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: hsl(var(--muted-foreground));
+	}
+	article .sidenote .katex {
+		font-size: 1em;
+	}
+	/* Wide screens: float the note into the right margin. */
+	@media (min-width: 1280px) {
+		article .sidenote {
+			float: right;
+			clear: right;
+			width: 13rem;
+			margin: 0.2rem -14.5rem 1rem 0;
+			padding-left: 0;
+			border-left: none;
+			font-size: 0.78rem;
+			line-height: 1.5;
+			text-align: left;
+		}
 	}
 
 	/* Centered figures with subdued italic captions */
@@ -82,16 +239,11 @@ const isSpiritual = tags?.includes('spiritual') ?? false
 		<article class='break-words' data-pagefind-body data-spiritual={isSpiritual.toString()}>
 			<div id='blog-hero'><BlogHero content={post} hideAuthorDate={isSpiritual} /></div>
 			<div
-				class:list={[
-					'text-black-foreground prose prose-lg prose-zinc mt-8 max-w-none dark:prose-invert prose-headings:font-medium prose-headings:text-foreground prose-th:before:content-none',
-					isSpiritual ? 'font-newsreader' : 'font-garamond'
-				]}
-				style={{
-					fontSize: '1.25rem'
-				}}
+				class:list={['blog-prose mt-12', isSpiritual ? 'font-newsreader' : 'font-lora']}
 			>
 				<slot />
 			</div>
+			{citation && <Citation authors={citationAuthors} publishDate={publishDate} slug={slug} title={title} />}
 		</article>
 		{
 			/* 

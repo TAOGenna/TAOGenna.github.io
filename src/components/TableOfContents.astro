@@ -10,19 +10,67 @@ const { headings } = Astro.props
 const filteredHeadings = headings.filter((heading) => heading.depth <= 3)
 ---
 
-<nav class='fixed right-8 top-28 hidden w-56 xl:block'>
-	<h2 class='mb-2 text-lg font-semibold'>CONTENTS</h2>
-	<div class='flex flex-col gap-2'>
+<nav class='toc fixed left-8 top-32 hidden w-52 xl:block 2xl:left-16'>
+	<h2 class='mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground'>Contents</h2>
+	<ul class='flex flex-col gap-2.5'>
 		{
 			filteredHeadings.map((heading) => (
-				<a
-					class={`text-sm hover:underline ${heading.depth === 3 ? 'text-gray-500' : ''}`}
-					href={`#${heading.slug}`}
-					style={`margin-left: ${(heading.depth - 2) * 1}rem`}
-				>
-					{heading.text}
-				</a>
+				<li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
+					<a
+						class='toc-link block text-sm leading-snug text-muted-foreground transition-colors hover:text-foreground'
+						data-toc-link
+						href={`#${heading.slug}`}
+					>
+						{heading.text}
+					</a>
+				</li>
 			))
 		}
-	</div>
+	</ul>
 </nav>
+
+<style>
+	.toc-link.is-active {
+		color: hsl(var(--foreground));
+		font-weight: 500;
+	}
+</style>
+
+<script>
+	// Scroll-spy: highlight the TOC entry for the section currently in view.
+	const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'))
+	const byId = new Map<string, HTMLAnchorElement>()
+	for (const link of links) {
+		const id = decodeURIComponent(link.hash.slice(1))
+		if (id) byId.set(id, link)
+	}
+
+	const targets = Array.from(byId.keys())
+		.map((id) => document.getElementById(id))
+		.filter((el): el is HTMLElement => el !== null)
+
+	if (targets.length) {
+		let activeId = ''
+		const setActive = (id: string) => {
+			if (id === activeId) return
+			activeId = id
+			for (const link of links) link.classList.remove('is-active')
+			byId.get(id)?.classList.add('is-active')
+		}
+
+		const visible = new Set<string>()
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) visible.add(entry.target.id)
+					else visible.delete(entry.target.id)
+				}
+				// Highlight the first on-screen heading in document order.
+				const current = targets.find((t) => visible.has(t.id))
+				if (current) setActive(current.id)
+			},
+			{ rootMargin: '-10% 0px -70% 0px', threshold: 0 }
+		)
+		for (const t of targets) observer.observe(t)
+	}
+</script>

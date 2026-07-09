@@ -31,7 +31,11 @@ const post = defineCollection({
 			pinned: z.boolean().default(false),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			ogImage: z.string().optional(),
-			hackerNewsId: z.string().optional()
+			hackerNewsId: z.string().optional(),
+			// Show an academic-style citation block (plaintext + BibTeX) at the
+			// end of the post. `citationAuthors` overrides the default author name.
+			citation: z.boolean().default(false),
+			citationAuthors: z.string().optional()
 		})
 })
 

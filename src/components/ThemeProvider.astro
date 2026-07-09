@@ -1,5 +1,5 @@
 <script is:inline>
-	// Get site mode from URL parameter (personal = light, professional = dark)
+	// Get site mode from URL parameter (professional = light, personal = dark)
 	function getSiteMode() {
 		const params = new URLSearchParams(window.location.search)
 		const mode = params.get('mode')
@@ -9,10 +9,10 @@
 		return 'professional' // default to professional mode
 	}
 
-	// Get theme based on site mode (personal = light, professional = dark)
+	// Get theme based on site mode (professional = light, personal = dark)
 	function getThemeFromMode() {
 		const mode = getSiteMode()
-		return mode === 'personal' ? 'light' : 'dark'
+		return mode === 'professional' ? 'light' : 'dark'
 	}
 
 	function setTheme(newTheme) {
