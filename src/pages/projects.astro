@@ -29,7 +29,8 @@ const projectCards = projects.map((p) => ({
 	videoPath: p.videoPath,
 	altText: p.altText,
 	tags: p.tags,
-	demo: p.demo
+	demo: p.demo,
+	video: p.video
 }))
 
 const writingCards = sortMDByDate(await getAllPosts())
@@ -43,7 +44,13 @@ const writingCards = sortMDByDate(await getAllPosts())
 		tags: [WRITING_TAG]
 	}))
 
-const cards = [...projectCards, ...writingCards]
+// Breadboard Pong should be the very last card, after the writing cards.
+const LAST_HEADING = 'Breadboard Pong'
+const cards = [
+	...projectCards.filter((c) => c.heading !== LAST_HEADING),
+	...writingCards,
+	...projectCards.filter((c) => c.heading === LAST_HEADING)
+]
 ---
 
 <PageLayout meta={meta}>
@@ -64,6 +71,7 @@ const cards = [...projectCards, ...writingCards]
 						altText={c.altText}
 						tags={c.tags}
 						demo={c.demo}
+						video={c.video}
 						class='w-full'
 					/>
 				))

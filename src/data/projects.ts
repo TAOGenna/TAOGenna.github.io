@@ -14,6 +14,7 @@ export interface Project {
 	tags?: ProjectTag[]
 	demo?: string
 	demoLabel?: string
+	video?: boolean // link points at a video; shows a play badge over the thumbnail
 }
 
 // Order matters: the homepage shows the first `HOMEPAGE_COUNT`, the full list
@@ -116,5 +117,15 @@ export const projects: Project[] = [
 		imagePath: '/src/assets/bachelor_thesis.png',
 		altText: 'Ryu-Takayanagi surface in AdS/CFT',
 		tags: [{ text: 'Thesis', outline: true }]
+	},
+	{
+		heading: 'Breadboard Pong',
+		href: 'https://www.youtube.com/shorts/_x0xzQIJ6gE',
+		subheading:
+			'Two-player Pong on a Tiva ARM Cortex-M microcontroller driving a TFT display, with potentiometer paddles.',
+		imagePath: '/src/assets/pong_breadboard.png',
+		altText: 'Breadboard Pong on a TFT display, driven by a Tiva ARM Cortex-M microcontroller',
+		video: true,
+		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
 	}
 ]

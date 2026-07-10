@@ -5,8 +5,9 @@ import { cn } from '@/utils'
 import Tag from './Tag.astro'
 import HackerNewsScore from './HackerNewsScore'
 import CornerOrnament from './CornerOrnament.astro'
+import PlayBadge from './PlayBadge.astro'
 
-const { class: className, href, heading, subheading, imagePath, videoPath, altText, tags, demo, demoLabel = 'See output', hackerNewsId } = Astro.props
+const { class: className, href, heading, subheading, imagePath, videoPath, altText, tags, demo, demoLabel = 'See output', hackerNewsId, video } = Astro.props
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}')
 // A card may have a video, an image, or neither yet (a pending thumbnail).
 if (imagePath && !images[imagePath])
@@ -16,39 +17,42 @@ if (imagePath && !images[imagePath])
 <div
 	class={cn(
 		className,
-		'relative flex flex-col gap-y-3 rounded-lg border-2 border-bronze/20 bg-card warm-shadow',
+		'group relative flex flex-col gap-y-3 rounded-lg border-2 border-bronze/20 bg-card warm-shadow',
 		href && 'transition-all duration-300 hover:border-gold/40 hover:warm-shadow-lg hover:-translate-y-1'
 	)}
 >
 	<CornerOrnament position='all' color='bronze' />
-	{
-		videoPath ? (
-			<video
-				src={videoPath}
-				class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
-				autoplay
-				loop
-				muted
-				playsinline
-				preload='metadata'
-				aria-label={altText}
-			/>
-		) : imagePath ? (
-			<Image
-				src={images[imagePath]()}
-				alt={altText}
-				class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
-				loading='eager'
-			/>
-		) : (
-			<div
-				class='flex h-48 w-full items-center justify-center rounded-t-lg bg-gradient-to-br from-bronze/10 via-card to-gold/10'
-				aria-hidden='true'
-			>
-				<span class='font-cormorant text-sm italic text-muted-foreground/70'>thumbnail soon</span>
-			</div>
-		)
-	}
+	<div class='relative'>
+		{
+			videoPath ? (
+				<video
+					src={videoPath}
+					class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
+					autoplay
+					loop
+					muted
+					playsinline
+					preload='metadata'
+					aria-label={altText}
+				/>
+			) : imagePath ? (
+				<Image
+					src={images[imagePath]()}
+					alt={altText}
+					class='h-48 w-full rounded-bl-none rounded-br-none object-cover'
+					loading='eager'
+				/>
+			) : (
+				<div
+					class='flex h-48 w-full items-center justify-center rounded-t-lg bg-gradient-to-br from-bronze/10 via-card to-gold/10'
+					aria-hidden='true'
+				>
+					<span class='font-cormorant text-sm italic text-muted-foreground/70'>thumbnail soon</span>
+				</div>
+			)
+		}
+		{video && <PlayBadge />}
+	</div>
 	<div class='flex flex-col gap-y-0.5 px-5 py-4'>
 		<h1 class='font-cormorant text-xl font-semibold text-foreground'>{heading}</h1>
 		<h2 class='text-sm leading-relaxed text-muted-foreground'>{subheading}</h2>
