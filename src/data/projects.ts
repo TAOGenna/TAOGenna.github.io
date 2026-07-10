@@ -74,6 +74,22 @@ export const projects: Project[] = [
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
 	},
 	{
+		heading: 'Soil Organic Carbon with GNNs',
+		href: 'https://spatiali.se/',
+		subheading:
+			'Worked with Spatialise to predict soil organic carbon across 200K+ hectares with graph neural networks.',
+		imagePath: '/src/assets/spatialise_soc.png',
+		altText: 'Stacked geospatial raster layers over terrain'
+	},
+	{
+		heading: 'Recommendation Systems',
+		href: 'https://www.yape.com.pe/productos/pago-de-servicios',
+		subheading:
+			'Recommender models predicting the right service provider per user, on Yape’s 18M-user platform.',
+		imagePath: '/src/assets/yape_recsys.png',
+		altText: 'Yape app screen for paying services'
+	},
+	{
 		heading: 'Distill',
 		href: 'https://github.com/TAOGenna/Distill',
 		subheading:
@@ -103,7 +119,7 @@ export const projects: Project[] = [
 	{
 		heading: 'MAHO',
 		href: 'https://maho.kenyi-rtp.workers.dev/',
-		subheading: 'Your projects as a living garden that blooms with focused work.',
+		subheading: 'Project markdown that compiles into a garden, blooming with focused work.',
 		videoPath: '/projects/maho_hero.mp4',
 		altText: 'MAHO garden of projects',
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
@@ -115,6 +131,14 @@ export const projects: Project[] = [
 		imagePath: '/src/assets/bachelor_thesis.png',
 		altText: 'Ryu-Takayanagi surface in AdS/CFT',
 		tags: [{ text: 'Thesis', outline: true }]
+	},
+	{
+		heading: 'Quantum Communication Complexity',
+		subheading:
+			'Undergraduate research at USP on reduced-communication quantum protocols and the efficiency gains from entanglement.',
+		imagePath: '/src/assets/quantum_communication.png',
+		altText: 'Graph illustrating a quantum communication complexity problem',
+		tags: [{ text: 'Research', outline: true }]
 	},
 	{
 		heading: 'Breadboard Pong',
