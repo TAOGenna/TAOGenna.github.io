@@ -103,8 +103,7 @@ export const projects: Project[] = [
 	{
 		heading: 'MAHO',
 		href: 'https://maho.kenyi-rtp.workers.dev/',
-		subheading:
-			'Compiles your project markdown into a living garden, where each project is an island that blooms when you give it focused time and one honest line, and wilts when you don’t.',
+		subheading: 'Your projects as a living garden that blooms with focused work.',
 		videoPath: '/projects/maho_hero.mp4',
 		altText: 'MAHO garden of projects',
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
@@ -112,8 +111,7 @@ export const projects: Project[] = [
 	{
 		heading: 'Holographic Entanglement Entropy',
 		href: '/Files/bachelor_thesis.pdf',
-		subheading:
-			'Bachelor’s thesis on holographic entanglement entropy and the Ryu-Takayanagi prescription in AdS/CFT (PUCP, 2021).',
+		subheading: 'Holographic entanglement entropy and Ryu-Takayanagi in AdS/CFT.',
 		imagePath: '/src/assets/bachelor_thesis.png',
 		altText: 'Ryu-Takayanagi surface in AdS/CFT',
 		tags: [{ text: 'Thesis', outline: true }]

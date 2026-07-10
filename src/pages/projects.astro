@@ -14,6 +14,13 @@ const meta = {
 // project). Thumbnails are pending, so these render a placeholder for now.
 const WRITING_EXCLUDE = new Set(['hartree-fock-method'])
 const WRITING_TAG = { text: 'Writing', outline: true }
+// Short, card-only blurbs (the full frontmatter description still feeds the blog page).
+const WRITING_BLURB: Record<string, string> = {
+	ppca: 'Deriving probabilistic PCA from a linear-Gaussian latent model.',
+	'atomic-environments-mlip': 'How local atomic environments are represented in ML potentials.',
+	'non-markovianity': 'Measuring non-Markovianity via decoherence rates and trace distance.',
+	'photonics-microwave-systems': 'A 3-channel radio-over-fiber link with single-sideband modulation.'
+}
 const WRITING_IMAGE: Record<string, string> = {
 	ppca: '/src/assets/writing_ppca.png',
 	'atomic-environments-mlip': '/src/assets/writing_ml_potentials.png',
@@ -38,7 +45,7 @@ const writingCards = sortMDByDate(await getAllPosts())
 	.map((p) => ({
 		heading: p.data.title,
 		href: `/blog/${p.slug}/`,
-		subheading: p.data.description,
+		subheading: WRITING_BLURB[p.slug] ?? p.data.description,
 		altText: p.data.title,
 		imagePath: WRITING_IMAGE[p.slug],
 		tags: [WRITING_TAG]

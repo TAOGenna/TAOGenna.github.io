@@ -1,5 +1,11 @@
-<script is:inline>
-	// Get site mode from URL parameter (professional = light, personal = dark)
+---
+// `force` locks the page to a theme regardless of the ?mode= param — used by
+// personal-only pages like /work that should always be light.
+const { force } = Astro.props
+---
+
+<script define:vars={{ force }}>
+	// Get site mode from URL parameter (professional = dark, personal = light)
 	function getSiteMode() {
 		const params = new URLSearchParams(window.location.search)
 		const mode = params.get('mode')
@@ -9,10 +15,12 @@
 		return 'professional' // default to professional mode
 	}
 
-	// Get theme based on site mode (professional = light, personal = dark)
+	// Get theme based on site mode (professional = dark, personal = light),
+	// unless the page forces a specific theme.
 	function getThemeFromMode() {
+		if (force === 'light' || force === 'dark') return force
 		const mode = getSiteMode()
-		return mode === 'professional' ? 'light' : 'dark'
+		return mode === 'professional' ? 'dark' : 'light'
 	}
 
 	function setTheme(newTheme) {
@@ -37,8 +45,10 @@
 	// View Transitions hook to restore theme
 	document.addEventListener('astro:after-swap', () => setTheme(getThemeFromMode()))
 
-	// Listen for theme-change custom event (from mode toggle)
+	// Listen for theme-change custom event (from mode toggle) — ignored when the
+	// page is locked to a forced theme.
 	document.addEventListener('theme-change', (e) => {
+		if (force === 'light' || force === 'dark') return
 		setTheme(e.detail.theme)
 	})
 </script>
