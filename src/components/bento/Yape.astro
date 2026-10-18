@@ -1,0 +1,162 @@
+---
+// Recommender on a map: Peru's water and electricity utilities have non-overlapping
+// territories, so where someone lives largely tells you their provider. The pin tours
+// regions (or follows the cursor) and the card ranks the services paid there.
+// Geometry: Natural Earth (public domain), scripts/tile-data/peru.py. Provider names are
+// real utilities; the scores are illustrative.
+import peru from '../../data/tiles/peru.json'
+
+const CATS = ['Water', 'Electricity', 'Mobile', 'Internet'] as const
+const SHORT = { Water: 'water', Electricity: 'elec', Mobile: 'mobile', Internet: 'net' }
+type Rows = Record<(typeof CATS)[number], [string, number]>
+const tour: { keys: string[]; label: string; rows: Rows }[] = [
+	{ keys: ['Lima Province', 'Lima', 'Callao'], label: 'Lima', rows: { Water: ['Sedapal', 0.78], Electricity: ['Luz del Sur', 0.71], Mobile: ['Claro', 0.46], Internet: ['Movistar', 0.34] } },
+	{ keys: ['Arequipa'], label: 'Arequipa', rows: { Electricity: ['SEAL', 0.74], Water: ['Sedapar', 0.7], Mobile: ['Claro', 0.43], Internet: ['Movistar', 0.31] } },
+	{ keys: ['Cusco'], label: 'Cusco', rows: { Water: ['Sedacusco', 0.72], Electricity: ['Electro Sur Este', 0.68], Mobile: ['Entel', 0.41], Internet: ['Claro', 0.3] } },
+	{ keys: ['Piura'], label: 'Piura', rows: { Electricity: ['Enosa', 0.73], Water: ['EPS Grau', 0.69], Mobile: ['Movistar', 0.44], Internet: ['Claro', 0.29] } },
+	{ keys: ['La Libertad'], label: 'Trujillo', rows: { Electricity: ['Hidrandina', 0.71], Water: ['Sedalib', 0.68], Mobile: ['Claro', 0.45], Internet: ['Movistar', 0.32] } },
+	{ keys: ['Loreto'], label: 'Iquitos', rows: { Electricity: ['Electro Oriente', 0.75], Water: ['Sedaloreto', 0.7], Mobile: ['Movistar', 0.4], Internet: ['Claro', 0.22] } },
+	{ keys: ['Junín'], label: 'Huancayo', rows: { Electricity: ['Electrocentro', 0.72], Water: ['Sedam Huancayo', 0.67], Mobile: ['Entel', 0.42], Internet: ['Movistar', 0.28] } },
+	{ keys: ['Puno'], label: 'Puno', rows: { Electricity: ['Electro Puno', 0.7], Water: ['EMSA Puno', 0.66], Mobile: ['Entel', 0.46], Internet: ['Claro', 0.24] } }
+]
+const tints = ['#cfd2f5', '#d8ece4', '#c9dae2', '#e4d9f0', '#cfe5ea', '#dfe8cf', '#d9dcf5', '#c4e0d8']
+const byKey = new Map(peru.regions.map((r) => [r.id, r]))
+const entries = tour.map((t) => ({ ...t, cx: byKey.get(t.keys[0])!.cx, cy: byKey.get(t.keys[0])!.cy }))
+const tintOf = (id: string) => {
+	const i = tour.findIndex((t) => t.keys.includes(id))
+	return i >= 0 ? tints[i] : 'rgba(255,255,255,0.5)'
+}
+const ROW = 16
+const t0 = entries[0]
+const order = [...CATS].sort((a, b) => t0.rows[b][1] - t0.rows[a][1])
+---
+
+<div data-peru data-tour={JSON.stringify(entries)} data-row={ROW} class='absolute inset-0'>
+	<!-- the result this work produced -->
+	<div class='absolute right-3 top-2 text-right'>
+		<p class='font-newsreader text-[1.25rem] font-light leading-none tracking-tight sm:text-[1.55rem]'>+130%</p>
+		<p class='mt-0.5 hidden whitespace-nowrap font-mono text-[0.42rem] uppercase leading-none tracking-wider text-black/55 sm:block'>correct payments · mid-tier</p>
+	</div>
+
+	<div class='absolute inset-x-3 bottom-3 top-[3.1rem] flex gap-2 sm:gap-3'>
+		<svg viewBox={`0 0 ${peru.w} ${peru.h}`} class='pe-map h-full w-auto shrink-0' role='img' aria-label='Map of Peru split into utility territories'>
+			<g stroke='#10202a' stroke-opacity='0.4' stroke-width='0.45' stroke-linejoin='round'>
+				{
+					peru.regions.map((r) => (
+						<path
+							data-reg={r.id}
+							class={`pe-reg ${t0.keys.includes(r.id) ? 'on' : ''}`}
+							d={r.d}
+							fill={tintOf(r.id)}
+						></path>
+					))
+				}
+			</g>
+			<g data-pin class='pe-pin' style={`transform:translate(${t0.cx}px,${t0.cy}px)`}>
+				<circle r='4.4' fill='#0b0f14' fill-opacity='0.12'></circle>
+				<circle r='2' fill='#f7f9fa' stroke='#0b0f14' stroke-width='0.9'></circle>
+			</g>
+		</svg>
+
+		<div class='min-w-0 flex-1 rounded-md bg-[#f7f9fa] px-2.5 py-2 shadow-[0_8px_18px_-10px_rgba(16,32,42,0.4)] ring-1 ring-black/5'>
+			<div class='flex items-baseline justify-between gap-2 font-mono text-[0.5rem] uppercase tracking-wider'>
+				<span class='truncate text-black/80' data-head>{t0.label}</span>
+				<span class='hidden shrink-0 text-black/35 sm:inline'>by territory</span>
+			</div>
+			<div class='relative mt-1.5' style={`height:${ROW * 4}px`}>
+				{
+					CATS.map((cat) => {
+						const [name, score] = t0.rows[cat]
+						const pos = order.indexOf(cat)
+						return (
+							<div data-row={cat} class='pe-row absolute inset-x-0 flex items-center gap-1.5' style={`height:${ROW}px;transform:translateY(${pos * ROW}px)`}>
+								<span class='hidden w-[1.6rem] shrink-0 font-mono text-[0.4rem] uppercase tracking-wider text-black/40 sm:inline'>{SHORT[cat]}</span>
+								<span data-name class={`min-w-0 flex-1 truncate font-newsreader text-[0.66rem] leading-none sm:w-[5.3rem] sm:text-[0.74rem] sm:flex-none ${pos === 0 ? 'font-medium' : ''}`}>{name}</span>
+								<span class='relative hidden h-[3px] flex-1 bg-black/10 sm:block'>
+									<span data-bar class={`pe-bar absolute inset-y-0 left-0 ${pos === 0 ? 'bg-[#0b0f14]' : 'bg-[#8fa9b8]'}`} style={`width:${score * 100}%`}></span>
+								</span>
+								<span data-score class='hidden w-5 shrink-0 text-right font-mono text-[0.5rem] text-black/55 sm:block'>{Math.round(score * 100)}</span>
+							</div>
+						)
+					})
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.pe-reg {
+		transition: fill 0.4s;
+		cursor: pointer;
+	}
+	.pe-reg.on {
+		fill: #0b0f14;
+	}
+	.pe-pin {
+		transition: transform 0.7s cubic-bezier(0.3, 0.7, 0.2, 1);
+		pointer-events: none;
+	}
+	.pe-row {
+		transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+	}
+	.pe-bar {
+		transition:
+			width 0.6s cubic-bezier(0.3, 0.7, 0.2, 1),
+			background-color 0.3s;
+	}
+</style>
+
+<script>
+	type Entry = { keys: string[]; label: string; rows: Record<string, [string, number]>; cx: number; cy: number }
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	document.querySelectorAll<HTMLElement>('[data-peru]').forEach((root) => {
+		const tour = JSON.parse(root.dataset.tour!) as Entry[]
+		const ROW = Number(root.dataset.row)
+		const regs = root.querySelectorAll<SVGPathElement>('[data-reg]')
+		const pin = root.querySelector<SVGGElement>('[data-pin]')!
+		let i = 0,
+			id = 0,
+			pause = 0
+		const show = (n: number) => {
+			const t = tour[n]
+			regs.forEach((p) => p.classList.toggle('on', t.keys.includes(p.dataset.reg!)))
+			pin.style.transform = `translate(${t.cx}px,${t.cy}px)`
+			root.querySelector('[data-head]')!.textContent = t.label
+			const order = Object.keys(t.rows).sort((a, b) => t.rows[b][1] - t.rows[a][1])
+			root.querySelectorAll<HTMLElement>('[data-row]').forEach((row) => {
+				const k = row.dataset.row!
+				const [name, score] = t.rows[k]
+				const pos = order.indexOf(k)
+				row.style.transform = `translateY(${pos * ROW}px)`
+				row.querySelector('[data-name]')!.textContent = name
+				row.querySelector('[data-name]')!.classList.toggle('font-medium', pos === 0)
+				row.querySelector('[data-score]')!.textContent = String(Math.round(score * 100))
+				const bar = row.querySelector<HTMLElement>('[data-bar]')!
+				bar.style.width = `${score * 100}%`
+				bar.classList.toggle('bg-[#0b0f14]', pos === 0)
+				bar.classList.toggle('bg-[#8fa9b8]', pos !== 0)
+			})
+		}
+		// exploring: hovering a territory jumps there and pauses the tour for a moment
+		regs.forEach((p) =>
+			p.addEventListener('pointerenter', () => {
+				const n = tour.findIndex((t) => t.keys.includes(p.dataset.reg!))
+				if (n < 0) return
+				i = n
+				show(n)
+				pause = Date.now() + 6000
+			})
+		)
+		if (reduce) return
+		new IntersectionObserver(([e]) => {
+			clearInterval(id)
+			if (e.isIntersecting)
+				id = window.setInterval(() => {
+					if (Date.now() < pause) return
+					i = (i + 1) % tour.length
+					show(i)
+				}, 2600)
+		}).observe(root)
+	})
+</script>

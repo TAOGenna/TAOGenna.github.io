@@ -1,0 +1,64 @@
+---
+// The rest of the archive (the second block of /projects): research, tools, hardware and writing,
+// one bespoke scene per item. Layout (4 cols, desktop):
+//   T T T T    T=title banner 4x1
+//   N N I I    N=IonogramNET 2x2   I=Inversion 2x2
+//   N N I I
+//   H O M Q    H=Thesis 1x2  O=Olive  M=MAHO  Q=Quantum
+//   H P P W    P=Pong 2x1    W=PPCA
+//   L K X X    L=MLIP  K=Non-Markovianity  X=Photonics 2x1
+import BentoTile from './BentoTile.astro'
+import Maho from './Maho.astro'
+import Inversion from './Inversion.astro'
+import Thesis from './Thesis.astro'
+import Olive from './Olive.astro'
+import IonogramNet from './IonogramNet.astro'
+import Quantum from './Quantum.astro'
+import Pong from './Pong.astro'
+import Ppca from './Ppca.astro'
+import Mlip from './Mlip.astro'
+import NonMarkov from './NonMarkov.astro'
+import Photonics from './Photonics.astro'
+import { projects } from '@/data/projects'
+import { getAllPosts } from '@/utils'
+
+const by = (h: string) => projects.find((p) => p.heading === h)!
+const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
+
+// Writing tiles link to the blog posts; card-only blurbs (the full description stays on the post).
+const posts = await getAllPosts()
+const writing = (slug: string, blurb: string) => {
+	const p = posts.find((x) => x.slug === slug)!
+	return {
+		heading: p.data.title,
+		href: `/blog/${slug}/`,
+		subheading: blurb,
+		altText: p.data.title,
+		tags: [{ text: 'Writing', outline: true }]
+	}
+}
+const ppca = writing('ppca', 'Deriving probabilistic PCA from a linear-Gaussian latent model.')
+const mlip = writing('atomic-environments-mlip', 'How local atomic environments are represented in ML potentials.')
+const nonMarkov = writing('non-markovianity', 'Measuring non-Markovianity via decoherence rates and trace distance.')
+const photonics = writing('photonics-microwave-systems', 'A 3-channel radio-over-fiber link with single-sideband modulation.')
+---
+
+<div class='grid auto-rows-[10rem] grid-flow-dense grid-cols-2 gap-3 lg:grid-flow-row lg:grid-cols-4'>
+	<div class='col-span-2 flex flex-col justify-between rounded-xl bg-[#0b0f14] p-5 text-white lg:col-span-4 lg:flex-row lg:items-end'>
+		<p class={`${mono} text-white/60 lg:self-start`}>The rest of it</p>
+		<h2 class='font-newsreader text-4xl font-light leading-none tracking-tight sm:text-5xl'>
+			Research, tools<br class='lg:hidden' /> &amp; writing.
+		</h2>
+	</div>
+	<BentoTile project={by('IonogramNET')} tone='glacier' label='IonogramNET' class='col-span-2 row-span-2'><IonogramNet /></BentoTile>
+	<BentoTile project={by('Inversion of ionograms')} tone='ink' label='Ionogram inversion' class='col-span-2 row-span-2'><Inversion /></BentoTile>
+	<BentoTile project={by('Holographic Entanglement Entropy')} tone='paper' label='Thesis' class='row-span-2'><Thesis /></BentoTile>
+	<BentoTile project={by('Olive')} tone='ink' label='Olive'><Olive /></BentoTile>
+	<BentoTile project={by('MAHO')} tone='paper' label='MAHO'><Maho /></BentoTile>
+	<BentoTile project={by('Quantum Communication Complexity')} tone='ink' label='Quantum comm.'><Quantum /></BentoTile>
+	<BentoTile project={by('Breadboard Pong')} tone='slate' label='Breadboard Pong' class='col-span-2'><Pong /></BentoTile>
+	<BentoTile project={ppca} tone='paper' label='PPCA'><Ppca /></BentoTile>
+	<BentoTile project={mlip} tone='slate' label='ML potentials'><Mlip /></BentoTile>
+	<BentoTile project={nonMarkov} tone='paper' label='Non-Markovianity'><NonMarkov /></BentoTile>
+	<BentoTile project={photonics} tone='paper' label='Photonics' class='col-span-2'><Photonics /></BentoTile>
+</div>

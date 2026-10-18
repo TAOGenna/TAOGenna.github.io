@@ -1,0 +1,228 @@
+---
+// Four real soundings, one after another: the noisy binarised ionogram (left) goes through the
+// encoder–decoder CNN (centre schematic: blocks light up as the signal flows, skips arch across) and
+// the predicted echo trace wipes in (right). Images are the repo's real network outputs, recolored:
+// scripts/tile-data/ionogramnet.py. The U-Net drawing is schematic (not to scale).
+const N = 4
+// U-Net blocks, left→right: [height]. encoder shrinks, bottleneck, decoder grows.
+const H = [78, 62, 46, 32, 22, 32, 46, 62, 78]
+const X0 = 8,
+	DX = 14.5,
+	CY = 84,
+	BW = 8.5
+const bx = (i: number) => X0 + i * DX
+// skip connections: encoder i ↔ decoder (8-i), dashed arcs above the blocks
+const skips = [0, 1, 2, 3].map((i) => {
+	const a = bx(i) + BW / 2,
+		b = bx(8 - i) + BW / 2,
+		y = CY - H[i] / 2 - 2
+	return { i, d: `M${a} ${y}C${a} ${y - 14 - i * 3} ${b} ${y - 14 - i * 3} ${b} ${y}` }
+})
+const mono = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace'
+const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-[#10202a]/55'
+---
+
+<div class='ion flex h-full w-full flex-col px-3.5 pb-3 pt-11 sm:px-4'>
+	<!-- scene ticks -->
+	<div class='absolute right-3.5 top-3.5 flex gap-1' aria-hidden='true'>
+		{Array.from({ length: N }, (_, i) => <i class='ion-tick h-[3px] w-4 rounded-full bg-[#10202a]' style={`--i:${i}`}></i>)}
+	</div>
+
+	<div class='flex min-h-0 flex-1 items-stretch justify-between gap-2 sm:gap-3'>
+		<!-- raw ionograms -->
+		<div class='flex min-w-0 flex-1 flex-col items-start gap-1.5 sm:flex-none'>
+			<div class='relative min-h-0 w-full flex-1 overflow-hidden rounded-[3px] bg-[#f7f9fa] shadow-[0_6px_14px_-8px_rgba(16,32,42,0.45)] ring-1 ring-black/5 sm:w-[11.5rem]'>
+				{Array.from({ length: N }, (_, i) => <img class='ion-raw absolute inset-0 h-full w-full object-cover' style={`--i:${i}`} src={`/projects/tiles/ion_${i + 1}_raw.png`} alt='' loading='eager' />)}
+			</div>
+			<p class={cap}>input · noisy ionogram</p>
+		</div>
+
+		<!-- U-Net schematic -->
+		<div class='hidden min-w-0 flex-1 flex-col items-center sm:flex'>
+			<svg viewBox='0 0 138 170' class='h-full max-h-full w-full' role='img' aria-label='Schematic of the encoder-decoder network: convolution and pooling down, upsampling and skip connections back up'>
+				<g fill='none' stroke='#10202a' stroke-width='0.7' stroke-dasharray='2 2'>
+					{skips.map((s) => <path class='ion-skip' d={s.d} style={`--i:${8 - s.i}`} />)}
+				</g>
+				<g>
+					{H.map((h, i) => <rect class='ion-blk' x={bx(i)} y={CY - h / 2} width={BW} height={h} rx='1.6' style={`--i:${i}`} />)}
+				</g>
+				<g font-size='5.6' letter-spacing='0.6' fill='#10202a' fill-opacity='0.55' style={mono}>
+					<text x={bx(0) + BW / 2} y={CY + H[0] / 2 + 12} text-anchor='start'>ENCODER</text>
+					<text x={bx(8) + BW / 2} y={CY + H[0] / 2 + 12} text-anchor='end'>DECODER</text>
+					<text x='69' y={CY + H[0] / 2 + 28} text-anchor='middle' font-size='5'>CONV · POOL · UP</text>
+				</g>
+			</svg>
+			<p class={`${cap} mt-1.5 whitespace-nowrap`}>U-Net · skip connections</p>
+		</div>
+
+		<!-- predicted echo trace -->
+		<div class='flex min-w-0 flex-1 flex-col items-start gap-1.5 sm:flex-none'>
+			<div class='relative min-h-0 w-full flex-1 overflow-hidden rounded-[3px] bg-[#f7f9fa] shadow-[0_6px_14px_-8px_rgba(16,32,42,0.45)] ring-1 ring-black/5 sm:w-[11.5rem]'>
+				{Array.from({ length: N }, (_, i) => <img class='ion-pred absolute inset-0 h-full w-full object-cover' style={`--i:${i}`} src={`/projects/tiles/ion_${i + 1}_pred.png`} alt='' loading='eager' />)}
+			</div>
+			<p class={cap}>output · echo trace</p>
+		</div>
+	</div>
+
+	<p class='mt-2.5 font-newsreader text-[0.95rem] font-light italic leading-tight text-[#10202a]/80 sm:text-[1.05rem]'>
+		Noise in, echo out <span class='not-italic text-[#10202a]/40'>→</span> trace → electron density.
+	</p>
+</div>
+
+<style>
+	/* One 28s loop = 4 scenes x 7s. Each scene's images start at i*7s; the U-Net pulse is a shared 7s loop,
+	   so both stay in phase. Keyframe names are prefixed: Astro doesn't scope @keyframes. */
+	.ion-raw,
+	.ion-pred {
+		opacity: 0;
+		animation-duration: 28s;
+		animation-iteration-count: infinite;
+		animation-delay: calc(var(--i) * 7s);
+		animation-fill-mode: backwards;
+		animation-timing-function: ease-in-out;
+	}
+	.ion-raw {
+		animation-name: ion-raw;
+	}
+	.ion-pred {
+		animation-name: ion-pred;
+	}
+	/* Input never clears either: the next sounding fades/blur-focuses in on top (z 2) over 0.7s while the old
+	   one sits underneath (z 1) and is dropped only once the new one is fully opaque. */
+	@keyframes ion-raw {
+		0% {
+			opacity: 0;
+			filter: blur(7px);
+			z-index: 2;
+		}
+		2.5%,
+		25% {
+			opacity: 1;
+			filter: blur(0);
+			z-index: 2;
+		}
+		25.1%,
+		28% {
+			opacity: 1;
+			filter: blur(0);
+			z-index: 1;
+		}
+		28.1%,
+		100% {
+			opacity: 0;
+			filter: blur(0);
+			z-index: 1;
+		}
+	}
+	/* Output never clears: each trace wipes in on top (z 2) at 0.9-3.1s of its 7s window, then drops under
+	   (z 1) and stays until the next sounding's trace has fully covered it (+3.1s), then vanishes unseen. */
+	@keyframes ion-pred {
+		0% {
+			opacity: 0;
+			clip-path: inset(0 100% 0 0);
+			filter: blur(5px);
+			z-index: 2;
+		}
+		3.2% {
+			opacity: 1;
+			clip-path: inset(0 100% 0 0);
+			filter: blur(5px);
+			z-index: 2;
+		}
+		11.1%,
+		25% {
+			opacity: 1;
+			clip-path: inset(0 0 0 0);
+			filter: blur(0);
+			z-index: 2;
+		}
+		25.1%,
+		36% {
+			opacity: 1;
+			clip-path: inset(0 0 0 0);
+			filter: blur(0);
+			z-index: 1;
+		}
+		36.1%,
+		100% {
+			opacity: 0;
+			clip-path: inset(0 0 0 0);
+			filter: blur(0);
+			z-index: 1;
+		}
+	}
+	.ion-tick {
+		opacity: 0.18;
+		animation: ion-tick 28s infinite;
+		animation-delay: calc(var(--i) * 7s);
+	}
+	@keyframes ion-tick {
+		0%,
+		25% {
+			opacity: 1;
+		}
+		26%,
+		100% {
+			opacity: 0.18;
+		}
+	}
+
+	/* U-Net: blocks light up left to right (encoder → decoder), skips draw in as the decoder reaches them */
+	.ion-blk {
+		fill: #10202a;
+		fill-opacity: 0.1;
+		stroke: #10202a;
+		stroke-width: 0.7;
+		animation: ion-blk 7s infinite;
+		animation-delay: calc(1.2s + var(--i) * 0.3s);
+	}
+	@keyframes ion-blk {
+		0% {
+			fill-opacity: 0.1;
+		}
+		4% {
+			fill-opacity: 0.95;
+		}
+		16%,
+		100% {
+			fill-opacity: 0.1;
+		}
+	}
+	.ion-skip {
+		stroke-opacity: 0.25;
+		animation: ion-skip 7s infinite;
+		animation-delay: calc(1.2s + var(--i) * 0.3s);
+	}
+	@keyframes ion-skip {
+		0% {
+			stroke-opacity: 0.25;
+		}
+		4% {
+			stroke-opacity: 1;
+		}
+		20%,
+		100% {
+			stroke-opacity: 0.25;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ion-raw,
+		.ion-pred,
+		.ion-tick,
+		.ion-blk,
+		.ion-skip {
+			animation: none;
+		}
+		.ion-raw:first-of-type,
+		.ion-pred:first-of-type {
+			opacity: 1;
+		}
+		.ion-tick:first-of-type {
+			opacity: 1;
+		}
+		.ion-blk {
+			fill-opacity: 0.55;
+		}
+	}
+</style>

@@ -1,0 +1,81 @@
+---
+// Two scenes in turn: the paper's first page, then the blackboard where it was worked out.
+// Each photo pans slowly across its page. Images: scripts/tile-data/majorana_images.py.
+const plate =
+	'absolute bottom-3 right-3 z-10 rounded bg-[#0b0f14] px-2 py-1 font-mono text-[0.5rem] uppercase leading-none tracking-wider text-[#f1efea]'
+---
+
+<div data-mj class='absolute inset-0'>
+	<div data-scene='paper' class='mj-scene on play bg-white' style='--d:7s'>
+		<img
+			src='/projects/tiles/majorana_paper.jpg'
+			alt='First page of Phys. Rev. B 109, 075416: Effect of interatomic repulsion on Majorana zero modes in a coupled quantum-dot–superconducting-nanowire hybrid system'
+			class='mj-pan h-full w-full object-cover'
+		/>
+		<span class={plate}>Phys. Rev. B 109, 075416 · 2024</span>
+	</div>
+
+	<div data-scene='board' class='mj-scene bg-[#e8e6e1]' style='--d:8s'>
+		<img
+			src='/projects/tiles/majorana_board.jpg'
+			alt='The whiteboard covered in handwritten Majorana and Kitaev-chain derivations'
+			class='mj-pan h-full w-full object-cover'
+			loading='lazy'
+		/>
+		<span class={plate}>The blackboard · Aug 2023</span>
+	</div>
+</div>
+
+<style>
+	.mj-scene {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		transition: opacity 0.6s;
+	}
+	.mj-scene.on {
+		opacity: 1;
+	}
+	.mj-pan {
+		object-position: 25% 0%;
+	}
+	.mj-scene.play .mj-pan {
+		animation: mj-pan var(--d) ease-in-out forwards;
+	}
+	@keyframes mj-pan {
+		to {
+			object-position: 75% 100%;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.mj-scene.play .mj-pan {
+			animation: none;
+		}
+	}
+</style>
+
+<script>
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	const HOLD = [7000, 8000] // ms per scene: paper, board
+	document.querySelectorAll<HTMLElement>('[data-mj]').forEach((root) => {
+		if (reduce) return
+		const scenes = [...root.querySelectorAll<HTMLElement>('.mj-scene')]
+		let i = 0,
+			t = 0
+		const enter = (n: number) => {
+			scenes.forEach((el, j) => {
+				el.classList.toggle('on', j === n)
+				if (j === n) el.classList.add('play')
+				else setTimeout(() => !el.classList.contains('on') && el.classList.remove('play'), 700) // reset the pan after the fade
+			})
+			t = window.setTimeout(() => {
+				i = (n + 1) % scenes.length
+				enter(i)
+			}, HOLD[n])
+		}
+		new IntersectionObserver(([e]) => {
+			clearTimeout(t)
+			if (e.isIntersecting) enter(i)
+		}).observe(root)
+	})
+</script>

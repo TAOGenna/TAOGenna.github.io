@@ -25,7 +25,7 @@ set to **GitHub Actions**. Output is static (`output: 'static'`, site
 
 ## Mode toggle (Professional / Personal)
 
-- Personal mode = light theme; Professional mode = dark theme.
+- Personal mode = dark theme; Professional mode = light theme.
 - Elements tagged `data-mode="professional"` or `data-mode="personal"` are shown/hidden
   by a script in `src/pages/index.astro`. `ThemeProvider.astro` maps mode → light/dark.
 - `ModeToggle.astro` (header) and `FlippableProfile.astro` (the photo) both drive/read
@@ -42,7 +42,7 @@ src/
 │   ├── misc.astro        # coursework, online courses, links
 │   └── blog/             # blog routes (renders src/content/post)
 ├── components/
-│   ├── ProjectCard.astro # project tile (image OR videoPath, tags, optional demo pill)
+│   ├── bento/            # BentoGrid/MoreGrid + one scene per project (see 'Project tile')
 │   ├── Collage.astro + RotatingBadge.astro  # personal "Adventures" collage (hidden for now)
 │   ├── BookShelf.astro, Section.astro, GeometricDivider.astro, ...
 ├── content/post/         # blog posts (.md) — frontmatter schema in src/content/config.ts
@@ -55,7 +55,7 @@ public/                   # served as-is (not optimized)
 ├── topcoder/ + data/ + styles/ + fonts/ + m/   # ported legacy pages (TopCoder archive, Harada 9x9)
 ├── work/                 # collage/gallery images
 ├── images/books/         # book covers
-└── projects/             # project demo videos (.mp4) used by ProjectCard videoPath
+└── projects/             # project demo videos (.mp4) used by the bento tiles
 
 legacy-hugo/              # the previous Hugo site, archived (not built/served)
 ```
@@ -75,9 +75,14 @@ legacy-hugo/              # the previous Hugo site, archived (not built/served)
   below otherwise) via `src/utils/rehypeSidenotes.ts` — no bottom footnotes section. Set
   `citation: true` (optional `citationAuthors: "A, B"`) to append a citation block
   (plaintext + BibTeX) built from title/date/URL by `components/blog/Citation.astro`.
-- **Project card**: add a `<ProjectCard>` in `index.astro`. Use `imagePath='/src/assets/x'`
-  for a still, or `videoPath='/projects/x.mp4'` (served from `public/`) for an autoplay clip.
-  Optional `tags={[{text,color}]}` and `demo='/path'` (gold "See output" pill).
+- **Project tile** (homepage + /projects): each project is a bespoke scene in `src/components/bento/<Name>.astro`
+  wrapped by `BentoTile.astro` (surface tone, name chip, frosted-glass hover panel from `data/projects.ts`). The
+  layout lives in `BentoGrid.astro` (homepage + top of /projects) and `MoreGrid.astro` (/projects archive); source
+  order is the grid order. Rule: **mix formats** (photo / book spread / object print / data card / colour field /
+  digit-texture / quiet type / real product video) — no wall of line plots. Real data comes from
+  `scripts/tile-data/*.py` (JSON in `src/data/tiles/`, images in `public/projects/tiles/`); the Distill film is
+  recorded by `scripts/film/` (see its header). Astro doesn't scope `@keyframes`: prefix names per tile. Restart
+  `astro dev` after adding a new component file (Tailwind misses it otherwise).
 - **Book**: add to `src/data/books.ts` (drop the cover into `public/images/books/`).
 - **Work / Adventures item**: add to `src/data/work.ts` (drop image into `public/work/`).
   The collage block is currently commented out in `index.astro`.

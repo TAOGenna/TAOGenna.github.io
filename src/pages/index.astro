@@ -1,14 +1,13 @@
 ---
 import PageLayout from '../layouts/BaseLayout.astro'
 import Section from '../components/Section.astro'
-import ProjectCard from '../components/ProjectCard.astro'
+import BentoGrid from '@/components/bento/BentoGrid.astro'
 import PostPreview from '@/components/blog/PostPreview.astro'
 import GeometricDivider from '@/components/GeometricDivider.astro'
 import FlippableProfile from '@/components/FlippableProfile.astro'
 import Collage from '@/components/Collage.astro'
 
 import { getAllPosts, sortMDByDate } from '@/utils'
-import { projects, HOMEPAGE_COUNT } from '@/data/projects'
 import RotatingBadge from '@/components/RotatingBadge.astro'
 
 const MAX_POSTS = 10
@@ -138,25 +137,9 @@ const publications = [
 
 		<GeometricDivider variant='simple' data-mode='professional' />
 
-		<Section title="Stuff I've Made" data-mode='professional'>
-			<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-				{
-					projects.slice(0, HOMEPAGE_COUNT).map((p) => (
-						<ProjectCard
-							heading={p.heading}
-							href={p.href}
-							subheading={p.subheading}
-							imagePath={p.imagePath}
-							videoPath={p.videoPath}
-							altText={p.altText}
-							tags={p.tags}
-							demo={p.demo}
-							class='w-full'
-						/>
-					))
-				}
-			</div>
-		</Section>
+		<div data-mode='professional'>
+			<BentoGrid />
+		</div>
 
 		<div class='mt-10 flex justify-center' data-mode='professional'>
 			<RotatingBadge href='/projects' label='More Work · ' repeat={4} size={140} />

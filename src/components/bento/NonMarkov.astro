@@ -1,0 +1,93 @@
+---
+// Quiet / typographic format for the "Measuring the non-Markovianity of a Quantum System" post: a soft flat colour
+// field, one huge serif D (the trace distance D(ρ₁,ρ₂) = ½Tr|ρ₁−ρ₂| the post is built on), and one hairline curve:
+// D(t) falling and then growing back, i.e. σ = dD/dt > 0, which the post defines as non-Markovian. A dot walks the
+// curve once per loop. The curve is ILLUSTRATIVE (single qubit under pure dephasing with an oscillating canonical
+// rate γ(t) = 0.55·(0.22 + sin 2.4t), D = exp(−2∫γ)); the definitions are the post's.
+const T = 7
+const N = 120
+const X0 = 14,
+	X1 = 226
+const Gam = (t: number) => 0.55 * (0.22 * t + (1 - Math.cos(2.4 * t)) / 2.4)
+const D = (t: number) => Math.exp(-2 * Gam(t))
+const pts = Array.from({ length: N + 1 }, (_, i) => {
+	const t = (i / N) * T
+	return [X0 + (t / T) * (X1 - X0), 128 - D(t) * 62] as [number, number]
+})
+const path = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('')
+---
+
+<div data-nm class='nm absolute inset-0 overflow-hidden'>
+	<span class='nm-d' aria-hidden='true'>D</span>
+	<svg viewBox='0 0 240 160' preserveAspectRatio='xMidYMid meet' class='absolute inset-0 h-full w-full' role='img' aria-label='The trace distance between two quantum states falls, then grows back: information flows back into the system'>
+		<path data-curve d={path} pathLength='1' fill='none' stroke='#0b0f14' stroke-width='1' stroke-linecap='round' class='nm-curve'></path>
+		<circle data-dot cx={pts[0][0]} cy={pts[0][1]} r='2.6' fill='#0b0f14'></circle>
+	</svg>
+	<p class='nm-cap'>D = ½ Tr|ρ₁ − ρ₂|</p>
+</div>
+
+<style>
+	.nm {
+		background: #cfd2f5;
+		color: #0b0f14;
+	}
+	/* the one huge glyph, tonal on the field */
+	.nm-d {
+		position: absolute;
+		right: 0.06em;
+		bottom: -0.2em;
+		font-family: 'Newsreader Variable', serif;
+		font-weight: 200;
+		font-size: 215px;
+		line-height: 1;
+		letter-spacing: -0.04em;
+		color: #e6e7fb;
+		opacity: 0.95;
+		pointer-events: none;
+		user-select: none;
+	}
+	.nm-cap {
+		position: absolute;
+		left: 16px;
+		bottom: 12px;
+		margin: 0;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.55rem;
+		letter-spacing: 0.06em;
+		color: rgba(11, 15, 20, 0.6);
+	}
+</style>
+
+<script>
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	const DRAW = 7000,
+		HOLD = 2800,
+		FADE = 600
+	document.querySelectorAll<HTMLElement>('[data-nm]').forEach((root) => {
+		if (reduce) return
+		const curve = root.querySelector<SVGPathElement>('[data-curve]')!,
+			dot = root.querySelector<SVGCircleElement>('[data-dot]')!,
+			svg = root.querySelector<SVGSVGElement>('svg')!
+		const len = curve.getTotalLength()
+		let raf = 0,
+			t0 = 0
+		const tick = (now: number) => {
+			const u = Math.max(0, now - t0) % (DRAW + HOLD + FADE)
+			const p = Math.min(u / DRAW, 1)
+			const e = p * p * (3 - 2 * p) * 0.3 + p * 0.7
+			curve.style.strokeDasharray = '1'
+			curve.style.strokeDashoffset = String(1 - e)
+			const pt = curve.getPointAtLength(e * len)
+			dot.setAttribute('cx', String(pt.x)), dot.setAttribute('cy', String(pt.y))
+			svg.style.opacity = u > DRAW + HOLD ? String(1 - (u - DRAW - HOLD) / FADE) : '1'
+			raf = requestAnimationFrame(tick)
+		}
+		new IntersectionObserver(([e]) => {
+			cancelAnimationFrame(raf)
+			if (e.isIntersecting) {
+				t0 = performance.now()
+				raf = requestAnimationFrame(tick)
+			}
+		}).observe(root)
+	})
+</script>

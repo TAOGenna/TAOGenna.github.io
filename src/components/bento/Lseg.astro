@@ -1,0 +1,133 @@
+---
+// Paper tile: three scenes in turn. Per scene the prompt labels type in, the photo
+// comes into focus, then the recolored segmentation mask fades in beside it.
+import data from '../../data/tiles/lseg.json'
+
+const scenes = data.scenes
+const T = 8 // seconds per scene
+---
+
+<div class='relative h-full w-full'>
+	{
+		scenes.map((s, i) => (
+			<div
+				class='lseg-sc absolute inset-0 flex items-center justify-center gap-3 px-4 pb-3 pt-10 sm:gap-4'
+				style={`--sd:${i * T}s`}
+			>
+				<img
+					src={`/projects/tiles/lseg_${s.key}_input.jpg`}
+					alt={s.scene}
+					class='lseg-photo h-full shrink-0 rounded-sm object-cover grayscale'
+					style={`aspect-ratio:${s.ar}`}
+				/>
+				<ul
+					class={`flex min-w-0 flex-col font-newsreader italic ${s.labels.length > 4 ? 'text-[0.82rem] leading-[1.3]' : 'text-[0.92rem] leading-[1.5] sm:text-[1.05rem]'}`}
+				>
+					{s.labels.map((l, j) => (
+						<li class='lseg-li flex items-center gap-2 whitespace-nowrap' style={`--i:${j}`}>
+							<span class='inline-block h-2 w-2 shrink-0 rounded-full ring-1 ring-black/30' style={`background:${l.color}`} />
+							{l.name}
+						</li>
+					))}
+				</ul>
+				<img
+					src={`/projects/tiles/lseg_${s.key}_mask.png`}
+					alt={`Predicted segmentation: ${s.labels.map((l) => l.name).join(', ')}`}
+					class='lseg-mask h-full shrink-0 rounded-sm object-cover'
+					style={`aspect-ratio:${s.ar}`}
+				/>
+				<p class='absolute right-3 top-3.5 font-mono text-[0.5rem] uppercase tracking-wider opacity-45'>
+					{String(i + 1).padStart(2, '0')}/{String(scenes.length).padStart(2, '0')} · {s.scene}
+				</p>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	/* 24s cycle = 3 scenes x 8s; keyframes are relative to each scene's own delay */
+	.lseg-sc {
+		opacity: 0;
+		animation: ls-sc 24s infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes ls-sc {
+		0% {
+			opacity: 0;
+		}
+		2%,
+		34% {
+			opacity: 1;
+		}
+		36%,
+		100% {
+			opacity: 0;
+		}
+	}
+	.lseg-li {
+		opacity: 0;
+		animation: ls-type 24s infinite;
+		animation-delay: calc(var(--sd) + 0.5s + var(--i) * 0.6s);
+	}
+	@keyframes ls-type {
+		0% {
+			opacity: 0;
+			transform: translateX(-6px);
+		}
+		1.5%,
+		31% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+		34%,
+		100% {
+			opacity: 0;
+		}
+	}
+	.lseg-photo {
+		animation: ls-focus 24s infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes ls-focus {
+		0% {
+			filter: grayscale(1) blur(7px);
+		}
+		14%,
+		100% {
+			filter: grayscale(1) blur(0);
+		}
+	}
+	.lseg-mask {
+		opacity: 0;
+		animation: ls-mask 24s infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes ls-mask {
+		0%,
+		17% {
+			opacity: 0;
+		}
+		22%,
+		34% {
+			opacity: 1;
+		}
+		36%,
+		100% {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.lseg-sc {
+			animation: none;
+		}
+		.lseg-sc:first-child {
+			opacity: 1;
+		}
+		.lseg-li,
+		.lseg-photo,
+		.lseg-mask {
+			animation: none;
+			opacity: 1;
+		}
+	}
+</style>

@@ -1,0 +1,81 @@
+---
+// TEXTURE: the latent Gaussian starts as a soft, blurred lavender blob. As the draws of
+// x ~ N(0, I), t = Wx + μ + ε accumulate, it resolves (blur → focus) into a sparse digit-contour
+// cloud stretched along W: the marginal p(t) = N(μ, WWᵀ + σ²I). Same technique as the Soil tile.
+// The cloud is the density of a fixed-seed sample set, not a fit to real data.
+import { field } from '../../utils/ppca'
+
+const { digits, glow, wide } = field(64) // the finished picture: no-JS / reduced-motion state
+const layer = 'absolute inset-0 m-0 select-none overflow-hidden font-mono text-[9px] leading-[10.5px]'
+---
+
+<div data-pp class='absolute inset-0 overflow-hidden'>
+	<div class='absolute left-1/2 top-1/2 h-[157.5px] w-[270px] -translate-x-1/2 -translate-y-1/2'>
+		<pre data-wide aria-hidden='true' class={`${layer} pp-wide text-[#d8ece4]`}>{wide}</pre>
+		<pre data-glow aria-hidden='true' class={`${layer} pp-glow text-[#cfd2f5]`}>{glow}</pre>
+		<pre data-digits aria-hidden='true' class={`${layer} pp-digits text-[#0b0f14]`}>{digits}</pre>
+	</div>
+	<p class='absolute bottom-2.5 left-3 font-mono text-[0.5rem] leading-none tracking-wide opacity-45'>x ~ N(0, I)</p>
+	<p class='absolute bottom-2.5 right-3 font-mono text-[0.5rem] leading-none tracking-wide opacity-45'>t = Wx + μ + ε</p>
+</div>
+
+<style>
+	.pp-wide {
+		filter: blur(13px);
+		opacity: 0.9;
+	}
+	.pp-glow {
+		filter: blur(7px);
+		opacity: 0.95;
+	}
+	.pp-digits {
+		opacity: 0.8;
+		transition:
+			filter 0.3s,
+			opacity 0.3s;
+	}
+</style>
+
+<script>
+	import { field, N } from '../../utils/ppca'
+
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	document.querySelectorAll<HTMLElement>('[data-pp]').forEach((root) => {
+		if (reduce) return
+		const wide = root.querySelector<HTMLElement>('[data-wide]')!
+		const glow = root.querySelector<HTMLElement>('[data-glow]')!
+		const digits = root.querySelector<HTMLElement>('[data-digits]')!
+		let n = 0,
+			t = 0
+		const paint = (k: number) => {
+			const f = field(k)
+			const w = k / N
+			wide.textContent = f.wide
+			glow.textContent = f.glow
+			digits.textContent = f.digits
+			digits.style.filter = `blur(${(5 * (1 - w) ** 1.5).toFixed(2)}px)`
+			digits.style.opacity = String((0.8 * w ** 1.4).toFixed(2))
+		}
+		const step = () => {
+			if (n >= N) {
+				t = window.setTimeout(() => {
+					n = 0
+					paint(0)
+					t = window.setTimeout(step, 900)
+				}, 3400)
+				return
+			}
+			n++
+			paint(n)
+			t = window.setTimeout(step, 130)
+		}
+		new IntersectionObserver(([e]) => {
+			clearTimeout(t)
+			if (e.isIntersecting) {
+				n = 0
+				paint(0)
+				t = window.setTimeout(step, 700)
+			}
+		}).observe(root)
+	})
+</script>

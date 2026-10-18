@@ -1,0 +1,256 @@
+---
+// What Distill does behind the scenes, from the repo's own README: 01 Blueprint
+// (module dependency graph) → 02 Generate (lessons + exercises per module, in
+// parallel) → 03 Review (scaffold contract + checks, failed modules regenerate).
+// Module and exercise counts are real (the kUPS course in public/courses). The edges
+// are an illustrative sparse DAG inferred from the module topics: that course's own
+// depends_on lists every earlier module (a Distill bug), so it is deliberately not used.
+const URL_TEXT = 'github.com/cusp-ai-oss/kups'
+const modules = [
+	{ deps: [] as number[], ex: 4, layer: 0, at: [16, 95] },
+	{ deps: [0], ex: 4, layer: 1, at: [58, 95] },
+	{ deps: [1], ex: 1, layer: 2, at: [102, 38] }, // M2 and M3 are independent branches
+	{ deps: [1], ex: 4, layer: 2, at: [102, 152] },
+	{ deps: [2, 3], ex: 0, layer: 3, at: [144, 95] } // capstone joins them
+]
+const edges = modules.flatMap((m, i) =>
+	m.deps.map((j) => {
+		const [x1, y1] = modules[j].at,
+			[x2, y2] = m.at,
+			xm = (x1 + x2) / 2
+		return { t: m.layer, d: `M${x1} ${y1}C${xm} ${y1} ${xm} ${y2} ${x2} ${y2}` }
+	})
+)
+const total = modules.reduce((a, m) => a + m.ex, 0)
+const checks = ['syntax', 'TODOs present', 'output patterns', 'pedagogy review']
+const mono = 'font-mono text-[0.5rem] uppercase tracking-wider'
+---
+
+<div data-dst class='dst s1 s2 s3 s4 s5 flex h-full w-full flex-col px-5 pb-4 pt-3 sm:px-6'>
+	<!-- source: a real repo URL, typed in; level = expert -->
+	<div class='flex h-6 items-center gap-3 pl-[5.3rem] font-mono text-[0.68rem]'>
+		<span class='min-w-0 flex-1 truncate border-b border-black/25 pb-0.5'>
+			<span class='dst-typed'>{URL_TEXT}</span><span class='dst-caret'></span>
+		</span>
+		<span class={`${mono} hidden shrink-0 rounded-full bg-[#0b0f14] px-2 py-0.5 text-[#f1efea] sm:inline`}>expert</span>
+	</div>
+
+	<div class='mt-4 grid min-h-0 flex-1 sm:mt-5 grid-cols-2 content-start gap-x-4 gap-y-2 sm:grid-cols-3 sm:gap-y-3 sm:gap-x-5'>
+		<!-- 01 blueprint: module dependency graph -->
+		<section class='min-w-0'>
+			<p class={`${mono} truncate`}><span class='opacity-45'>01</span> Blueprint <span class='opacity-40'>· module graph</span></p>
+			<svg viewBox='0 0 160 190' class='mt-2 w-full max-sm:h-[6.6rem]' role='img' aria-label='Dependency graph between the five course modules'>
+				<g fill='none' stroke='currentColor' stroke-width='0.9'>
+					{edges.map((e) => <path class='dst-arc' d={e.d} pathLength='1' style={`--t:${e.t}`}></path>)}
+				</g>
+				{
+					modules.map((m, i) => (
+						<g>
+							<circle class='dst-node' cx={m.at[0]} cy={m.at[1]} r='5.5' style={`--i:${m.layer}`}></circle>
+							<text x={m.at[0]} y={m.at[1] + 16} text-anchor='middle' font-size='6.5' fill='currentColor' fill-opacity='0.55' style='font-family:ui-monospace,SFMono-Regular,Menlo,monospace'>
+								M{i}
+							</text>
+						</g>
+					))
+				}
+			</svg>
+		</section>
+
+		<!-- 02 generate: lesson, then exercises, per module -->
+		<section class='min-w-0'>
+			<p class={`${mono} truncate`}><span class='opacity-45'>02</span> Generate <span class='opacity-40'>· in parallel</span></p>
+			<ul class='mt-2 flex flex-col gap-[9px] sm:mt-3 sm:gap-[25px]'>
+				{
+					modules.map((m, i) => (
+						<li class='flex items-center gap-2' style={`--m:${i}`}>
+							<span class={`${mono} w-4 shrink-0 opacity-55`}>M{i}</span>
+							<span class='relative h-[6px] w-12 shrink-0 bg-black/10 sm:w-14'>
+								<span class='dst-lesson absolute inset-0 bg-[#0b0f14]'></span>
+							</span>
+							<span class='flex gap-[3px]'>
+								{Array.from({ length: m.ex }, (_, k) => <span class='dst-ex h-[8px] w-[8px]' style={`--k:${k}`}></span>)}
+								{m.ex === 0 && <span class={`${mono} -mt-0.5 text-[0.42rem] opacity-45`}>capstone</span>}
+							</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<!-- 03 review: the scaffold contract + checks -->
+		<section class='col-span-2 min-w-0 sm:col-span-1'>
+			<p class={`${mono} truncate`}><span class='opacity-45'>03</span> Review <span class='opacity-40'>· checks</span></p>
+			<div class='grid grid-cols-2 items-start gap-3 sm:block'>
+			<div class='dst-code mt-2 rounded-[3px] bg-[#0b0f14] px-2 py-2 font-mono text-[0.46rem] leading-[0.78rem] text-white/85'>
+				<p class='truncate text-[#cfd2f5]'># TODO 1: Implement U_LJ</p>
+				<p class='truncate'>def U_LJ(q, L, eps, sigma):</p>
+				<p class='truncate text-white/50'>&nbsp;&nbsp;"""Total Lennard-Jones energy"""</p>
+				<p class='truncate text-white/50'>&nbsp;&nbsp;...&nbsp;# student writes this</p>
+				<p class='mt-1 hidden truncate text-[#cfd2f5] sm:block'>if __name__ == "__main__":</p>
+				<p class='hidden truncate text-white/50 sm:block'>&nbsp;&nbsp;run_tests()&nbsp;# harness</p>
+			</div>
+			<ul class='mt-2.5 flex flex-col gap-1.5 sm:mt-4'>
+				{
+					checks.map((c, n) => (
+						<li class={`dst-chk ${mono} flex gap-1.5`} style={`--c:${n}`}>
+							<span>✓</span><span class='truncate'>{c}</span>
+						</li>
+					))
+				}
+				<li class={`dst-chk ${mono} flex gap-1.5 text-black/50`} style='--c:4'>
+					<span>↻</span><span class='truncate'>fail → regenerate</span>
+				</li>
+			</ul>
+			</div>
+		</section>
+	</div>
+
+	<div class='mt-2 hidden items-end justify-between gap-3 sm:flex'>
+		<p class='hidden font-newsreader text-[1.05rem] font-light leading-none tracking-tight sm:block'>
+			Paste a URL. Pick your level. Get a course.
+		</p>
+		<p class={`${mono} ml-auto shrink-0 opacity-45`}>fig 1 — {modules.length} modules · {total} exercises</p>
+	</div>
+</div>
+
+<style>
+	/* transitions live under the step classes, so removing them resets instantly */
+	.dst {
+		transition: opacity 0.35s;
+	}
+	.dst-typed {
+		display: inline-block;
+		overflow: hidden;
+		vertical-align: bottom;
+		white-space: nowrap;
+		width: 0;
+	}
+	.dst.s1 .dst-typed {
+		width: 27ch;
+		transition: width 1.7s steps(27);
+	}
+	.dst-caret {
+		display: inline-block;
+		width: 1px;
+		height: 0.85em;
+		margin-left: 1px;
+		background: currentColor;
+		vertical-align: -1px;
+		animation: dst-blink 1s steps(2) infinite;
+	}
+	@keyframes dst-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	/* 01 graph: arcs draw toward each node as it's unlocked, then nodes fill */
+	.dst-arc {
+		stroke-opacity: 0.55;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
+	.dst.s2 .dst-arc {
+		stroke-dashoffset: 0;
+		transition: stroke-dashoffset 0.7s ease;
+		transition-delay: calc(var(--t) * 0.5s);
+	}
+	.dst-node {
+		fill: #f1efea;
+		stroke: #0b0f14;
+		stroke-width: 0.9;
+	}
+	.dst.s2 .dst-node {
+		fill: #0b0f14;
+		transition: fill 0.3s;
+		transition-delay: calc(var(--i) * 0.5s);
+	}
+
+	/* 02 generate: lesson bar fills, then exercises tick over, modules in parallel */
+	.dst-lesson {
+		transform: scaleX(0);
+		transform-origin: left;
+	}
+	.dst.s3 .dst-lesson {
+		transform: scaleX(1);
+		transition: transform 0.9s ease;
+		transition-delay: calc(var(--m) * 0.18s);
+	}
+	.dst-ex {
+		border: 1px solid #0b0f14;
+		background: transparent;
+	}
+	.dst.s3 .dst-ex {
+		background: #0b0f14;
+		transition: background 0.25s;
+		transition-delay: calc(1.1s + var(--m) * 0.18s + var(--k) * 0.35s);
+	}
+
+	/* 03 review: scaffold resolves from blur, then checks tick in */
+	.dst-code {
+		opacity: 0;
+		filter: blur(4px);
+	}
+	.dst.s4 .dst-code {
+		opacity: 1;
+		filter: none;
+		transition:
+			opacity 0.6s,
+			filter 0.6s;
+	}
+	.dst-chk {
+		opacity: 0;
+	}
+	.dst.s4 .dst-chk {
+		opacity: 1;
+		transition: opacity 0.3s;
+		transition-delay: calc(0.7s + var(--c) * 0.45s);
+	}
+	/* the fully-resolved layout is the no-JS / reduced-motion state */
+	@media (prefers-reduced-motion: reduce) {
+		.dst-caret {
+			animation: none;
+		}
+	}
+</style>
+
+<script>
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	// [step, ms held]; 'out' fades the whole tile before the reset
+	const seq: [number, number][] = [
+		[0, 400],
+		[1, 2300],
+		[2, 3000],
+		[3, 4300],
+		[4, 3900],
+		[5, 2400],
+		[-1, 380]
+	]
+	document.querySelectorAll<HTMLElement>('[data-dst]').forEach((root) => {
+		if (reduce) return
+		let k = 0,
+			t = 0
+		const apply = (n: number) => {
+			if (n === -1) {
+				root.style.opacity = '0'
+				return
+			}
+			root.style.opacity = '1'
+			for (let i = 1; i <= 5; i++) root.classList.toggle('s' + i, i <= n)
+		}
+		const tick = () => {
+			apply(seq[k][0])
+			t = window.setTimeout(() => {
+				k = (k + 1) % seq.length
+				tick()
+			}, seq[k][1])
+		}
+		new IntersectionObserver(([e]) => {
+			clearTimeout(t)
+			if (e.isIntersecting) {
+				k = 0
+				tick()
+			}
+		}).observe(root)
+	})
+</script>

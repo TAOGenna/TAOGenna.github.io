@@ -1,0 +1,18 @@
+---
+// Distill as a short launch film: recorded from the real Distill UI and the real generated
+// course (form → blueprint graph → lesson → runnable exercise → passing gate), restyled to
+// this site. Source + recipe: scripts/film/ (record.mjs → assemble.mjs; FILM_H=356 gives this wide 2×1 cut, the default is 16:9). The live SVG
+// version of the pipeline diagram is kept in DistillDiagram.astro.
+---
+
+<video
+	src='/projects/distill_launch_wide.mp4'
+	poster='/projects/distill_launch_wide.jpg'
+	class='h-full w-full object-cover'
+	autoplay
+	loop
+	muted
+	playsinline
+	preload='metadata'
+	aria-label='Distill in use: paste a repo URL, watch the course blueprint generate, read a lesson, run an exercise'
+></video>

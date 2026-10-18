@@ -1,0 +1,44 @@
+---
+// The "Stuff I've Made" bento: one bespoke scene per project (live SVG/HTML + real data), in the
+// layout below. Used by the homepage and by /projects (which adds MoreGrid for the archive).
+import BentoTile from './BentoTile.astro'
+import Distill from './Distill.astro'
+import StyleTransfer from './StyleTransfer.astro'
+import Yape from './Yape.astro'
+import YaVendio from './YaVendio.astro'
+import Connect4 from './Connect4.astro'
+import Majorana from './Majorana.astro'
+import Soil from './Soil.astro'
+import Lseg from './Lseg.astro'
+import { projects } from '@/data/projects'
+
+const by = (h: string) => projects.find((p) => p.heading === h)!
+const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
+---
+
+<!--  M M B B   M=Majorana 2x2  B=title 2x1
+      D D S Y   S=Style  Y=Yape
+      V C W W   V=YaVendio 1x2  C=Connect 4  W=Distill 2x1
+      V K L L   K=Soil  L=LSeg 2x1 -->
+<div class='grid auto-rows-[10rem] grid-flow-dense grid-cols-2 gap-3 lg:grid-flow-row lg:grid-cols-4'>
+	<BentoTile project={by('Majorana zero modes')} tone='paper' label='Majorana' class='col-span-2 row-span-2'><Majorana /></BentoTile>
+	<div class='col-span-2 flex flex-col justify-between rounded-xl bg-[#0b0f14] p-5 text-white'>
+		<p class={`${mono} text-white/60`}>Selected work</p>
+		<h1 class='font-newsreader text-5xl font-light leading-none tracking-tight sm:text-6xl'>
+			Stuff I've<br />Made.
+		</h1>
+	</div>
+	<BentoTile project={by('Neural Style Transfer')} tone='paper' label='Style transfer'><StyleTransfer /></BentoTile>
+	<BentoTile project={by('Recommendation Systems')} tone='glacier' label='Yape' reveal={false}><Yape /></BentoTile>
+	<BentoTile
+		project={by('YaVendio')}
+		tone='ink'
+		class='row-span-2'
+		blurb='Built the multi-tenant shopping agent behind $55M in closed sales, rebuilt it to handle 600K conversations a month, and wrote Yago, the backoffice agent handling 10K conversations a month.'
+		tags={['Applied AI', 'Product']}
+	><YaVendio /></BentoTile>
+	<BentoTile project={by('MCTS for Connect 4')} tone='paper' label='Connect 4'><Connect4 /></BentoTile>
+	<BentoTile project={by('Distill')} tone='paper' label='Distill' class='col-span-2'><Distill /></BentoTile>
+	<BentoTile project={by('Soil Organic Carbon with GNNs')} tone='glacier' label='Soil carbon'><Soil /></BentoTile>
+	<BentoTile project={by('Language-driven Segmentation')} tone='paper' label='LSeg' class='col-span-2'><Lseg /></BentoTile>
+</div>

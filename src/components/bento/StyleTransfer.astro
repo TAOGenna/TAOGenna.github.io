@@ -1,0 +1,188 @@
+---
+// Photo tile: three real content→result pairs, one after another. Each pair is a
+// grayscale-to-stylized wipe plus that result's own dominant colors as a breathing
+// swatch strip (the palette bars from the reference).
+import data from '../../data/tiles/style.json'
+
+const words = ['Gatys et al.', 'VGG-19', 'Gram matrices']
+const T = 5.2 // seconds per pair
+const pairs = data.pairs.map((p: { pos: string; palette: string[]; weights: number[] }, i: number) => {
+	const total = p.weights.reduce((a, b) => a + b, 0)
+	const w = p.weights.map((x) => x / total)
+	return {
+		...p,
+		i,
+		bars: p.palette.map((c, j) => ({ c, a: (w[j] * 10).toFixed(2), b: (w[(j + 2) % 6] * 10).toFixed(2) }))
+	}
+})
+---
+
+<div class='relative h-full w-full overflow-hidden'>
+	{
+		pairs.map((p) => (
+			<div class='st-pair absolute inset-0' style={`--sd:${p.i * T}s`}>
+				<img
+					src={`/projects/tiles/style_${p.i}_content.jpg`}
+					alt=''
+					class='absolute inset-0 h-full w-full object-cover grayscale'
+					style={`object-position:${p.pos}`}
+					loading='eager'
+				/>
+				<img
+					src={`/projects/tiles/style_${p.i}_result.jpg`}
+					alt=''
+					class='st-result absolute inset-0 h-full w-full object-cover'
+					style={`object-position:${p.pos}`}
+					loading='eager'
+				/>
+				<div class='st-line absolute inset-y-0 w-px bg-white/90'></div>
+				<div class='absolute inset-x-0 bottom-0 flex h-3.5'>
+					{p.bars.map((b, j) => (
+						<span class='st-bar' style={`background:${b.c};--a:${b.a};--b:${b.b};--i:${j}`} />
+					))}
+				</div>
+			</div>
+		))
+	}
+
+	<!-- which pair is showing -->
+	<div class='absolute right-3 top-3.5 flex gap-1'>
+		{pairs.map((p) => <span class='st-tick' style={`--sd:${p.i * T}s`} />)}
+	</div>
+
+	<div class='st-words absolute bottom-6 right-2 top-10 w-3 overflow-hidden font-mono text-[0.5rem] uppercase tracking-wider text-white'>
+		{words.map((word, i) => <span class='st-word' style={`animation-delay:${i * 2.6}s`}>{word}</span>)}
+	</div>
+</div>
+
+<style>
+	/* 15.6s cycle = 3 pairs x 5.2s; each pair's keyframes are relative to its own delay */
+	.st-pair {
+		opacity: 0;
+		animation: st-pair 15.6s infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes st-pair {
+		0% {
+			opacity: 0;
+		}
+		3%,
+		35% {
+			opacity: 1;
+		}
+		37%,
+		100% {
+			opacity: 0;
+		}
+	}
+	.st-result {
+		animation: st-wipe 15.6s ease-in-out infinite;
+		animation-delay: var(--sd);
+	}
+	.st-line {
+		animation: st-wipeline 15.6s ease-in-out infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes st-wipe {
+		0%,
+		8% {
+			clip-path: inset(0 0 0 100%);
+		}
+		22%,
+		100% {
+			clip-path: inset(0 0 0 0);
+		}
+	}
+	@keyframes st-wipeline {
+		0%,
+		8% {
+			left: 100%;
+			opacity: 1;
+		}
+		22% {
+			left: 0%;
+			opacity: 1;
+		}
+		23%,
+		100% {
+			left: 0%;
+			opacity: 0;
+		}
+	}
+	.st-bar {
+		flex-grow: var(--a);
+		animation: st-breathe 5s ease-in-out infinite alternate;
+		animation-delay: calc(var(--i) * -0.9s);
+	}
+	@keyframes st-breathe {
+		to {
+			flex-grow: var(--b);
+		}
+	}
+	.st-tick {
+		width: 10px;
+		height: 2px;
+		background: #fff;
+		opacity: 0.3;
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+		animation: st-tick 15.6s infinite;
+		animation-delay: var(--sd);
+	}
+	@keyframes st-tick {
+		0%,
+		33% {
+			opacity: 1;
+		}
+		37%,
+		100% {
+			opacity: 0.3;
+		}
+	}
+	.st-word {
+		position: absolute;
+		inset: 0;
+		writing-mode: vertical-rl;
+		white-space: nowrap;
+		text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+		opacity: 0;
+		animation: st-word 7.8s infinite;
+	}
+	@keyframes st-word {
+		0% {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+		6%,
+		28% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		34%,
+		100% {
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.st-pair,
+		.st-result,
+		.st-line,
+		.st-bar,
+		.st-tick,
+		.st-word {
+			animation: none;
+		}
+		.st-pair:first-child {
+			opacity: 1;
+		}
+		.st-result {
+			clip-path: inset(0 0 0 50%);
+		}
+		.st-line {
+			left: 50%;
+		}
+		.st-word:first-child {
+			opacity: 1;
+		}
+	}
+</style>

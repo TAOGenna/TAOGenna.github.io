@@ -83,8 +83,8 @@
       })
     )
 
-    // Professional mode = dark theme, Personal mode = light theme
-    const theme = mode === 'professional' ? 'dark' : 'light'
+    // Professional mode = light theme, Personal mode = dark theme
+    const theme = mode === 'professional' ? 'light' : 'dark'
     document.dispatchEvent(
       new CustomEvent('theme-change', {
         detail: { theme }
@@ -139,7 +139,7 @@
     updateToggleUI(mode)
 
     // Set theme to match mode on init
-    const theme = mode === 'professional' ? 'dark' : 'light'
+    const theme = mode === 'professional' ? 'light' : 'dark'
     document.dispatchEvent(
       new CustomEvent('theme-change', {
         detail: { theme }

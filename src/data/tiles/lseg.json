@@ -1,0 +1,73 @@
+{
+ "scenes": [
+  {
+   "key": "bear",
+   "scene": "bear",
+   "ar": 0.916,
+   "labels": [
+    {
+     "name": "bear",
+     "color": "#0b0f14"
+    },
+    {
+     "name": "terrain",
+     "color": "#d8ece4"
+    }
+   ]
+  },
+  {
+   "key": "people",
+   "scene": "kids playing",
+   "ar": 0.97,
+   "labels": [
+    {
+     "name": "terrain",
+     "color": "#c9dae2"
+    },
+    {
+     "name": "person",
+     "color": "#0b0f14"
+    },
+    {
+     "name": "fence",
+     "color": "#cfd2f5"
+    },
+    {
+     "name": "vegetation",
+     "color": "#8fa9b8"
+    }
+   ]
+  },
+  {
+   "key": "sign",
+   "scene": "city scene",
+   "ar": 0.75,
+   "labels": [
+    {
+     "name": "traffic sign",
+     "color": "#0b0f14"
+    },
+    {
+     "name": "sky",
+     "color": "#cfd2f5"
+    },
+    {
+     "name": "vegetation",
+     "color": "#8fa9b8"
+    },
+    {
+     "name": "road",
+     "color": "#c9dae2"
+    },
+    {
+     "name": "sidewalk",
+     "color": "#7e8ea1"
+    },
+    {
+     "name": "terrain",
+     "color": "#d8ece4"
+    }
+   ]
+  }
+ ]
+}

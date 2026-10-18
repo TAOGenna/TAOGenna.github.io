@@ -1,0 +1,110 @@
+---
+// Paper plate: hairline board replaying a real MCTS self-play game, with the
+// search's visit counts per column as bars (the move chosen is inked).
+import { CX, CY, BAR_X, moves, win, START } from '../../utils/connect4'
+
+const mono = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace'
+const held = new Map<string, number>()
+moves.slice(0, START).forEach((m) => held.set(`${m.r},${m.c}`, m.p))
+const last = moves[START - 1]
+const max = Math.max(...last.visits, 1)
+const [a, b] = [win[0], win[3]]
+---
+
+<svg
+	data-connect4
+	viewBox='0 0 271 160'
+	preserveAspectRatio='xMidYMid meet'
+	class='h-full w-full'
+	role='img'
+	aria-label='Connect 4 board replaying an MCTS self-play game, with search visit counts per column'
+>
+	<defs>
+		<filter id='c4-glow' x='-60%' y='-60%' width='220%' height='220%'>
+			<feGaussianBlur stdDeviation='3'></feGaussianBlur>
+		</filter>
+	</defs>
+	{
+		Array.from({ length: 6 }, (_, r) =>
+			Array.from({ length: 7 }, (_, c) => {
+				const p = held.get(`${r},${c}`)
+				return (
+					<circle
+						data-cell={`${r},${c}`}
+						cx={CX(c)}
+						cy={CY(r)}
+						r='7.2'
+						fill={p === 1 ? '#0b0f14' : p === -1 ? '#8fa9b8' : 'none'}
+						stroke='currentColor'
+						stroke-width='0.7'
+						stroke-opacity={p ? 0 : 0.35}
+					></circle>
+				)
+			})
+		)
+	}
+	<circle data-last cx={CX(last.c)} cy={CY(last.r)} r='9.6' fill='none' stroke='currentColor' stroke-width='0.7'></circle>
+	<g data-win opacity='0'>
+		{win.map(([r, c]) => <circle cx={CX(c)} cy={CY(r)} r='11' fill='#cfd2f5' filter='url(#c4-glow)'></circle>)}
+		<line x1={CX(a[1])} y1={CY(a[0])} x2={CX(b[1])} y2={CY(b[0])} stroke='#0b0f14' stroke-width='1.2'></line>
+	</g>
+
+	<text x='163' y='50' font-size='6.5' letter-spacing='0.6' fill='currentColor' fill-opacity='0.5' style={mono}>MCTS · VISITS</text>
+	{
+		Array.from({ length: 7 }, (_, c) => {
+			const h = (last.visits[c] / max) * 58
+			return (
+				<rect
+					data-bar={c}
+					x={BAR_X(c)}
+					y={128 - h}
+					width='9'
+					height={h}
+					fill={last.c === c ? '#0b0f14' : '#8fa9b8'}
+				></rect>
+			)
+		})
+	}
+	<line x1='163' y1='128' x2='254' y2='128' stroke='currentColor' stroke-opacity='0.4' stroke-width='0.6'></line>
+	<text data-move x='163' y='142' font-size='8' fill='currentColor' style={mono}>move {START}</text>
+	<text x='163' y='152' font-size='6' letter-spacing='0.6' fill='currentColor' fill-opacity='0.4' style={mono}>FIG 4 · SELF-PLAY</text>
+</svg>
+
+<style>
+	circle[data-cell] {
+		transition:
+			fill 0.25s,
+			stroke-opacity 0.25s;
+	}
+	rect[data-bar] {
+		transition:
+			y 0.3s,
+			height 0.3s;
+	}
+</style>
+
+<script>
+	import { moves, paint } from '../../utils/connect4'
+
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	document.querySelectorAll<SVGSVGElement>('[data-connect4]').forEach((svg) => {
+		if (reduce) return
+		let k = 0,
+			t = 0
+		const step = () => {
+			if (k === moves.length) {
+				paint(svg, k, true)
+				k = 0
+				t = window.setTimeout(step, 2400)
+				return
+			}
+			paint(svg, k)
+			k++
+			t = window.setTimeout(step, 520)
+		}
+		new IntersectionObserver(([e]) => {
+			clearTimeout(t)
+			if (e.isIntersecting) step()
+		}).observe(svg)
+	})
+</script>

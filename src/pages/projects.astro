@@ -1,88 +1,17 @@
 ---
 import PageLayout from '../layouts/BaseLayout.astro'
-import ProjectCard from '../components/ProjectCard.astro'
-import { projects } from '@/data/projects'
-import { getAllPosts, sortMDByDate } from '@/utils'
+import BentoGrid from '@/components/bento/BentoGrid.astro'
+import MoreGrid from '@/components/bento/MoreGrid.astro'
 
 const meta = {
 	title: 'Projects',
 	description: "Everything I've built and written — research reproductions, AI tools, and notes."
 }
-
-// Writing cards, mixed into the same grid as the projects. Hartree-Fock is
-// intentionally excluded (its method already lives inside the Majorana
-// project). Thumbnails are pending, so these render a placeholder for now.
-const WRITING_EXCLUDE = new Set(['hartree-fock-method'])
-const WRITING_TAG = { text: 'Writing', outline: true }
-// Short, card-only blurbs (the full frontmatter description still feeds the blog page).
-const WRITING_BLURB: Record<string, string> = {
-	ppca: 'Deriving probabilistic PCA from a linear-Gaussian latent model.',
-	'atomic-environments-mlip': 'How local atomic environments are represented in ML potentials.',
-	'non-markovianity': 'Measuring non-Markovianity via decoherence rates and trace distance.',
-	'photonics-microwave-systems': 'A 3-channel radio-over-fiber link with single-sideband modulation.'
-}
-const WRITING_IMAGE: Record<string, string> = {
-	ppca: '/src/assets/writing_ppca.png',
-	'atomic-environments-mlip': '/src/assets/writing_ml_potentials.png',
-	'non-markovianity': '/src/assets/writing_non_markovianity.png',
-	'photonics-microwave-systems': '/src/assets/writing_photonics.png'
-}
-
-const projectCards = projects.map((p) => ({
-	heading: p.heading,
-	href: p.href,
-	subheading: p.subheading,
-	imagePath: p.imagePath,
-	videoPath: p.videoPath,
-	altText: p.altText,
-	tags: p.tags,
-	demo: p.demo,
-	video: p.video
-}))
-
-const writingCards = sortMDByDate(await getAllPosts())
-	.filter((p) => !p.data.tags.includes('hidden') && !WRITING_EXCLUDE.has(p.slug))
-	.map((p) => ({
-		heading: p.data.title,
-		href: `/blog/${p.slug}/`,
-		subheading: WRITING_BLURB[p.slug] ?? p.data.description,
-		altText: p.data.title,
-		imagePath: WRITING_IMAGE[p.slug],
-		tags: [WRITING_TAG]
-	}))
-
-// Breadboard Pong should be the very last card, after the writing cards.
-const LAST_HEADING = 'Breadboard Pong'
-const cards = [
-	...projectCards.filter((c) => c.heading !== LAST_HEADING),
-	...writingCards,
-	...projectCards.filter((c) => c.heading === LAST_HEADING)
-]
 ---
 
 <PageLayout meta={meta}>
-	<div class='mx-auto w-full max-w-[80rem]'>
-		<h1 class='font-cormorant text-4xl font-semibold text-foreground'>Stuff I've Made</h1>
-		<p class='mb-10 mt-1 font-garamond text-lg text-muted-foreground'>
-			Research reproductions, AI tools, experiments, and notes.
-		</p>
-		<div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-			{
-				cards.map((c) => (
-					<ProjectCard
-						heading={c.heading}
-						href={c.href}
-						subheading={c.subheading}
-						imagePath={c.imagePath}
-						videoPath={c.videoPath}
-						altText={c.altText}
-						tags={c.tags}
-						demo={c.demo}
-						video={c.video}
-						class='w-full'
-					/>
-				))
-			}
-		</div>
+	<div class='mx-auto flex w-full max-w-[80rem] flex-col gap-3'>
+		<BentoGrid />
+		<MoreGrid />
 	</div>
 </PageLayout>

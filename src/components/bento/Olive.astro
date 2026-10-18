@@ -1,0 +1,95 @@
+---
+// Olive, nearly silent: the one decorator that does everything (README: "One decorator, plain
+// HTTP"), set huge; a hairline arrow draws; the tool schema it implies types in. Nothing else.
+// The weather tool is the README's own example.
+const JSON_TEXT = '{"tool":"get_weather"}'
+---
+
+<div class='ol absolute inset-x-3 bottom-3 top-11 flex flex-col justify-center'>
+	<p class='ol-dec m-0 font-newsreader text-[2.7rem] font-light leading-none tracking-tight text-[#f1efea] max-sm:text-[1.55rem]'>@olive_tool</p>
+	<div class='mt-3.5 flex items-center gap-2 max-sm:mt-2'>
+		<svg viewBox='0 0 32 8' class='ol-arrow h-2 w-8 shrink-0 max-sm:w-5' fill='none' stroke='#f1efea' stroke-opacity='0.45' stroke-width='0.8' stroke-linecap='round' aria-hidden='true'>
+			<path class='ol-line' d='M1 4H30M26 1 30 4 26 7' pathLength='1'></path>
+		</svg>
+		<span class='ol-json font-mono text-[0.5rem] leading-none text-[#cfd2f5]/85 max-sm:text-[0.44rem]'>{JSON_TEXT}</span>
+	</div>
+</div>
+
+<style>
+	/* one 9s cycle; every element holds its end state, then all fade together and restart */
+	.ol-dec {
+		animation: ol-dec 9s ease-out infinite;
+	}
+	.ol-line {
+		stroke-dasharray: 1;
+		animation: ol-line 9s ease-out infinite;
+	}
+	.ol-json {
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
+		vertical-align: middle;
+		animation: ol-json 9s infinite;
+	}
+	@keyframes ol-dec {
+		0% {
+			opacity: 0;
+			filter: blur(8px);
+		}
+		10%,
+		90% {
+			opacity: 1;
+			filter: blur(0);
+		}
+		96%,
+		100% {
+			opacity: 0;
+			filter: blur(0);
+		}
+	}
+	@keyframes ol-line {
+		0%,
+		14% {
+			stroke-dashoffset: 1;
+			opacity: 1;
+		}
+		24%,
+		90% {
+			stroke-dashoffset: 0;
+			opacity: 1;
+		}
+		96%,
+		100% {
+			stroke-dashoffset: 0;
+			opacity: 0;
+		}
+	}
+	@keyframes ol-json {
+		0%,
+		26% {
+			width: 0;
+			opacity: 1;
+			animation-timing-function: steps(22, end);
+		}
+		44%,
+		90% {
+			width: 22ch;
+			opacity: 1;
+		}
+		96%,
+		100% {
+			width: 22ch;
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ol-dec,
+		.ol-line,
+		.ol-json {
+			animation: none;
+		}
+		.ol-json {
+			width: 22ch;
+		}
+	}
+</style>

@@ -1,0 +1,186 @@
+---
+// COLOUR-FIELD STRIPS (the flat swatch bars of the reference): one full-height strip per channel of
+// the post's 3-channel radio-over-fiber link (36 / 28 / 20 GHz; optical carriers 1553.32 / 1552.92 /
+// 1552.52 nm), the optical spectrum drawn over them as thin ink lines, stepping through the post's
+// three stages: double sideband → single sideband (90° arm shift) → after the FBG chain (carrier-to-
+// sideband gap ~12 → ~2 dB). The inset is the post's real OptiSystem eye diagrams (recolored by
+// scripts/tile-data/photonics_eyes.py). Offsets are proportional to the real GHz; heights are schematic.
+const mono = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace'
+const chans = [
+	{ nm: 1553.32, ghz: 36, bg: '#c9dae2' },
+	{ nm: 1552.92, ghz: 28, bg: '#cfd2f5' },
+	{ nm: 1552.52, ghz: 20, bg: '#d8ece4' }
+].map((c) => ({ ...c, d: c.ghz * 1.5 }))
+const BASE = 128
+const CAR = 80 // strip svg is 160x160; carrier in the middle
+const H_SIDE = 25 // kept sideband
+const H_CAR = 46 // carrier before the FBGs (~12 dB above the sideband)
+const R_CAR = 28 / H_CAR // after the FBG chain (~2 dB above)
+const R_SUP = 8 / H_SIDE // suppressed sideband after the 90° shift
+
+// a quiet noise-floor hairline with skirts around the three peaks (seeded, static)
+let seed = 9
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647)
+const floor = (peaks: number[]) =>
+	'M' +
+	Array.from({ length: 107 }, (_, i) => {
+		const x = 4 + i * 1.5
+		const skirt = peaks.reduce((s, p) => s + 9 * Math.exp(-Math.abs(x - p) / 4), 0)
+		return `${x.toFixed(1)} ${(BASE - 1.5 - rnd() * 3.5 - skirt * (0.6 + 0.4 * rnd())).toFixed(1)}`
+	}).join('L')
+const eyes = [
+	{ src: '/projects/tiles/ph_eye_single.jpg', cap: 'single channel' },
+	{ src: '/projects/tiles/ph_eye_ch1.jpg', cap: '1553.32 nm · 36 GHz' },
+	{ src: '/projects/tiles/ph_eye_ch2.jpg', cap: '1552.92 nm · 28 GHz' },
+	{ src: '/projects/tiles/ph_eye_ch3.jpg', cap: '1552.52 nm · 20 GHz' }
+]
+const stages = ['MZM · both sidebands', '90° arm shift · one sideband', 'FBG chain · CSR 12 → 2 dB']
+---
+
+<div class='ph absolute inset-0 text-[#0b0f14]'>
+	<div class='absolute inset-0 flex'>
+		{
+			chans.map((c) => (
+				<div class='relative min-w-0 flex-1' style={`background:${c.bg}`}>
+					<svg
+						viewBox='0 0 160 160'
+						preserveAspectRatio='xMidYMax meet'
+						class='absolute inset-0 h-full w-full'
+						role='img'
+						aria-label={`Optical spectrum of the ${c.ghz} GHz channel at ${c.nm} nm: carrier, kept sideband, suppressed sideband`}
+					>
+						<path d={floor([CAR - c.d, CAR, CAR + c.d])} fill='none' stroke='#0b0f14' stroke-opacity='0.4' stroke-width='0.5' stroke-linejoin='round'></path>
+						<line x1='4' y1={BASE} x2='156' y2={BASE} stroke='#0b0f14' stroke-opacity='0.35' stroke-width='0.5'></line>
+						<g class='ph-sup' style={`--r:${R_SUP.toFixed(3)}`}>
+							<line x1={CAR + c.d} y1={BASE} x2={CAR + c.d} y2={BASE - H_SIDE} stroke='#0b0f14' stroke-opacity='0.5' stroke-width='1'></line>
+							<circle cx={CAR + c.d} cy={BASE - H_SIDE} r='1.6' fill='#0b0f14' fill-opacity='0.5'></circle>
+						</g>
+						<g>
+							<line x1={CAR - c.d} y1={BASE} x2={CAR - c.d} y2={BASE - H_SIDE} stroke='#0b0f14' stroke-width='1.1'></line>
+							<circle cx={CAR - c.d} cy={BASE - H_SIDE} r='1.8' fill='#0b0f14'></circle>
+						</g>
+						<g class='ph-car' style={`--r:${R_CAR.toFixed(3)}`}>
+							<line x1={CAR} y1={BASE} x2={CAR} y2={BASE - H_CAR} stroke='#0b0f14' stroke-width='1.3'></line>
+							<circle cx={CAR} cy={BASE - H_CAR} r='2.2' fill='#0b0f14'></circle>
+						</g>
+						<text x={CAR} y='142' text-anchor='middle' font-size='6.5' fill='#0b0f14' fill-opacity='0.7' style={mono}>
+							<tspan class='max-sm:hidden'>{c.nm} nm · </tspan>{c.ghz} GHz
+						</text>
+					</svg>
+				</div>
+			))
+		}
+	</div>
+
+	<!-- stage caption, to the right of the chip -->
+	<div class='absolute left-[8.4rem] top-[1.15rem] h-3 font-mono text-[0.5rem] uppercase leading-3 tracking-wider text-black/70 max-sm:left-[7.7rem]'>
+		{stages.map((s, i) => <span class='ph-stage absolute left-0 top-0 whitespace-nowrap' style={`--i:${i}`}>{s}</span>)}
+	</div>
+
+	<!-- the post's real eye diagrams, as a small inset -->
+	<div class='absolute right-3 top-3 w-[3.8rem] max-sm:w-[3.2rem]'>
+		<div class='relative h-[3.8rem] overflow-hidden rounded-[3px] bg-[#0b0f14] shadow-[0_6px_12px_-6px_rgba(0,0,0,0.5)] ring-1 ring-black/25 max-sm:h-[3.2rem]'>
+			{eyes.map((e, i) => <img src={e.src} alt='' class='ph-eye absolute inset-0 h-full w-full scale-[1.04] object-cover' style={`--i:${i}`} loading='lazy' />)}
+		</div>
+		<div class='relative mt-1 h-2 font-mono text-[0.42rem] uppercase leading-none tracking-wider text-black/65 max-sm:hidden'>
+			{eyes.map((e, i) => <span class='ph-cap absolute right-0 top-0 whitespace-nowrap' style={`--i:${i}`}>{e.cap}</span>)}
+		</div>
+	</div>
+</div>
+
+<style>
+	/* 14.4s loop. Spectrum: 3 stages of 4.8s. Eyes: 4 images of 3.6s. */
+	.ph-car,
+	.ph-sup {
+		transform-box: fill-box;
+		transform-origin: 50% 100%;
+	}
+	.ph-car {
+		animation: ph-car 14.4s ease-in-out infinite;
+	}
+	.ph-sup {
+		animation: ph-sup 14.4s ease-in-out infinite;
+	}
+	@keyframes ph-car {
+		0%,
+		60% {
+			transform: scaleY(1);
+		}
+		68%,
+		94% {
+			transform: scaleY(var(--r));
+		}
+		100% {
+			transform: scaleY(1);
+		}
+	}
+	@keyframes ph-sup {
+		0%,
+		28% {
+			transform: scaleY(1);
+		}
+		36%,
+		94% {
+			transform: scaleY(var(--r));
+		}
+		100% {
+			transform: scaleY(1);
+		}
+	}
+	.ph-stage {
+		opacity: 0;
+		animation: ph-stage 14.4s infinite;
+		animation-delay: calc(var(--i) * 4.8s);
+	}
+	@keyframes ph-stage {
+		0% {
+			opacity: 0;
+		}
+		3%,
+		30% {
+			opacity: 1;
+		}
+		34%,
+		100% {
+			opacity: 0;
+		}
+	}
+	.ph-eye,
+	.ph-cap {
+		opacity: 0;
+		animation: ph-eye 14.4s infinite;
+		animation-delay: calc(var(--i) * 3.6s);
+	}
+	@keyframes ph-eye {
+		0% {
+			opacity: 0;
+			filter: blur(4px);
+		}
+		3%,
+		22% {
+			opacity: 1;
+			filter: blur(0);
+		}
+		26%,
+		100% {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ph-car,
+		.ph-sup {
+			animation: none;
+			transform: scaleY(var(--r));
+		}
+		.ph-stage,
+		.ph-eye,
+		.ph-cap {
+			animation: none;
+		}
+		.ph-stage:last-child,
+		.ph-eye:first-child,
+		.ph-cap:first-child {
+			opacity: 1;
+		}
+	}
+</style>
