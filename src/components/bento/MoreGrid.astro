@@ -6,7 +6,8 @@
 //   N N I I
 //   H O M Q    H=Thesis 1x2  O=Olive  M=MAHO  Q=Quantum
 //   H P P W    P=Pong 2x1    W=PPCA
-//   L K X X    L=MLIP  K=Non-Markovianity  X=Photonics 2x1
+//   L K C C    L=MLIP  K=Non-Markovianity  C=Competitive programming 2x2
+//   X X C C    X=Photonics 2x1
 import BentoTile from './BentoTile.astro'
 import Maho from './Maho.astro'
 import Inversion from './Inversion.astro'
@@ -19,6 +20,7 @@ import Ppca from './Ppca.astro'
 import Mlip from './Mlip.astro'
 import NonMarkov from './NonMarkov.astro'
 import Photonics from './Photonics.astro'
+import CompetitiveProgramming from './CompetitiveProgramming.astro'
 import { projects } from '@/data/projects'
 import { getAllPosts } from '@/utils'
 
@@ -40,6 +42,16 @@ const writing = (slug: string, blurb: string) => {
 const ppca = writing('ppca', 'Deriving probabilistic PCA from a linear-Gaussian latent model.')
 const mlip = writing('atomic-environments-mlip', 'How local atomic environments are represented in ML potentials.')
 const nonMarkov = writing('non-markovianity', 'Measuring non-Markovianity via decoherence rates and trace distance.')
+// One card for the competitive-programming repo (the reel inside it plays vrating, cf-heatmap, cf-theme,
+// cf-predictor and the library in turn).
+const cp = {
+	heading: 'Competitive programming tools',
+	href: 'https://github.com/TAOGenna/competitive-programming',
+	subheading:
+		'Tools I wrote for Codeforces and AtCoder: a virtual rating, a profile heatmap, dark and light themes and a rating predictor. The repo also has my C++ templates and 2,496 problems sorted by topic.',
+	altText: 'Competitive programming tools',
+	tags: ['Python', 'Userscripts', 'C++'].map((text) => ({ text, outline: true }))
+}
 const photonics = writing('photonics-microwave-systems', 'A 3-channel radio-over-fiber link with single-sideband modulation.')
 ---
 
@@ -60,5 +72,6 @@ const photonics = writing('photonics-microwave-systems', 'A 3-channel radio-over
 	<BentoTile project={ppca} tone='paper' label='PPCA'><Ppca /></BentoTile>
 	<BentoTile project={mlip} tone='slate' label='ML potentials'><Mlip /></BentoTile>
 	<BentoTile project={nonMarkov} tone='paper' label='Non-Markovianity'><NonMarkov /></BentoTile>
+	<BentoTile project={cp} tone='paper' label='Competitive programming tools' class='col-span-2 row-span-2'><CompetitiveProgramming /></BentoTile>
 	<BentoTile project={photonics} tone='paper' label='Photonics' class='col-span-2'><Photonics /></BentoTile>
 </div>

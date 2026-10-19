@@ -1,0 +1,1372 @@
+---
+// ONE card for github.com/TAOGenna/competitive-programming: five of its works in turn, like Majorana /
+// Inversion (~22 s loop): vrating (3.6 s) -> cf-heatmap (4.6 s) -> cf-theme (4.4 s) -> cf-predictor (4.8 s) ->
+// the library (4.5 s); no scene idles after its content has landed. Each scene keeps its own surface (glacier plate + pale card, ink colour field, real
+// screenshot, glacier quiet type, paper type)
+// and animates only while it is the active one: the controller toggles `.on` on the scene and fires
+// `cp-start` / `cp-stop` on it (CSS animations live under `.on`; the vrating replay listens to the events). A mono plate (bottom-right) names the tool, a 5-segment ticker (bottom-left) fills
+// while it plays.
+// The loop starts when the tile is on screen and holds while it is hovered (the hover panel slides over it).
+// Static fallback (no JS / reduced motion): the finished vrating card.
+// Layout is plain scoped CSS (no Tailwind classes), so it works without a dev-server restart.
+//
+// DATA (all real, nothing invented):
+//  - vrating:  the repo docs' screenshot of an EXAMPLE public career (not the site owner's), digitised by
+//              scripts/tile-data/cp_vrating.py -> src/data/tiles/cp_vrating.json. No handle is shown.
+//  - heatmap:  the repo's 2022 example profile, digitised cell by cell by scripts/tile-data/cp_heatmap.py ->
+//              src/data/tiles/cp_heatmap.json (the day tooltip is the README's own: 2022-05-23, six problems).
+//  - theme:    the repo's own light/dark screenshots, cropped by scripts/tile-data/cp_theme.py (no standings
+//              rows, so no other users' handles). The round ☀/☾ switch on the wipe edge is drawn here.
+//  - predictor: a mini Codeforces STANDINGS table (Educational Round 195) with the Δ column the userscript adds.
+//              REAL, read off cf-predictor/.github/readme/cf-predictor.png: every rank, solved count and penalty
+//              (1: 7/356, 2: 7/373, 3: 6/121, 4: 6/138, 5: 6/140, 6: 6/144, 7: 6/151, 8: 6/154, 8: 6/154) and the
+//              four deltas (+262, +217, +217, +227); the blank Δ cells are real too (users above the 2100 cap are
+//              official but unrated). "99% within +-1 rating point on Div. 1" is the README accuracy table
+//              (contests 1889, 2196). ILLUSTRATIVE: the "Who" placeholders (no handles): the hairline lengths are
+//              arbitrary and the dot hues just follow the cap rule (warm tiers = at/above 2100, cool = below).
+//  - library:  the topic counts parsed from the repo README by scripts/tile-data/cp_library.py ->
+//              src/data/tiles/cp_library.json.
+import vr from '../../data/tiles/cp_vrating.json'
+import hm from '../../data/tiles/cp_heatmap.json'
+import lib from '../../data/tiles/cp_library.json'
+
+// ---------------------------------------------------------------- vrating (chart geometry)
+const { virtual, real, tiers, ticks, range, stats } = vr
+const [LO, HI] = range
+const N = virtual.length
+const mono = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace'
+const INK = '#0b0f14'
+const STEEL = '#7e8ea1'
+const tint = ['#eceeef', '#dcebdf', '#d3ebe6', '#d6dcf3', '#e5d8f0', '#efe3d4', '#f2dbd8', '#f0d0cf', '#e9c3c2']
+const layouts = [
+	{ name: 'wide', W: 498, H: 184, l: 27, r: 44, t: 6, b: 15, dot: 2 },
+	{ name: 'narrow', W: 294, H: 184, l: 25, r: 36, t: 6, b: 15, dot: 1.7 }
+].map((c) => {
+	const x0 = c.l,
+		x1 = c.W - c.r,
+		y0 = c.t,
+		y1 = c.H - c.b
+	const X = (i: number) => x0 + ((x1 - x0) * i) / (N - 1)
+	const Y = (r: number) => y0 + ((HI - r) / (HI - LO)) * (y1 - y0)
+	const line = (a: number[]) => a.map((r, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Y(r).toFixed(1)}`).join('')
+	const back = real.map((r, i) => `L${X(N - 1 - i).toFixed(1)} ${Y(real[N - 1 - i]).toFixed(1)}`).join('')
+	return { ...c, x0, x1, y0, y1, X, Y, virt: line(virtual), real: line(real), gap: line(virtual) + back + 'Z' }
+})
+
+// ---------------------------------------------------------------- heatmap
+const P = 10, // cell pitch in svg units (cell = 8)
+	COLS = 53,
+	ROWS = 7
+const TIER_MIN = [3000, 2600, 2400, 2300, 2100, 1900, 1600, 1400, 1200, 0] // highest first = digit in hm.cells
+const FILL = ['#b3262c', '#ff4d4d', '#ff8f8f', '#f4b86a', '#f6d3a3', '#e06be0', '#a9adf2', '#7fd8bd', '#8de68d', '#b9bec4']
+const tierOf = (rating: number) => TIER_MIN.findIndex((m) => rating >= m)
+// Jan 1 2022 is a Saturday: day d sits in column (d+6)/7, row (d+6)%7 (rows start on Sunday)
+const pos = (d: number) => [Math.floor((d + 6) / 7), (d + 6) % 7]
+const days = hm.cells.split('')
+const lit = days.map((k, d) => ({ k, d })).filter((x) => x.k !== '.')
+const empty = days.map((k, d) => ({ k, d })).filter((x) => x.k === '.')
+const delay = (d: number) => (0.25 + (d / 364) * 1.9).toFixed(2) // the sweep runs 0.25 s -> 2.15 s
+const [fc, fr] = pos(142) // 2022-05-23, the README's tooltip day
+const problems: [string, number][] = [
+	['Game with Cards', 800],
+	['Card Trick', 800],
+	['Double Sort', 1200],
+	['Unique Occurrences', 2300],
+	['Required Length', 1700],
+	['Labyrinth Adventures', 2600]
+]
+const hardest = Math.max(...problems.map((p) => p[1]))
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const first = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+
+// ---------------------------------------------------------------- library
+const max = Math.max(...lib.topics.map((t) => t.count))
+const ranked = [...lib.topics].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+const rank = new Map(ranked.map((t, i) => [t.name, i]))
+const h = (s: string) => [...s].reduce((a, c) => (Math.imul(a, 31) + c.charCodeAt(0)) >>> 0, 7) % 9973 // fixed shuffle
+const words = [...lib.topics]
+	.sort((a, b) => h(a.name) - h(b.name))
+	.map((t) => {
+		const k = Math.sqrt(t.count / max)
+		return {
+			name: t.name,
+			f: (6.5 + 16 * k).toFixed(1), // px at full size
+			o: (0.3 + 0.7 * k ** 0.9).toFixed(2), // ink opacity
+			g: h(t.name + '!') % 6, // blur-in group
+			r: rank.get(t.name)!,
+			tone: t.name === 'dp' || t.name === 'dijkstra' ? 'mark' : t.name === 'segment tree' ? 'steel' : ''
+		}
+	})
+const problemsN = lib.problems.toLocaleString('en')
+
+// ---------------------------------------------------------------- predictor
+// real rows of the README screenshot; d = null where Codeforces shows no delta (above the cap)
+const std: { r: number; s: number; p: number; d: number | null; dot: string; w: number; x?: boolean }[] = [
+	{ r: 1, s: 7, p: 356, d: null, dot: '#ff4d4d', w: 58 },
+	{ r: 2, s: 7, p: 373, d: 262, dot: '#e06be0', w: 44 },
+	{ r: 3, s: 6, p: 121, d: 217, dot: '#a9adf2', w: 70 },
+	{ r: 4, s: 6, p: 138, d: null, dot: '#ff4d4d', w: 52 },
+	{ r: 5, s: 6, p: 140, d: null, dot: '#ff8f8f', w: 38, x: true },
+	{ r: 6, s: 6, p: 144, d: null, dot: '#f4b86a', w: 62, x: true },
+	{ r: 7, s: 6, p: 151, d: null, dot: '#f6d3a3', w: 46, x: true },
+	{ r: 8, s: 6, p: 154, d: 217, dot: '#a9adf2', w: 66 },
+	{ r: 8, s: 6, p: 154, d: 227, dot: '#e06be0', w: 50 }
+]
+let pillK = 0
+const rows = std.map((x) => ({ ...x, k: x.d === null ? -1 : pillK++ }))
+---
+
+<div data-cpc class='cpc'>
+	<!-- 1 · vrating -->
+	<div class='cpc-scene cpc-vr on' data-name='vrating' data-dur='3600'>
+		<div class='vr-glow'></div>
+		<div class='vr-card'>
+			<div class='vr-stats'>
+				<div>
+					<p class='vr-cap'>Virtual rating</p>
+					<p class='vr-num' data-vr-v>{stats.virtual}</p>
+				</div>
+				<div>
+					<p class='vr-cap'>vs real</p>
+					<p class='vr-num vr-nowrap'><span class='vr-mark' data-vr-d>+{stats.delta}</span><span class='vr-vs'>vs {stats.real}</span></p>
+				</div>
+				<div class='vr-more'>
+					<p class='vr-cap'>Peak</p>
+					<p class='vr-num' data-vr-peak>{stats.peak}</p>
+				</div>
+				<div class='vr-more'>
+					<p class='vr-cap'>Rounds replayed</p>
+					<p class='vr-num' data-vr-n>{stats.rounds}</p>
+				</div>
+			</div>
+
+			<div class='vr-chart'>
+				{
+					layouts.map((g) => {
+						const wide = g.name === 'wide'
+						const lastX = g.X(N - 1)
+						return (
+							<svg
+								data-vr={g.name}
+								viewBox={`0 0 ${g.W} ${g.H}`}
+								preserveAspectRatio='xMidYMid meet'
+								class={wide ? 'vr-w' : 'vr-n'}
+								role='img'
+								aria-label='A virtual rating career replayed round by round: the rating the virtual rounds would have given, dashed against the real rating, with the gap between them highlighted'
+							>
+								<defs>
+									<clipPath id={`cpc-vc-${g.name}`}>
+										<rect data-vr-clip data-x0={g.x0 - 3} data-x1={g.x1 + 3} x={g.x0 - 3} y='0' width={g.x1 - g.x0 + 6} height={g.H} />
+									</clipPath>
+									<clipPath id={`cpc-vp-${g.name}`}><rect x={g.x0} y={g.y0} width={g.x1 - g.x0} height={g.y1 - g.y0} /></clipPath>
+								</defs>
+								<g clip-path={`url(#cpc-vp-${g.name})`}>
+									{tiers.map((t, k) => <rect x={g.x0} width={g.x1 - g.x0} y={g.Y(t.hi).toFixed(1)} height={(g.Y(t.lo) - g.Y(t.hi)).toFixed(1)} fill={tint[k]} />)}
+									<g stroke='#fff' stroke-opacity='0.7' stroke-width='0.6'>
+										{tiers.slice(1).map((t) => <line x1={g.x0} x2={g.x1} y1={g.Y(t.lo).toFixed(1)} y2={g.Y(t.lo).toFixed(1)} />)}
+									</g>
+								</g>
+								<g font-size='6.5' fill={INK} fill-opacity='0.5' style={mono}>
+									{[1600, 2000, 2400, 2800, 3200].map((r) => <text x={g.x0 - 4} y={(g.Y(r) + 2.2).toFixed(1)} text-anchor='end'>{r}</text>)}
+									{ticks.filter((t) => wide || t.i !== 7).map((t, k) => <text x={g.X(t.i).toFixed(1)} y={g.H - 3} text-anchor={k === 0 ? 'start' : 'middle'} fill-opacity='0.45'>{t.label}</text>)}
+								</g>
+								<g clip-path={`url(#cpc-vc-${g.name})`}>
+									<path d={g.gap} fill='#cfd2f5' fill-opacity='0.7' />
+									<path d={g.real} fill='none' stroke={STEEL} stroke-width='1' stroke-dasharray='3 2.6' stroke-linejoin='round' />
+									<path d={g.virt} fill='none' stroke={INK} stroke-width={wide ? 1.5 : 1.4} stroke-linejoin='round' stroke-linecap='round' />
+									<g fill='#f6f8fa' stroke={INK} stroke-width='1'>
+										{virtual.map((r, i) => <circle cx={g.X(i).toFixed(1)} cy={g.Y(r).toFixed(1)} r={g.dot} />)}
+									</g>
+									<circle cx={lastX.toFixed(1)} cy={g.Y(virtual[N - 1]).toFixed(1)} r='5.2' fill='#cfd2f5' fill-opacity='0.8' />
+									<circle cx={lastX.toFixed(1)} cy={g.Y(virtual[N - 1]).toFixed(1)} r={g.dot + 0.4} fill='#f6f8fa' stroke={INK} stroke-width='1.1' />
+								</g>
+								<g data-vr-end font-size='6.5' style={mono}>
+									<text x={lastX + 7} y={(g.Y(virtual[N - 1]) + 2.2).toFixed(1)} fill={INK} font-weight='600'>virtual</text>
+									<text x={lastX + 7} y={(g.Y(real[N - 1]) + 2.2).toFixed(1)} fill={STEEL}>real</text>
+								</g>
+							</svg>
+						)
+					})
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- 2 · cf-heatmap -->
+	<div class='cpc-scene cpc-hm' data-name='cf-heatmap' data-dur='4600'>
+		<div class='hm-in'>
+			<div class='hm-legend' aria-hidden='true'>
+				<span class='hm-lt'>hardest problem that day</span>
+				<span class='hm-sw'>{[...FILL].reverse().map((c) => <i style={`background:${c}`} />)}</span>
+			</div>
+
+			<div class='hm-body'>
+				<div class='hm-months' aria-hidden='true'>
+					{MONTHS.map((m, i) => <span style={`left:${(pos(first[i])[0] * 100) / COLS}%`}>{m}</span>)}
+				</div>
+				<svg
+					viewBox={`0 0 ${COLS * P} ${ROWS * P}`}
+					class='hm-svg'
+					role='img'
+					aria-label={`The 2022 Codeforces heatmap of an example profile: ${lit.length} days coloured by the hardest problem solved, from grey below 1200 to dark red at 3000 and above`}
+				>
+					<g fill='none' stroke='#e9edf0' stroke-opacity='0.14' stroke-width='0.5'>
+						{empty.map(({ d }) => <rect x={pos(d)[0] * P + 0.25} y={pos(d)[1] * P + 0.25} width='7.5' height='7.5' rx='1.2' />)}
+					</g>
+					<g>
+						{lit.map(({ k, d }) => <rect class='hm-c' x={pos(d)[0] * P} y={pos(d)[1] * P} width='8' height='8' rx='1.2' fill={FILL[+k]} style={`--t:${delay(d)}s`} />)}
+					</g>
+					<rect class='hm-ring' x={fc * P - 1.5} y={fr * P - 1.5} width='11' height='11' rx='2.2' fill='none' stroke='#fff' stroke-width='1' />
+					<rect class='hm-sweep' x='-1' y='-4' width='1' height={ROWS * P + 8} fill='#cfd2f5' />
+				</svg>
+			</div>
+
+			<div class='hm-detail'>
+				<div class='hm-tip'>
+					<p class='hm-th'>2022-05-23<span> · {problems.length} problems</span></p>
+					<ul>
+						{
+							problems.map(([name, r]) => (
+								<li class={r === hardest ? 'hm-top' : ''}>
+									<i style={`background:${FILL[tierOf(r)]}`} />
+									<span>{name}</span>
+									<b>{r}</b>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+				<div class='hm-stat'>
+					<p class='hm-n'>{lit.length}</p>
+					<p class='hm-sc'>days solved · 2022</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 3 · cf-theme -->
+	<div class='cpc-scene cpc-ct' data-name='cf-theme' data-dur='4400'>
+		<div class='ct-sheet' style='background:#eef4f1'>
+			<img src='/projects/tiles/cp_theme_light.jpg' alt='Codeforces in the light theme: pale sage page, pastel bars under each menu item' loading='lazy' decoding='async' />
+		</div>
+		<div class='ct-sheet ct-dark' style='background:#050505'>
+			<img src='/projects/tiles/cp_theme_dark.jpg' alt='The same Codeforces page in the dark theme, with rank and link colours kept' loading='lazy' decoding='async' />
+		</div>
+		<i class='ct-line' aria-hidden='true'></i>
+		<span class='ct-btn' aria-hidden='true'>
+			<svg class='ct-moon' viewBox='0 0 24 24' fill='currentColor'><path d='M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a.6.6 0 0 0-.8-.7A9.5 9.5 0 1 0 21.2 15a.6.6 0 0 0-.7-.8z' /></svg>
+			<svg class='ct-sun' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'>
+				<circle cx='12' cy='12' r='4' fill='currentColor' stroke='none' />
+				<path d='M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8' />
+			</svg>
+		</span>
+	</div>
+
+	<!-- 4 · cf-predictor -->
+	<div
+		class='cpc-scene cpc-pd'
+		data-name='cf-predictor'
+		data-dur='4800'
+		role='img'
+		aria-label='cf-predictor adds a delta column to Codeforces standings: the rating change each contestant is about to get, shown before Codeforces applies it'
+	>
+		<div class='pd-wrap'>
+			<div class='pd-table' aria-hidden='true'>
+				<div class='pd-head pd-grid'>
+					<span>#</span><span>Who</span><span>=</span><span class='pd-pen'>Penalty</span>
+					<span class='pd-dcell'><b class='pd-hwait'>Δ…</b><b class='pd-hdone'>Δ</b></span>
+				</div>
+				{
+					rows.map((x) => (
+						<div class:list={['pd-row pd-grid', x.x && 'pd-x']}>
+							<span class='pd-n pd-rk'>{x.r}</span>
+							<span class='pd-who'>
+								<i style={`background:${x.dot}`} />
+								<u style={`width:${x.w}px`} />
+							</span>
+							<span class='pd-n'>{x.s}</span>
+							<span class='pd-n pd-pen'>{x.p}</span>
+							<span class='pd-dcell'>
+								{x.d !== null && (
+									<span class='pd-pill' style={`--k:${x.k}`}>
+										<em>▲</em>+{x.d}
+									</span>
+								)}
+							</span>
+						</div>
+					))
+				}
+			</div>
+			<p class='pd-foot'>Blank = rating over 2100, unrated here</p>
+			<p class='pd-cap'>Rating change, shown before Codeforces applies it</p>
+			<p class='pd-mono'>Runs in the browser, no server. Div. 1: 99% within ±1 of the real change.</p>
+		</div>
+	</div>
+
+	<!-- 5 · library -->
+	<div class='cpc-scene cpc-lb' data-name='library' data-dur='4500'>
+		<div class='lb-head'>
+			<p class='lb-a lb-g0 lb-num'>{problemsN}</p>
+			<p class='lb-a lb-g2 lb-cap'>problems · {lib.nTopics} topics</p>
+			<p class='lb-a lb-g3 lb-cap lb-cap2'>{lib.templates} templates · {lib.blogs} blog posts</p>
+		</div>
+		<div class='lb-cloud' aria-hidden='true'>
+			{
+				words.map((w) => (
+					<span
+						class:list={['lb-w lb-a', `lb-g${w.g}`, w.tone && `lb-${w.tone}`, w.r >= 18 && 'lb-sm-hide', w.r >= 48 && 'lb-md-hide']}
+						style={`--f:${w.f};--o:${w.o}`}>{w.name}</span>
+				))
+			}
+			<i class='lb-fill'></i>
+		</div>
+	</div>
+
+	<!-- frame: progress ticker (bottom-left) + tool plate (bottom-right) -->
+	<div class='cpc-tick' aria-hidden='true'><i class='cpc-seg done'></i><i class='cpc-seg'></i><i class='cpc-seg'></i><i class='cpc-seg'></i><i class='cpc-seg'></i></div>
+	<span class='cpc-plate' aria-hidden='true'>vrating</span>
+</div>
+
+<style>
+	.cpc {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+	}
+	.cpc-scene {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.55s;
+	}
+	.cpc-scene.on {
+		opacity: 1;
+	}
+
+	/* ---------- frame ---------- */
+	.cpc-tick {
+		position: absolute;
+		left: 12px;
+		bottom: 12px;
+		z-index: 10;
+		display: flex;
+		gap: 3px;
+		padding: 8px 8px;
+		border-radius: 4px;
+		background: #0b0f14;
+	}
+	.cpc-seg {
+		position: relative;
+		display: block;
+		width: 18px;
+		height: 2px;
+		overflow: hidden;
+		background: rgb(241 239 234 / 0.22);
+	}
+	.cpc-seg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: #f1efea;
+		transform: scaleX(0);
+		transform-origin: left;
+	}
+	.cpc-seg.done::after {
+		transform: scaleX(1);
+	}
+	.cpc-seg.act::after {
+		animation: cpc-fill var(--d) linear forwards;
+	}
+	@keyframes cpc-fill {
+		to {
+			transform: scaleX(1);
+		}
+	}
+	:global(.cpc-paused) .cpc-seg.act::after {
+		animation-play-state: paused;
+	}
+	.cpc-plate {
+		position: absolute;
+		right: 12px;
+		bottom: 12px;
+		z-index: 10;
+		padding: 5px 8px;
+		border-radius: 4px;
+		background: #0b0f14;
+		color: #f1efea;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	/* ---------- 1 · vrating ---------- */
+	.cpc-vr {
+		background: #cfdde4;
+	}
+	.vr-glow {
+		position: absolute;
+		right: -8%;
+		top: -6%;
+		width: 70%;
+		height: 80%;
+		pointer-events: none;
+		background: radial-gradient(closest-side, rgba(207, 210, 245, 0.85), rgba(207, 210, 245, 0) 72%);
+		filter: blur(22px);
+	}
+	.cpc-vr.on .vr-glow {
+		animation: vr-drift 15s ease-in-out infinite alternate;
+	}
+	@keyframes vr-drift {
+		from {
+			transform: translate(6%, 2%) scale(0.94);
+		}
+		to {
+			transform: translate(-5%, 6%) scale(1.06);
+		}
+	}
+	.vr-card {
+		position: absolute;
+		left: 12px;
+		right: 12px;
+		top: 44px;
+		bottom: 44px;
+		max-width: 640px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		padding: 12px 16px 10px;
+		border-radius: 5px;
+		background: #f6f8fa;
+		color: #0b0f14;
+		transform: rotate(1.5deg);
+		transform-origin: 50% 60%;
+		box-shadow:
+			0 20px 36px -14px rgba(11, 15, 20, 0.5),
+			0 2px 5px rgba(11, 15, 20, 0.2);
+	}
+	.vr-card::after {
+		/* paper grain, stronger than the tile's overlay (that one is invisible on a pale surface) */
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		opacity: 0.09;
+		mix-blend-mode: multiply;
+		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+	}
+	.vr-stats {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0 16px;
+	}
+	.vr-cap {
+		margin: 0;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(16 32 42 / 0.55);
+	}
+	.vr-num {
+		margin: 0.4rem 0 0;
+		font-family: 'Newsreader Variable', serif;
+		font-size: 2.15rem;
+		font-weight: 300;
+		line-height: 1;
+		letter-spacing: -0.01em;
+	}
+	.vr-nowrap {
+		white-space: nowrap;
+	}
+	.vr-vs {
+		margin-left: 0.25rem;
+		font: 400 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		color: rgb(16 32 42 / 0.45);
+	}
+	.vr-mark {
+		/* highlighter under the gap figure, the same lavender as the area on the chart */
+		background: linear-gradient(transparent 58%, rgba(207, 210, 245, 0.95) 58%);
+		padding: 0 0.15rem;
+	}
+	.vr-chart {
+		flex: 1;
+		min-height: 0;
+		margin-top: 0.5rem;
+	}
+	.vr-chart svg {
+		width: 100%;
+		height: 100%;
+	}
+	.vr-n {
+		display: none;
+	}
+	[data-vr-end] {
+		transition: opacity 0.3s;
+	}
+	@media (max-width: 639px) {
+		.vr-card {
+			transform: rotate(1deg);
+			padding: 12px 12px 10px;
+		}
+		.vr-stats {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.vr-more {
+			display: none;
+		}
+		.vr-num {
+			font-size: 1.9rem;
+		}
+		.vr-w {
+			display: none;
+		}
+		.vr-n {
+			display: block;
+		}
+	}
+
+	/* ---------- 2 · cf-heatmap ---------- */
+	.cpc-hm {
+		background: #0b0f14;
+		color: #e9edf0;
+	}
+	.hm-in {
+		position: absolute;
+		inset: 0;
+		max-width: 620px;
+		margin: 0 auto;
+	}
+	.hm-legend {
+		position: absolute;
+		right: 16px;
+		top: 16px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.hm-lt {
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(255 255 255 / 0.4);
+	}
+	.hm-sw {
+		display: flex;
+		gap: 2px;
+	}
+	.hm-sw i {
+		display: block;
+		width: 7px;
+		height: 7px;
+		border-radius: 1.5px;
+	}
+	.hm-body {
+		position: absolute;
+		left: 16px;
+		right: 16px;
+		top: 56px;
+	}
+	.hm-months {
+		position: relative;
+		height: 8px;
+		margin-bottom: 4px;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(255 255 255 / 0.45);
+	}
+	.hm-months span {
+		position: absolute;
+	}
+	.hm-svg {
+		display: block;
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+	.hm-c {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+	.hm-sweep {
+		opacity: 0;
+	}
+	.hm-detail {
+		position: absolute;
+		left: 16px;
+		right: 16px;
+		bottom: 46px;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 16px;
+	}
+	.hm-tip {
+		width: 15.5rem;
+		max-width: 100%;
+		padding: 0.5rem 0.65rem;
+		border-radius: 0.4rem;
+		border: 1px solid rgb(255 255 255 / 0.25);
+		border-top-color: rgb(255 255 255 / 0.4);
+		background: rgb(27 35 48 / 0.55);
+		-webkit-backdrop-filter: blur(14px) saturate(1.5);
+		backdrop-filter: blur(14px) saturate(1.5);
+		box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.7);
+		font: 500 0.56rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		color: rgb(255 255 255 / 0.75);
+	}
+	.hm-th {
+		margin: 0 0 0.4rem;
+		color: #fff;
+		letter-spacing: 0.04em;
+	}
+	.hm-th span {
+		color: rgb(255 255 255 / 0.5);
+	}
+	.hm-tip ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.28rem;
+	}
+	.hm-tip li {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+	.hm-tip li i {
+		flex: none;
+		width: 6px;
+		height: 6px;
+		border-radius: 1.2px;
+	}
+	.hm-tip li span {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+	.hm-tip li b {
+		font-weight: 500;
+		color: rgb(255 255 255 / 0.5);
+	}
+	.hm-top,
+	.hm-top b {
+		color: #fff !important;
+	}
+	.hm-stat {
+		text-align: right;
+	}
+	.hm-n {
+		margin: 0;
+		font-family: 'Newsreader Variable', serif;
+		font-size: 4.6rem;
+		font-weight: 300;
+		line-height: 0.8;
+		letter-spacing: -0.02em;
+	}
+	.hm-sc {
+		margin: 0.55rem 0 0;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(255 255 255 / 0.5);
+	}
+	/* one-shot under .on: cells pop in date order, a lavender sweep follows, then the day card opens on its ring */
+	.cpc-hm.on .hm-c {
+		animation: hm-cell 0.5s ease-out var(--t) both;
+	}
+	.cpc-hm.on .hm-sweep {
+		animation: hm-sweep 2s linear 0.2s both;
+	}
+	.cpc-hm.on .hm-ring {
+		animation: hm-fade 0.4s ease-out 2.3s both;
+	}
+	.cpc-hm.on .hm-tip {
+		animation: hm-rise 0.5s ease-out 2.4s both;
+	}
+	.cpc-hm.on .hm-stat {
+		animation: hm-rise 0.6s ease-out 2.8s both;
+	}
+	@keyframes hm-cell {
+		0% {
+			opacity: 0;
+			transform: scale(0.2);
+		}
+		60% {
+			opacity: 1;
+			transform: scale(1.25);
+		}
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+	@keyframes hm-sweep {
+		0% {
+			opacity: 0;
+			transform: translateX(0);
+		}
+		4% {
+			opacity: 0.8;
+			transform: translateX(0);
+		}
+		94% {
+			opacity: 0.8;
+			transform: translateX(530px);
+		}
+		100% {
+			opacity: 0;
+			transform: translateX(530px);
+		}
+	}
+	@keyframes hm-fade {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@keyframes hm-rise {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	@media (max-width: 639px) {
+		.hm-stat {
+			display: none;
+		}
+		.hm-tip {
+			width: 100%;
+		}
+		.hm-lt {
+			display: none;
+		}
+	}
+
+	/* ---------- 3 · cf-theme ---------- */
+	.cpc-ct {
+		background: #eef4f1;
+	}
+	.ct-sheet {
+		position: absolute;
+		inset: 0;
+	}
+	.ct-sheet img {
+		/* width-fit: the whole nav stays in view, and the strip under it is free for the plate and the ticker */
+		position: absolute;
+		left: 0;
+		top: 36px;
+		width: 100%;
+		height: auto;
+	}
+	@media (max-width: 639px) {
+		.ct-sheet img {
+			height: calc(100% - 36px);
+			object-fit: cover;
+			object-position: 8% 50%;
+		}
+	}
+	.ct-line,
+	.ct-btn {
+		position: absolute;
+		z-index: 6;
+	}
+	.ct-line {
+		top: 0;
+		bottom: 0;
+		left: 100%;
+		width: 1px;
+		background: rgb(120 130 140 / 0.7);
+	}
+	.ct-btn {
+		top: 50%;
+		left: calc(100% - 16px);
+		width: 28px;
+		height: 28px;
+		margin: -14px 0 0 -14px; /* left is the button's centre */
+		display: grid;
+		place-items: center;
+		border-radius: 50%;
+		background: #f1efea;
+		color: #0b0f14;
+		box-shadow:
+			0 0 0 1px rgb(11 15 20 / 0.22),
+			0 4px 10px -3px rgb(0 0 0 / 0.4);
+	}
+	.ct-btn svg {
+		position: absolute;
+		width: 14px;
+		height: 14px;
+	}
+	.ct-sun {
+		opacity: 0;
+	}
+	.ct-dark {
+		clip-path: inset(0 0 0 100%);
+	}
+	/* one-shot under .on (4.4 s): hold light 0.5, wipe to dark 0.9, hold dark 1.0, wipe back 0.9, hold 1.1. Dark enters from the right. */
+	.cpc-ct.on .ct-dark {
+		animation: ct-clip 4.4s ease-in-out both;
+	}
+	.cpc-ct.on .ct-line {
+		animation: ct-edge 4.4s ease-in-out both;
+	}
+	.cpc-ct.on .ct-btn {
+		animation: ct-btn 4.4s ease-in-out both;
+	}
+	.cpc-ct.on .ct-moon {
+		animation: ct-moon 4.4s ease-in-out both;
+	}
+	.cpc-ct.on .ct-sun {
+		animation: ct-sun 4.4s ease-in-out both;
+	}
+	@keyframes ct-clip {
+		0%,
+		11% {
+			clip-path: inset(0 0 0 100%);
+		}
+		32%,
+		55% {
+			clip-path: inset(0 0 0 0);
+		}
+		75%,
+		100% {
+			clip-path: inset(0 0 0 100%);
+		}
+	}
+	@keyframes ct-edge {
+		0%,
+		11% {
+			left: 100%;
+		}
+		32%,
+		55% {
+			left: 0%;
+		}
+		75%,
+		100% {
+			left: 100%;
+		}
+	}
+	/* the button stays inside the tile: its centre is kept 16px from either border */
+	@keyframes ct-btn {
+		0%,
+		11% {
+			left: calc(100% - 16px);
+		}
+		32%,
+		55% {
+			left: 16px;
+		}
+		75%,
+		100% {
+			left: calc(100% - 16px);
+		}
+	}
+	/* moon shows while light is on (click -> dark); sun while dark is on */
+	@keyframes ct-moon {
+		0%,
+		16% {
+			opacity: 1;
+		}
+		24%,
+		56% {
+			opacity: 0;
+		}
+		64%,
+		100% {
+			opacity: 1;
+		}
+	}
+	@keyframes ct-sun {
+		0%,
+		16% {
+			opacity: 0;
+		}
+		24%,
+		56% {
+			opacity: 1;
+		}
+		64%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	/* ---------- 4 · cf-predictor ---------- */
+	.cpc-pd {
+		background: #dfe9ee;
+		color: #10202a;
+	}
+	.pd-wrap {
+		position: absolute;
+		left: 16px;
+		right: 16px;
+		top: 44px;
+		max-width: 540px;
+		margin: 0 auto;
+	}
+	.pd-table {
+		overflow: hidden;
+		border-radius: 6px;
+		background: #fbfdfd;
+		box-shadow:
+			inset 0 0 0 1px rgb(16 32 42 / 0.12),
+			0 10px 22px -14px rgb(16 32 42 / 0.4);
+	}
+	.pd-grid {
+		display: grid;
+		grid-template-columns: 2.2rem 1fr 2rem 3.6rem 5rem;
+		align-items: center;
+		padding: 0 8px;
+	}
+	.pd-head {
+		height: 22px;
+		background: #e4edf0;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(16 32 42 / 0.55);
+	}
+	.pd-row {
+		height: 17px;
+	}
+	.pd-row:nth-child(even) {
+		background: #eef4f6;
+	}
+	.pd-n {
+		font: 500 0.62rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		color: #10202a;
+	}
+	.pd-rk {
+		color: rgb(16 32 42 / 0.5);
+	}
+	.pd-who {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.pd-who i {
+		flex: none;
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+	}
+	.pd-who u {
+		display: block;
+		height: 3px;
+		border-radius: 2px;
+		background: rgb(16 32 42 / 0.2);
+		text-decoration: none;
+	}
+	.pd-dcell {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.pd-head .pd-dcell b {
+		font-weight: 600;
+		font-size: 0.7rem;
+		letter-spacing: 0;
+		text-transform: none;
+		color: #10202a;
+	}
+	.pd-hdone {
+		position: absolute;
+	}
+	.pd-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0 6px;
+		border-radius: 3px;
+		background: #d8ece4;
+		color: #1f5a47;
+		font: 600 0.62rem/14px ui-monospace, SFMono-Regular, Menlo, monospace;
+	}
+	.pd-pill em {
+		margin-right: 3px;
+		font-style: normal;
+		font-size: 0.4rem;
+	}
+	.pd-foot {
+		margin: 6px 0 0;
+		text-align: right;
+		font: 500 0.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(16 32 42 / 0.45);
+	}
+	.pd-cap {
+		margin: 10px 0 0;
+		font-family: 'Newsreader Variable', serif;
+		font-style: italic;
+		font-weight: 400;
+		font-size: 1.1rem;
+		line-height: 1.2;
+		text-wrap: balance;
+	}
+	.pd-mono {
+		margin: 6px 0 0;
+		font: 500 0.5rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.06em;
+		color: rgb(16 32 42 / 0.5);
+	}
+	/* one pass under .on: the header shows "Δ…" and pulses (what the userscript shows while it computes), then the
+	   deltas land row by row, then the footnote, the caption and the accuracy line fade in, then it holds. */
+	.cpc-pd.on .pd-hwait {
+		animation: pd-wait 1s ease-in-out both;
+	}
+	.cpc-pd.on .pd-hdone {
+		animation: pd-fade 0.3s ease-out 0.95s both;
+	}
+	.cpc-pd.on .pd-pill {
+		animation: pd-pop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) calc(1s + var(--k) * 0.35s) both;
+	}
+	.cpc-pd.on .pd-foot {
+		animation: pd-fade 0.5s ease-out 2.5s both;
+	}
+	.cpc-pd.on .pd-cap {
+		animation: pd-rise 0.6s ease-out 2.8s both;
+	}
+	.cpc-pd.on .pd-mono {
+		animation: pd-rise 0.6s ease-out 3.2s both;
+	}
+	@keyframes pd-wait {
+		0% {
+			opacity: 0.3;
+		}
+		25% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.3;
+		}
+		75% {
+			opacity: 1;
+		}
+		92% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	@keyframes pd-fade {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@keyframes pd-pop {
+		from {
+			opacity: 0;
+			transform: translateY(5px) scale(0.85);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	@keyframes pd-rise {
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	@media (max-width: 639px) {
+		.pd-wrap {
+			left: 12px;
+			right: 12px;
+		}
+		.pd-grid {
+			grid-template-columns: 1.8rem 1fr 1.6rem 4.4rem;
+		}
+		.pd-pen,
+		.pd-x {
+			display: none;
+		}
+		.pd-row {
+			height: 20px;
+		}
+		.pd-cap {
+			font-size: 0.98rem;
+		}
+	}
+
+	/* ---------- 5 · library ---------- */
+	.cpc-lb {
+		background: #f1efea;
+		color: #0b0f14;
+	}
+	.lb-head {
+		position: absolute;
+		left: 20px;
+		top: 50px;
+		z-index: 2;
+	}
+	.lb-num {
+		margin: 0;
+		white-space: nowrap;
+		font-family: 'Newsreader Variable', serif;
+		font-size: 4.2rem;
+		font-weight: 300;
+		line-height: 0.86;
+		letter-spacing: -0.02em;
+	}
+	.lb-cap {
+		margin: 0.6rem 0 0;
+		font: 500 0.55rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(11 15 20 / 0.6);
+	}
+	.lb-cap2 {
+		margin-top: 0.4rem;
+		font-size: 0.5rem;
+		color: rgb(11 15 20 / 0.4);
+	}
+	.lb-cloud {
+		--k: 0.9;
+		position: absolute;
+		left: 230px;
+		right: 18px;
+		top: 46px;
+		bottom: 46px;
+		display: flex;
+		flex-wrap: wrap;
+		align-content: space-between;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0 0.7rem;
+		overflow: hidden;
+	}
+	.lb-fill {
+		flex: 999 1 0;
+		height: 0;
+	}
+	.lb-w {
+		font-family: 'Newsreader Variable', serif;
+		font-weight: 300;
+		line-height: 1.12;
+		white-space: nowrap;
+		font-size: calc(var(--f) * var(--k) * 1px);
+		color: rgb(11 15 20 / var(--o));
+	}
+	.lb-mark {
+		background: #cfd2f5;
+		color: #0b0f14;
+		border-radius: 0.2em;
+		padding: 0 0.22em;
+	}
+	.lb-steel {
+		color: #5f8199;
+	}
+	/* one-shot under .on: each group resolves blur -> sharp, staggered by group, then holds */
+	.cpc-lb.on .lb-a {
+		animation: lb-in 0.8s ease-out calc(var(--g, 0) * 0.12s) both;
+	}
+	.lb-g0 {
+		--g: 0;
+	}
+	.lb-g1 {
+		--g: 1;
+	}
+	.lb-g2 {
+		--g: 2;
+	}
+	.lb-g3 {
+		--g: 3;
+	}
+	.lb-g4 {
+		--g: 4;
+	}
+	.lb-g5 {
+		--g: 5;
+	}
+	@keyframes lb-in {
+		from {
+			opacity: 0;
+			filter: blur(7px);
+		}
+		to {
+			opacity: 1;
+			filter: blur(0);
+		}
+	}
+	@media (max-width: 1023px) {
+		.lb-cloud {
+			--k: 0.85;
+		}
+		.lb-md-hide {
+			display: none;
+		}
+	}
+	@media (max-width: 639px) {
+		.lb-head {
+			left: 14px;
+		}
+		.lb-num {
+			font-size: 3rem;
+		}
+		.lb-cap2 {
+			max-width: 7.5rem;
+			line-height: 1.5;
+		}
+		.lb-cloud {
+			--k: 0.78;
+			left: 140px;
+			right: 12px;
+			gap: 0 0.55rem;
+		}
+		.lb-sm-hide {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cpc-scene,
+		.cpc-scene * {
+			animation: none !important;
+			transition: none !important;
+		}
+	}
+</style>
+
+<script>
+	import vr from '../../data/tiles/cp_vrating.json'
+
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	const { virtual, real, stats } = vr
+	const N = virtual.length
+	const PLAY = 2200 // ms of the vrating replay (the scene lasts 3.6 s: ~1.2 s hold, then the crossfade)
+	const lerp = (a: number[], f: number) => {
+		const i = Math.min(Math.floor(f), N - 2)
+		return a[i] + (a[i + 1] - a[i]) * (f - i)
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-cpc]').forEach((root) => {
+		if (reduce) return
+		const scenes = [...root.querySelectorAll<HTMLElement>('.cpc-scene')]
+		const segs = [...root.querySelectorAll<HTMLElement>('.cpc-seg')]
+		const plate = root.querySelector<HTMLElement>('.cpc-plate')!
+
+		// ---- vrating replay: driven by cp-start / cp-stop on its scene
+		const vrs = root.querySelector<HTMLElement>('.cpc-vr')!
+		const clips = [...vrs.querySelectorAll<SVGRectElement>('[data-vr-clip]')]
+		const ends = [...vrs.querySelectorAll<SVGGElement>('[data-vr-end]')]
+		const $ = (s: string) => vrs.querySelector<HTMLElement>(s)!
+		const [v, d, peak, n] = ['[data-vr-v]', '[data-vr-d]', '[data-vr-peak]', '[data-vr-n]'].map($)
+		const paint = (p: number) => {
+			clips.forEach((c) => c.setAttribute('width', String((+c.dataset.x1! - +c.dataset.x0!) * p)))
+			ends.forEach((e) => (e.style.opacity = p >= 0.97 ? '1' : '0'))
+			if (p >= 1) {
+				v.textContent = String(stats.virtual)
+				d.textContent = '+' + stats.delta
+				peak.textContent = String(stats.peak)
+				n.textContent = String(stats.rounds)
+				return
+			}
+			const f = p * (N - 1)
+			let top = 0
+			for (let i = 0; i <= Math.floor(f); i++) top = Math.max(top, virtual[i])
+			top = Math.max(top, lerp(virtual, f))
+			v.textContent = String(Math.round(lerp(virtual, f)))
+			const gap = Math.round(lerp(virtual, f) - lerp(real, f))
+			d.textContent = (gap < 0 ? '−' : '+') + Math.abs(gap)
+			peak.textContent = String(Math.round(top))
+			n.textContent = String(Math.floor(f) + 1)
+		}
+		let raf = 0
+		vrs.addEventListener('cp-start', () => {
+			cancelAnimationFrame(raf)
+			const t0 = performance.now()
+			paint(0)
+			const tick = (now: number) => {
+				const p = Math.min(Math.max((now - t0) / PLAY, 0), 1) // rAF's timestamp can precede t0: never negative
+				paint(p)
+				if (p < 1) raf = requestAnimationFrame(tick)
+			}
+			raf = requestAnimationFrame(tick)
+		})
+		vrs.addEventListener('cp-stop', () => cancelAnimationFrame(raf))
+
+		// ---- the reel: one scene at a time, advance on a timer, hold while hovered
+		const DUR = scenes.map((s) => +s.dataset.dur!)
+		const tile = root.closest('a')
+		let i = -1,
+			t = 0,
+			left = 0,
+			since = 0,
+			hovered = false
+		const arm = (ms: number) => {
+			left = ms
+			since = performance.now()
+			clearTimeout(t)
+			if (!hovered) t = window.setTimeout(() => enter((i + 1) % scenes.length), left)
+		}
+		const enter = (k: number) => {
+			if (scenes[i]) {
+				scenes[i].classList.remove('on')
+				scenes[i].dispatchEvent(new CustomEvent('cp-stop'))
+			}
+			i = k
+			const s = scenes[k]
+			s.classList.remove('on') // restart its one-shot CSS animations from their first frame
+			void s.offsetWidth
+			s.classList.add('on')
+			s.dispatchEvent(new CustomEvent('cp-start'))
+			plate.textContent = s.dataset.name!
+			segs.forEach((g, j) => {
+				g.classList.remove('act')
+				g.classList.toggle('done', j < k)
+			})
+			void root.offsetWidth
+			segs[k].style.setProperty('--d', DUR[k] + 'ms')
+			segs[k].classList.add('act')
+			arm(DUR[k])
+		}
+		const stop = () => {
+			clearTimeout(t)
+			if (scenes[i]) scenes[i].dispatchEvent(new CustomEvent('cp-stop'))
+			i = -1
+		}
+		tile?.addEventListener('mouseenter', () => {
+			if (i < 0) return
+			hovered = true
+			clearTimeout(t)
+			left -= performance.now() - since
+			root.classList.add('cpc-paused')
+		})
+		tile?.addEventListener('mouseleave', () => {
+			if (i < 0) return
+			hovered = false
+			root.classList.remove('cpc-paused')
+			arm(Math.max(left, 300))
+		})
+		new IntersectionObserver(([e]) => {
+			if (e.isIntersecting) {
+				if (i < 0) enter(0)
+			} else stop()
+		}).observe(root)
+	})
+</script>

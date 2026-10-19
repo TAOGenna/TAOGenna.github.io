@@ -121,6 +121,7 @@ one (glacier and slate are the cool breaks between paper tiles). Dark tiles are 
 | Digit-contour texture | Quantum, PPCA, Soil background | digits only on contour lines; **max ~2 per block** |
 | Quiet type | Olive, Non-Markov | near-empty, one idea |
 | Real product video | Distill film, MAHO | recorded, cropped, colour poster |
+| Reel (several works, one tile) | Competitive programming (vrating → heatmap → theme → predictor → library), Majorana, Inversion | one card per body of work, not one per sub-tool; ≤ ~6 s per scene, ticker bottom-left, tool plate bottom-right, pauses on hover |
 
 Don't ship a wall of thin-line plots on flat backgrounds, and don't use matplotlib frames on cream (the
 old look). If a project only has a plot, re-draw it in the palette or pick a different format for it.
@@ -134,7 +135,7 @@ old look). If a project only has a plot, re-draw it in the palette or pick a dif
 - Hover motion lives on the frame (panel slide-up), the wheel (spin up, orbs speed up) and Writing rows
   (2px lift). Scenes don't need to react to hover.
 - **Astro does not scope `@keyframes`**: prefix every name per tile (`yv-`, `st-`, `ls-`, `soil-`, `qc-`,
-  `ol-`, `ph-`, `th-`, `ion-`, `inv-`, `ml-`, `mj-`, `dst-`, …) or tiles overwrite each other.
+  `ol-`, `ph-`, `th-`, `ion-`, `inv-`, `iv-`, `ml-`, `mj-`, `dst-`, `cpc-`, `vr-`, `hm-`, `ct-`, `pd-`, `lb-`, …) or tiles overwrite each other.
 - Honour `prefers-reduced-motion: reduce` (stop or freeze the loop). Every animated vector scene does;
   the video and photo tiles are exempt.
 - Video: `autoplay loop muted playsinline preload='metadata'`, a coloured `poster` (not a white-fade
@@ -150,11 +151,20 @@ old look). If a project only has a plot, re-draw it in the palette or pick a dif
 - **Headline numbers come from his own record** (CV, LinkedIn, paper, repo), never invented. A number
   must mean something to a stranger (+130% correct payment predictions, $55M closed sales, 600K
   conversations/month, 10K conversations/month) — a bare "18M users" does not.
+- **Example data from someone else's account** is allowed only when it comes from the project's own README/docs, is
+  labelled in the file header, and never shows a handle (vrating, cf-heatmap and cf-predictor use the
+  competitive-programming repo's example screenshots; swap in his own handles when he gives them).
+- **One card per body of work.** A repo with several tools (competitive-programming) is a single reel tile, not
+  a tile per tool.
 - **Illustrative parts are labelled in the file header.** Currently illustrative: Distill's dependency
   graph (the real generated `depends_on` lists every earlier module, a Distill bug, so never draw it),
   the YaVendio chat, the Yape scores (provider names are real).
 - Show **results, not job titles** (YaVendio shows what shipped, not a role card).
 - Hover copy: one or two sentences of what it is + result, then mono tags. No marketing adjectives.
+- **Copy must sound like a person, not a model.** Plain first-person sentences, concrete numbers, the words he
+  would actually say ("Tools I wrote for Codeforces and AtCoder: …"). Avoid: clever italic taglines, "X, before Y"
+  slogans, em-dash asides, lists of three adjectives, "the library behind them", "built along the way", stacked
+  middots used as a sentence. A label says what the thing is ("Rating change"), a caption says what to look at.
 
 ---
 
