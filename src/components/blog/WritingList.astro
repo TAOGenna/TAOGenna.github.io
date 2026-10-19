@@ -1,0 +1,253 @@
+---
+// The homepage "Writing" list: per post, an image at the left, the title, a two-line excerpt of what's
+// inside (the post's own opening paragraph, clamped by CSS) and the date underneath.
+// Images are the bespoke scenes from src/components/bento, keyed by slug; any post without one gets
+// a quiet fallback plate, so a new post just works.
+import 'katex/dist/katex.min.css'
+import katex from 'katex'
+import type { CollectionEntry } from 'astro:content'
+import Ppca from '../bento/Ppca.astro'
+import Mlip from '../bento/Mlip.astro'
+import NonMarkov from '../bento/NonMarkov.astro'
+import scf from '../../data/tiles/hf_convergence.json'
+
+type Props = { posts: CollectionEntry<'post'>[] }
+const { posts } = Astro.props
+
+const fig: Record<string, string> = {
+	ppca: 'ppca',
+	'atomic-environments-mlip': 'mlip',
+	'hartree-fock-method': 'scf',
+	'non-markovianity': 'nm',
+	'photonics-microwave-systems': 'eye'
+}
+
+// ---- excerpt: first prose paragraph(s) of the body, markdown stripped, inline math via KaTeX
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+function excerpt(body: string): string {
+	const paras: string[] = []
+	let cur: string[] = []
+	let inDiv = false
+	const flush = () => {
+		if (cur.length) paras.push(cur.join(' '))
+		cur = []
+	}
+	for (const raw of body.split('\n')) {
+		const l = raw.trim()
+		if (inDiv) {
+			if (l.includes('</div>')) inDiv = false
+			continue
+		}
+		if (l.startsWith('<div')) {
+			flush()
+			inDiv = !l.includes('</div>')
+			continue
+		}
+		if (l.startsWith('$$')) {
+			flush()
+			break
+		}
+		if (!l) {
+			flush()
+			if (paras.join(' ').length >= 260) break
+			continue
+		}
+		if (l.startsWith('<') || l.startsWith('#') || l.startsWith('![') || /^\*[^*]+\*$/.test(l) || /^Extended Abstract/i.test(l)) {
+			flush()
+			continue
+		}
+		cur.push(l.replace(/^>\s*/, ''))
+	}
+	flush()
+	let t = paras.join(' ')
+	const math: string[] = []
+	t = t.replace(/\$([^$\n]+?)\$/g, (_, m) => {
+		math.push(m)
+		return `\u0000${math.length - 1}\u0000`
+	})
+	t = t
+		.replace(/\[\^[^\]]+\]/g, '') // footnote refs
+		.replace(/\[(\d+)\]/g, '') // numeric citations
+		.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
+		.replace(/\*\*([^*]+)\*\*/g, '$1')
+		.replace(/[*_]([^*_]+)[*_]/g, '$1')
+		.replace(/`([^`]+)`/g, '$1')
+		.replace(/\s+/g, ' ')
+		.replace(/\s+([.,;:])/g, '$1')
+		.trim()
+	return esc(t).replace(/\u0000(\d+)\u0000/g, (_, i) => katex.renderToString(math[+i], { throwOnError: false }))
+}
+
+const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString('en-US', { ...o, timeZone: 'UTC' })
+const entries = posts.map((p) => {
+	const d = new Date(p.data.updatedDate ?? p.data.publishDate)
+	return {
+		slug: p.slug,
+		title: p.data.title,
+		dfull: fmt(d, { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase().replace(',', ''),
+		text: excerpt(p.body),
+		fig: fig[p.slug] ?? 'plain',
+		initial: p.data.title.trim()[0]
+	}
+})
+
+// SCF residual hairline for the Hartree-Fock thumbnail (viewBox 272x160, like the bento tiles)
+const n = scf.residual.length
+const X = (i: number) => 22 + (i / (n - 1)) * 232
+const Y = (l: number) => 26 + (-l / 14) * 108
+const path = scf.residual.map((r, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Y(Math.log10(r)).toFixed(1)}`).join('')
+const end: [number, number] = [X(n - 1), Y(Math.log10(scf.residual[n - 1]))]
+---
+
+<div class='wl'>
+	{
+		entries.map((e) => (
+			<>
+				<article class='wl-row'>
+					<div class='wl-card'>
+						<div class='wl-th' aria-hidden='true'>
+							{e.fig === 'ppca' && (
+								<div class='wl-in bg-[#f1efea] text-[#0b0f14]'>
+									<Ppca />
+								</div>
+							)}
+							{e.fig === 'mlip' && (
+								<div class='wl-in text-[#0b0f14]'>
+									<Mlip />
+								</div>
+							)}
+							{e.fig === 'nm' && (
+								<div class='wl-in text-[#0b0f14]'>
+									<NonMarkov />
+								</div>
+							)}
+							{e.fig === 'scf' && (
+								<div class='wl-in bg-[#0b0f14] text-[#e9edf0]'>
+									<svg viewBox='0 0 272 160' class='absolute inset-0 h-full w-full'>
+										<g stroke='currentColor' stroke-opacity='0.14' stroke-width='0.5'>
+											{[0, -4, -8, -12].map((l) => (
+												<line x1='22' x2='254' y1={Y(l)} y2={Y(l)} />
+											))}
+										</g>
+										<path d={path} fill='none' stroke='#cfd2f5' stroke-width='1.4' stroke-linejoin='round' />
+										<circle cx={end[0]} cy={end[1]} r='3' fill='#cfd2f5' />
+									</svg>
+								</div>
+							)}
+							{e.fig === 'eye' && <img src='/projects/tiles/ph_eye_single.jpg' alt='' class='h-full w-full object-cover' loading='lazy' />}
+							{e.fig === 'plain' && (
+								<div class='wl-in flex items-center justify-center bg-[#dfe9ee] text-[#10202a]'>
+									<span class='font-newsreader text-[5.5rem] font-light leading-none'>{e.initial}</span>
+								</div>
+							)}
+						</div>
+						<div class='wl-text'>
+							<h3>
+								<a class='wl-link' data-astro-prefetch href={`/blog/${e.slug}/`}>
+									{e.title}
+								</a>
+							</h3>
+							<p class='wl-ex' set:html={e.text} />
+							<p class='wl-meta'>{e.dfull}</p>
+						</div>
+					</div>
+				</article>
+			</>
+		))
+	}
+</div>
+
+<style is:global>
+	/* ---- list: image at the left, title + excerpt + date at the right ---- */
+	.wl {
+		position: relative;
+		--k: 0.44; /* thumbnail scale: the bento scenes are authored at 271x160 */
+	}
+	.wl-row {
+		position: relative;
+		padding-bottom: 1.1rem;
+	}
+	.wl-card {
+		position: relative;
+		display: flex;
+		gap: 0.9rem;
+		align-items: flex-start;
+		min-width: 0;
+	}
+	.wl-th {
+		position: relative;
+		flex: none;
+		width: calc(271px * var(--k));
+		height: calc(160px * var(--k));
+		overflow: hidden;
+		border-radius: 0.5rem;
+		box-shadow: inset 0 0 0 1px hsl(var(--foreground) / 0.12);
+		transition: transform 0.25s;
+	}
+	.wl-in {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 271px;
+		height: 160px;
+		overflow: hidden;
+		transform: scale(var(--k));
+		transform-origin: 0 0;
+	}
+	.wl-card:hover .wl-th {
+		transform: translateY(-2px);
+	}
+	.wl-text {
+		min-width: 0;
+		flex: 1;
+	}
+	.wl-text h3 {
+		margin: 0;
+		font-family: 'Newsreader Variable', serif;
+		font-size: 1.2rem;
+		font-weight: 400;
+		line-height: 1.18;
+		letter-spacing: -0.005em;
+	}
+	.wl-link::after {
+		/* whole row clickable */
+		content: '';
+		position: absolute;
+		inset: -0.3rem -0.5rem;
+	}
+	.wl-ex {
+		margin: 0.25rem 0 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		font-size: 0.92rem;
+		line-height: 1.42;
+		color: hsl(var(--muted-foreground));
+	}
+	.wl-ex .katex {
+		font-size: 1em;
+	}
+	.wl-meta {
+		margin: 0.4rem 0 0;
+		font: 500 0.58rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.07em;
+		color: hsl(var(--muted-foreground) / 0.85);
+	}
+
+	/* ---- phones: smaller image ---- */
+	@media (max-width: 767px) {
+		.wl {
+			--k: 0.31;
+		}
+		.wl-card {
+			gap: 0.7rem;
+		}
+		.wl-text h3 {
+			font-size: 1.08rem;
+		}
+		.wl-ex {
+			font-size: 0.88rem;
+		}
+	}
+</style>

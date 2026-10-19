@@ -75,6 +75,8 @@ legacy-hugo/              # the previous Hugo site, archived (not built/served)
   below otherwise) via `src/utils/rehypeSidenotes.ts` — no bottom footnotes section. Set
   `citation: true` (optional `citationAuthors: "A, B"`) to append a citation block
   (plaintext + BibTeX) built from title/date/URL by `components/blog/Citation.astro`.
+- **Design / style**: read [`STYLE_GUIDE.md`](STYLE_GUIDE.md) before touching the homepage, /projects, a tile or
+  a Writing thumbnail (palette, type, tile frame, format variety, motion, honesty rules, prompt template).
 - **Project tile** (homepage + /projects): each project is a bespoke scene in `src/components/bento/<Name>.astro`
   wrapped by `BentoTile.astro` (surface tone, name chip, frosted-glass hover panel from `data/projects.ts`). The
   layout lives in `BentoGrid.astro` (homepage + top of /projects) and `MoreGrid.astro` (/projects archive); source

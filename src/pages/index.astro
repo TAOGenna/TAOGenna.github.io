@@ -2,7 +2,7 @@
 import PageLayout from '../layouts/BaseLayout.astro'
 import Section from '../components/Section.astro'
 import BentoGrid from '@/components/bento/BentoGrid.astro'
-import PostPreview from '@/components/blog/PostPreview.astro'
+import WritingList from '@/components/blog/WritingList.astro'
 import GeometricDivider from '@/components/GeometricDivider.astro'
 import FlippableProfile from '@/components/FlippableProfile.astro'
 import Collage from '@/components/Collage.astro'
@@ -47,23 +47,13 @@ const publications = [
 ---
 
 <PageLayout meta={{ title: 'Home' }} showModeToggle={true}>
-	<div class='flex w-full flex-col gap-y-10'>
+	<div class='ha flex w-full flex-col gap-y-10'>
 		<section class='flex flex-col items-center gap-y-4'>
 			<FlippableProfile size='lg' />
 
-			<h1
-				class='font-cormorant text-5xl font-semibold tracking-wide text-foreground'
-				data-mode='professional'
-			>
-				Kenyi Takagui-Perez
-			</h1>
+			<h1 class='ha-name' data-mode='professional'>Kenyi Takagui-Perez</h1>
 
-			<h1
-				class='font-cormorant text-5xl font-semibold tracking-wide text-foreground'
-				data-mode='personal'
-			>
-				Kenyi
-			</h1>
+			<h1 class='ha-name' data-mode='personal'>Kenyi</h1>
 
 			<div class='social-icons flex flex-row items-center gap-x-5' data-mode='professional'>
 				<a href='https://github.com/TAOGenna' aria-label='GitHub'>
@@ -81,30 +71,20 @@ const publications = [
 			</div>
 		</section>
 
-		<Section title='About' data-mode='professional'>
-			<div class='flex flex-col gap-y-5 font-garamond text-xl leading-loose'>
-				<p>
-					Engineer and physicist. Currently working in applied AI engineering at Yavendio.
-				</p>
-				<p>
-					In past lives I was an ML engineer at <a
-						class='illuminated-link font-medium text-foreground'
-						href='https://play.google.com/store/apps/details?id=com.bcp.innovacxion.yapeapp&hl=es_PE'
-						>Yape</a
-					> and <a
-						class='illuminated-link font-medium text-foreground'
-						href='https://spatiali.se/'>Spatialise</a
-					>, a geophysicist at <a
-						class='illuminated-link font-medium text-foreground'
-						href='https://inras.pucp.edu.pe/en/home'>PUCP-INRAS</a
-					>, and a grad student in condensed matter physics at the <a
-						class='illuminated-link font-medium text-foreground'
-						href='https://www.ib.edu.ar/home-english-version/'
-						>Balseiro Institute</a
-					>.
-				</p>
+		<section class='ha-sec flex flex-col gap-y-5 md:flex-row md:gap-y-0' data-mode='professional'>
+			<div class='md:w-1/5'>
+				<p class='ha-kick'>01 · Who</p>
+				<h2 class='ha-h'>About</h2>
 			</div>
-		</Section>
+			<div class='flex flex-col gap-y-3 md:w-2/3'>
+				<div class='ha-prose flex flex-col gap-y-4'>
+					<p>Engineer and physicist. Currently working in applied AI engineering at Yavendio.</p>
+					<p>
+						In past lives I was an ML engineer at <a class='illuminated-link' href='https://play.google.com/store/apps/details?id=com.bcp.innovacxion.yapeapp&hl=es_PE'>Yape</a> and <a class='illuminated-link' href='https://spatiali.se/'>Spatialise</a>, a geophysicist at <a class='illuminated-link' href='https://inras.pucp.edu.pe/en/home'>PUCP-INRAS</a>, and a grad student in condensed matter physics at the <a class='illuminated-link' href='https://www.ib.edu.ar/home-english-version/'>Balseiro Institute</a>.
+					</p>
+				</div>
+			</div>
+		</section>
 
 		<Section title='About' data-mode='personal'>
 			<div class='flex flex-col gap-y-5 font-garamond text-xl leading-loose'>
@@ -135,90 +115,85 @@ const publications = [
 				</p>
 			</Section>
 
-		<GeometricDivider variant='simple' data-mode='professional' />
+		<div class='ha-div' data-mode='professional'><i></i></div>
 
 		<div data-mode='professional'>
 			<BentoGrid />
 		</div>
 
 		<div class='mt-10 flex justify-center' data-mode='professional'>
-			<RotatingBadge href='/projects' label='More Work · ' repeat={4} size={140} />
+			<RotatingBadge glass href='/projects' label='More Work · ' repeat={4} size={140} />
 		</div>
 
 		{
 			allPostsByDate.length > 0 && (
 				<>
-					<Section title='Writing' data-mode='professional'>
-						<ul class='flex flex-col gap-y-4'>
-							{allPostsByDate
-								.filter((p) => !p.data.tags.includes('hidden'))
-								.map((p) => (
-									<PostPreview post={p} />
-								))}
-						</ul>
-					</Section>
+					<section class='ha-sec flex flex-col gap-y-5 md:flex-row md:gap-y-0' data-mode='professional'>
+					<div class='md:w-1/5'>
+						<p class='ha-kick'>03 · Notes</p>
+						<h2 class='ha-h'>Writing</h2>
+					</div>
+					<div class='flex flex-col gap-y-3 md:w-2/3'>
+						<WritingList posts={allPostsByDate.filter((p) => !p.data.tags.includes('hidden'))} />
+					</div>
+				</section>
 				</>
 			)
 		}
 
-		<Section title='Publications' data-mode='professional'>
-			<ul class='flex flex-col gap-y-6'>
-				{
-					publications.map((pub) => (
-						<li class='flex flex-col gap-1'>
-							<div class='flex items-baseline justify-between gap-4'>
-								<a
-									class='illuminated-link font-cormorant text-lg font-semibold'
-									href={pub.links[0].href}
-									rel='noopener noreferrer'
-									target='_blank'
-								>
-									{pub.title}
-								</a>
-								<span class='shrink-0 text-sm text-muted-foreground'>{pub.year}</span>
-							</div>
-							<p class='text-sm leading-relaxed text-muted-foreground'>
-								{pub.authors.map((a, i) => (
-									<>
-										{i > 0 && ', '}
-										{a.includes('Takagui') ? (
-											<span class='font-medium text-foreground/80'>{a}</span>
-										) : (
-											a
-										)}
-									</>
-								))}
-								{' · '}
-								<span class='italic'>{pub.venue}</span>
-							</p>
-							<div class='mt-0.5 flex flex-wrap gap-x-4 gap-y-1 text-xs'>
-								{pub.links.map((l) => (
-									<a
-										class='text-muted-foreground underline decoration-border underline-offset-2 transition-colors hover:text-gold'
-										href={l.href}
-										rel='noopener noreferrer'
-										target='_blank'
-									>
-										{l.label} ↗
+		<section class='ha-sec flex flex-col gap-y-5 md:flex-row md:gap-y-0' data-mode='professional'>
+			<div class='md:w-1/5'>
+				<p class='ha-kick'>04 · Papers</p>
+				<h2 class='ha-h'>Publications</h2>
+			</div>
+			<div class='flex flex-col gap-y-3 md:w-2/3'>
+				<ul class='flex flex-col gap-y-6'>
+					{
+						publications.map((pub) => (
+							<li class='flex flex-col gap-1'>
+								<div class='flex items-baseline justify-between gap-4'>
+									<a class='illuminated-link ha-pub' href={pub.links[0].href} rel='noopener noreferrer' target='_blank'>
+										{pub.title}
 									</a>
-								))}
-							</div>
-						</li>
-					))
-				}
-			</ul>
-		</Section>
+									<span class='ha-mono shrink-0'>{pub.year}</span>
+								</div>
+								<p class='text-sm leading-relaxed text-muted-foreground'>
+									{pub.authors.map((a, i) => (
+										<>
+											{i > 0 && ', '}
+											{a.includes('Takagui') ? <span class='font-medium text-foreground/80'>{a}</span> : a}
+										</>
+									))}
+									{' · '}
+									<span class='italic'>{pub.venue}</span>
+								</p>
+								<div class='mt-0.5 flex flex-wrap gap-x-4 gap-y-1 text-xs'>
+									{pub.links.map((l) => (
+										<a class='text-muted-foreground underline decoration-border underline-offset-2 transition-colors hover:text-gold' href={l.href} rel='noopener noreferrer' target='_blank'>
+											{l.label} ↗
+										</a>
+									))}
+								</div>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</section>
 
-		<GeometricDivider variant='simple' data-mode='professional' />
+		<div class='ha-div' data-mode='professional'><i></i></div>
 
-		<Section title='Misc' data-mode='professional'>
-			<p class='font-garamond text-xl leading-loose'>
-				Coursework, competitions, and other things — <a
-					class='illuminated-link font-medium text-foreground'
-					href='/misc'>see the misc page</a
-				>.
-			</p>
-		</Section>
+		<section class='ha-sec flex flex-col gap-y-5 md:flex-row md:gap-y-0' data-mode='professional'>
+			<div class='md:w-1/5'>
+				<p class='ha-kick'>05 · Elsewhere</p>
+				<h2 class='ha-h'>Misc</h2>
+			</div>
+			<div class='flex flex-col gap-y-3 md:w-2/3'>
+				<p class='ha-prose'>
+					Coursework, competitions, and other things — <a class='illuminated-link' href='/misc'>see the misc page</a>.
+				</p>
+			</div>
+		</section>
 	</div>
 </PageLayout>
 
@@ -283,5 +258,153 @@ const publications = [
 		width: 1.25rem;
 		height: 1.25rem;
 		fill: currentColor;
+	}
+</style>
+
+<style is:global>
+	/* ============ retone: variables (scoped to the homepage via the .ha wrapper) ============
+	   Everything old runs on --gold/--bronze/--background, so remapping them recolours the profile ring,
+	   mode toggle, wheel, header/footer hovers and the shared dividers in one go. */
+	html:has(.ha) {
+		--background: 48 22% 95.5%; /* cool paper, a touch lighter than the bento's #f1efea tiles */
+		--foreground: 212 28% 9%; /* ink */
+		--card: 48 20% 93%;
+		--muted: 210 12% 88%;
+		--muted-foreground: 210 11% 38%; /* steel-slate */
+		--border: 210 12% 80%;
+		--input: 210 12% 80%;
+		--ring: 200 21% 55%;
+		--accent: 200 21% 55%;
+		--gold: 205 22% 55%; /* steel #8fa9b8-ish, a little deeper so thin lines read on paper */
+		--bronze: 212 16% 32%; /* slate-ink */
+		--burnt-sienna: 235 55% 72%; /* the toggle's 'Personal' pill: lavender instead of terracotta */
+	}
+	html.dark:has(.ha) {
+		--background: 212 30% 7%;
+		--foreground: 210 20% 93%;
+		--card: 212 26% 10%;
+		--muted: 212 18% 18%;
+		--muted-foreground: 210 14% 66%;
+		--border: 212 16% 22%;
+		--ring: 235 55% 80%;
+		--accent: 235 55% 80%;
+		--gold: 235 55% 80%; /* lavender */
+		--bronze: 210 16% 64%;
+		--burnt-sienna: 235 55% 72%;
+	}
+
+	/* ============ type: Newsreader light, mono kickers ============ */
+	.ha-name {
+		font-family: 'Newsreader Variable', serif;
+		font-size: 3.1rem;
+		font-weight: 300;
+		letter-spacing: -0.02em;
+		line-height: 1.05;
+		text-align: center;
+	}
+	@media (max-width: 480px) {
+		.ha-name {
+			font-size: 2.2rem;
+		}
+	}
+	.ha-kick {
+		margin: 0 0 0.45rem;
+		font: 500 0.58rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: hsl(var(--muted-foreground));
+	}
+	.ha-h {
+		font-family: 'Newsreader Variable', serif;
+		font-size: 1.65rem;
+		font-weight: 300;
+		letter-spacing: -0.01em;
+		line-height: 1.1;
+	}
+	.ha-prose {
+		font-family: 'Newsreader Variable', serif;
+		font-size: 1.18rem;
+		font-weight: 350;
+		line-height: 1.7;
+	}
+	.ha .ha-pub.illuminated-link {
+		background-size: 0% 1px;
+		transition: background-size 0.3s ease;
+	}
+	.ha .ha-pub.illuminated-link:hover {
+		background-size: 100% 1px;
+	}
+	.ha-pub {
+		font-family: 'Newsreader Variable', serif;
+		font-size: 1.12rem;
+		font-weight: 400;
+		line-height: 1.35;
+	}
+	.ha-mono {
+		font: 500 0.62rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+		letter-spacing: 0.06em;
+		color: hsl(var(--muted-foreground));
+	}
+
+	/* ============ links: ink with a steel underline ============ */
+	.ha .illuminated-link {
+		background-image: linear-gradient(#8fa9b8, #8fa9b8);
+		background-size: 100% 1px;
+		background-repeat: no-repeat;
+		background-position: left bottom;
+		padding-bottom: 1px;
+	}
+	.ha .illuminated-link:hover {
+		background-image: linear-gradient(hsl(var(--foreground)), hsl(var(--foreground)));
+		color: hsl(var(--foreground));
+	}
+	html:has(.ha) .hover\:text-gold:hover,
+	.ha .social-icons a:hover {
+		color: hsl(var(--foreground));
+	}
+
+	/* ============ dividers: hairline + tiny ink dot ============ */
+	.ha-div {
+		position: relative;
+		height: 1px;
+		margin: 0.5rem 0;
+		background: linear-gradient(to right, transparent, hsl(var(--foreground) / 0.18) 20%, hsl(var(--foreground) / 0.18) 80%, transparent);
+	}
+	.ha-div i {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 5px;
+		height: 5px;
+		margin: -2.5px 0 0 -2.5px;
+		border-radius: 50%;
+		background: hsl(var(--foreground));
+	}
+	/* the footer still renders the shared GeometricDivider: flatten it to the same hairline */
+	html:has(.ha) main > .mt-20 {
+		position: relative;
+		width: 100%;
+		height: 1px;
+		background: linear-gradient(to right, transparent, hsl(var(--foreground) / 0.18) 20%, hsl(var(--foreground) / 0.18) 80%, transparent);
+	}
+	html:has(.ha) main > .mt-20 > * {
+		display: none;
+	}
+	html:has(.ha) main > .mt-20::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 5px;
+		height: 5px;
+		margin: -2.5px 0 0 -2.5px;
+		border-radius: 50%;
+		background: hsl(var(--foreground));
+	}
+
+	/* personal-mode headings (Section component) follow the same type */
+	.ha h2.font-cormorant {
+		font-family: 'Newsreader Variable', serif;
+		font-weight: 300;
 	}
 </style>

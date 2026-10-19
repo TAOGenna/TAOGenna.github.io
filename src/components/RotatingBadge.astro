@@ -4,17 +4,30 @@ interface Props {
 	label?: string
 	size?: number
 	repeat?: number
+	glass?: boolean // frosted-glass lens over drifting colour (homepage); default is the gold wheel
 }
-const { href = '/work', label = 'MORE · ', size = 132, repeat = 6 } = Astro.props
+const { href = '/work', label = 'MORE · ', size = 132, repeat = 6, glass = false } = Astro.props
 const text = label.repeat(repeat)
 ---
 
 <a
 	href={href}
-	class='more-work group'
+	class:list={['more-work group', glass && 'more-work--glass']}
 	aria-label='See more work'
 	style={`width:${size}px;height:${size}px;`}
 >
+	{
+		glass && (
+			<>
+				<span class='more-work__orbs' aria-hidden='true'>
+					<i />
+					<i />
+					<i />
+				</span>
+				<span class='more-work__disc' aria-hidden='true' />
+			</>
+		)
+	}
 	<svg viewBox='0 0 200 200' class='more-work__ring' aria-hidden='true'>
 		<defs>
 			<path id='mw-circle' d='M 100,100 m -70,0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0'></path>
@@ -78,8 +91,92 @@ const text = label.repeat(repeat)
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.more-work__ring {
+		.more-work__ring,
+		.more-work__orbs i {
 			animation: none;
+		}
+	}
+
+	/* ---- glass: a frosted lens over three drifting palette orbs (lavender / mint / steel) ---- */
+	.more-work__orbs {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+	.more-work__orbs i {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(1px);
+		animation: mw-drift 11s ease-in-out infinite;
+	}
+	.more-work__orbs i:nth-child(1) {
+		width: 54%;
+		height: 54%;
+		left: -6%;
+		top: 22%;
+		background: #cfd2f5;
+	}
+	.more-work__orbs i:nth-child(2) {
+		width: 46%;
+		height: 46%;
+		right: -4%;
+		bottom: 2%;
+		background: #bfe3d3;
+		animation-duration: 14s;
+		animation-direction: reverse;
+	}
+	.more-work__orbs i:nth-child(3) {
+		width: 38%;
+		height: 38%;
+		left: 38%;
+		top: -6%;
+		background: #8fa9b8;
+		animation-duration: 9s;
+		animation-delay: -4s;
+	}
+	.more-work__disc {
+		position: absolute;
+		inset: 5%;
+		border-radius: 50%;
+		background: linear-gradient(145deg, rgb(255 255 255 / 0.62), rgb(255 255 255 / 0.18));
+		-webkit-backdrop-filter: blur(14px) saturate(1.6);
+		backdrop-filter: blur(14px) saturate(1.6);
+		border: 1px solid rgb(255 255 255 / 0.75);
+		box-shadow:
+			0 12px 28px -12px rgb(11 15 20 / 0.4),
+			inset 0 1px 0 rgb(255 255 255 / 0.95),
+			inset 0 -10px 18px rgb(143 169 184 / 0.22);
+		transition: background 0.3s;
+	}
+	.more-work--glass:hover .more-work__disc {
+		background: linear-gradient(145deg, rgb(255 255 255 / 0.74), rgb(255 255 255 / 0.28));
+	}
+	.more-work--glass:hover .more-work__orbs i {
+		animation-duration: 4s;
+	}
+	.more-work--glass .more-work__text {
+		fill: hsl(var(--foreground) / 0.8);
+		font-family: 'Newsreader Variable', serif;
+		font-weight: 450;
+	}
+	.more-work--glass .more-work__hub {
+		border: 1px solid rgb(255 255 255 / 0.85);
+		background: rgb(207 210 245 / 0.55);
+		-webkit-backdrop-filter: blur(6px);
+		backdrop-filter: blur(6px);
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9);
+		color: #0b0f14;
+	}
+	:global(.dark) .more-work__disc {
+		background: linear-gradient(145deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.03));
+		border-color: rgb(255 255 255 / 0.28);
+		box-shadow:
+			0 12px 28px -12px rgb(0 0 0 / 0.7),
+			inset 0 1px 0 rgb(255 255 255 / 0.3);
+	}
+	@keyframes mw-drift {
+		50% {
+			transform: translate(9px, -7px);
 		}
 	}
 </style>
