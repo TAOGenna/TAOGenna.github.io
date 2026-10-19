@@ -49,7 +49,7 @@ const [a, b] = [win[0], win[3]]
 		<line x1={CX(a[1])} y1={CY(a[0])} x2={CX(b[1])} y2={CY(b[0])} stroke='#0b0f14' stroke-width='1.2'></line>
 	</g>
 
-	<text x='163' y='50' font-size='6.5' letter-spacing='0.6' fill='currentColor' fill-opacity='0.5' style={mono}>MCTS · VISITS</text>
+	<text x='163' y='50' font-size='6.5' letter-spacing='0.6' fill='currentColor' fill-opacity='0.5' style={mono}>VISITS PER COLUMN</text>
 	{
 		Array.from({ length: 7 }, (_, c) => {
 			const h = (last.visits[c] / max) * 58
