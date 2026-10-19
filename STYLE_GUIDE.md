@@ -65,8 +65,8 @@ chrome; use the hex values only inside tile scenes, where the tone is fixed.
   --background…`, which recolours the profile ring, mode toggle, header/footer hovers and shared dividers.
   New pages that should look like the homepage add the same `.ha` wrapper and the same `<style is:global>`
   block (or move it to `app.css` if the retone becomes site-wide).
-- **Section** = left column `md:w-1/5` with a mono kicker (`01 · Who`, `03 · Notes`, `04 · Papers`,
-  `05 · Elsewhere`; 02 is the bento) over a Newsreader 1.65rem/300 heading; right column `md:w-2/3`.
+- **Section** = left column `md:w-1/5` with a mono kicker (`Who`, `Notes`, `Papers`, `Elsewhere`; a word, never a
+  number: numbered kickers read as counts) over a Newsreader 1.65rem/300 heading; right column `md:w-2/3`.
 - **Dividers**: `.ha-div`, a fading hairline with one 5px ink dot. Not the ornamental `GeometricDivider`
   (it survives only in personal mode, retoned).
 - **Links** in prose: `.illuminated-link`, a steel underline that turns ink on hover. Publication titles
