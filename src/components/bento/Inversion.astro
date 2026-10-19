@@ -1,6 +1,8 @@
 ---
-// The reference's "pale data card on a black plate": a tilted card on the ink tile holds the repo's
-// real quasi-parabolic inversion of one Jicamarca ionogram (11 May 2024), replayed step by step.
+// Two scenes in turn, like Majorana: the sole-author paper (his screenshot of the title + abstract,
+// arXiv:2411.09215, flattened on white → public/projects/tiles/inversion_paper.jpg), panning left to
+// right; then the "pale data card on a black plate": a tilted card holding the repo's real
+// quasi-parabolic inversion of one Jicamarca ionogram (11 May 2024), replayed once step by step.
 // Plots (dark ink on the card): measured echoes vs the ionogram rebuilt from the current profile,
 // and the plasma-frequency profile being built. The big numeral is the profile's peak, live.
 // Geometry + data: src/utils/inversion.ts. Two plot layouts (desktop / phone); one shared readout.
@@ -15,9 +17,21 @@ const layouts = (['wide', 'narrow'] as const).map((name) => ({ name, cfg: CFG[na
 const v0 = layouts[0].v
 const INK = '#0b0f14'
 const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-[#10202a]/55'
+const plate =
+	'absolute right-3 top-3 z-10 rounded bg-[#0b0f14] px-2 py-1 font-mono text-[0.5rem] uppercase leading-none tracking-wider text-[#f1efea]'
 ---
 
-<div class='inv relative h-full w-full overflow-hidden'>
+<div data-iv class='absolute inset-0'>
+	<div data-scene='paper' class='iv-scene on play bg-white'>
+		<img
+			src='/projects/tiles/inversion_paper.jpg'
+			alt='Title and abstract of A note on an inversion algorithm for vertical ionograms for the prediction of plasma frequency profiles, by R. Kenyi Takagui-Perez'
+			class='iv-pan absolute left-0 top-11 h-[calc(100%-3.5rem)] w-full object-cover'
+		/>
+		<span class={plate}>arXiv:2411.09215 · 2024</span>
+	</div>
+
+	<div data-scene='sim' class='inv iv-scene overflow-hidden bg-[#0b0f14]'>
 	<div class='inv-glow pointer-events-none absolute right-[-6%] top-[22%] h-[78%] w-[70%]'></div>
 
 	<div class='inv-card absolute inset-x-2.5 bottom-2.5 top-11 flex flex-col rounded-[5px] bg-[#f6f8fa] px-3 pb-3 pt-2.5 text-[#0b0f14] sm:inset-x-3.5 sm:bottom-3.5 sm:px-4.5 sm:pb-3 sm:pt-3'>
@@ -26,7 +40,7 @@ const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-
 			<p class={`${cap} hidden shrink-0 text-[#10202a]/40 sm:block`} data-step>{v0.step}</p>
 		</div>
 
-		<div class='inv-fade mt-1.5 min-h-0 flex-1'>
+		<div class='mt-1.5 min-h-0 flex-1'>
 			{
 				layouts.map(({ name, cfg, v }) => {
 					const wide = cfg.wide
@@ -105,6 +119,7 @@ const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-
 			</div>
 		</div>
 	</div>
+	</div>
 </div>
 
 <style>
@@ -144,11 +159,29 @@ const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-
 		mix-blend-mode: multiply;
 		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 	}
-	.inv-fade {
-		transition: opacity 0.35s;
+	.iv-scene {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		transition: opacity 0.6s;
+	}
+	.iv-scene.on {
+		opacity: 1;
+	}
+	.iv-pan {
+		object-position: 0% 0%;
+	}
+	.iv-scene.play .iv-pan {
+		animation: iv-pan 7s ease-in-out forwards;
+	}
+	@keyframes iv-pan {
+		to {
+			object-position: 100% 100%;
+		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.inv-glow {
+		.inv-glow,
+		.iv-scene.play .iv-pan {
 			animation: none;
 		}
 	}
@@ -160,39 +193,40 @@ const cap = 'font-mono text-[0.5rem] uppercase leading-none tracking-wider text-
 	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 	// E-layer search steps are slower (it's a grid search), F-layer QPs tick faster; then hold the result
 	const dwell = (k: number) => (k < 5 ? 340 : 190)
-	document.querySelectorAll<HTMLElement>('.inv').forEach((root) => {
+	document.querySelectorAll<HTMLElement>('[data-iv]').forEach((root) => {
 		if (reduce) return
-		const svgs = [...root.querySelectorAll<SVGSVGElement>('svg[data-inv]')]
-		const fade = root.querySelector<HTMLElement>('.inv-fade')!
+		const paper = root.querySelector<HTMLElement>('[data-scene=paper]')!
+		const sim = root.querySelector<HTMLElement>('[data-scene=sim]')!
+		const svgs = [...sim.querySelectorAll<SVGSVGElement>('svg[data-inv]')]
 		const render = (k: number) => {
 			svgs.forEach((svg) => paint(svg, CFG[svg.dataset.inv as 'wide' | 'narrow'], k))
-			paintText(root, k)
+			paintText(sim, k)
 		}
-		let k = 0,
-			t = 0
-		const step = () => {
-			render(k)
-			if (k === steps.length - 1) {
-				t = window.setTimeout(() => {
-					fade.style.opacity = '0'
-					t = window.setTimeout(() => {
-						k = 0
-						render(0)
-						fade.style.opacity = '1'
-						t = window.setTimeout(step, 400)
-					}, 380)
-				}, 3200)
-				return
+		let t = 0
+		const wait = (ms: number, f: () => void) => (t = window.setTimeout(f, ms))
+		const playPaper = () => {
+			paper.classList.add('play')
+			paper.classList.add('on')
+			sim.classList.remove('on')
+			wait(7000, playSim)
+		}
+		const playSim = () => {
+			render(0) // start from the empty state before it fades in
+			sim.classList.add('on')
+			paper.classList.remove('on')
+			setTimeout(() => !paper.classList.contains('on') && paper.classList.remove('play'), 700) // reset the pan after the fade
+			let k = 0
+			const step = () => {
+				render(k)
+				if (k === steps.length - 1) return wait(3200, playPaper) // hold the finished profile
+				k++
+				wait(dwell(k), step)
 			}
-			k++
-			t = window.setTimeout(step, dwell(k))
+			wait(500, step)
 		}
 		new IntersectionObserver(([e]) => {
 			clearTimeout(t)
-			if (e.isIntersecting) {
-				k = 0
-				step()
-			}
+			if (e.isIntersecting) playPaper()
 		}).observe(root)
 	})
 </script>

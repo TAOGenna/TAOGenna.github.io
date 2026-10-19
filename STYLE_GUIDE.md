@@ -103,7 +103,7 @@ illustrative.
 
 **Tone.** Pick the tone from the scene's content, then look at the neighbours and break up runs of the same
 one (glacier and slate are the cool breaks between paper tiles). Dark tiles are rare and earn their place
-(title tile, YaVendio, Olive, Inversion, Quantum).
+(title tile, YaVendio, Olive, Quantum).
 
 ---
 
@@ -114,7 +114,7 @@ one (glacier and slate are the cool breaks between paper tiles). Dark tiles are 
 | Format | Examples | Notes |
 |---|---|---|
 | Real photo | Pong, LSeg input, Style transfer | the original, uncropped story |
-| Printed page / book spread | Majorana (paper + blackboard), Thesis | slow pan, caption plate |
+| Printed page / book spread | Majorana (paper + blackboard), Inversion (paper + replayed simulation), Thesis | slow pan; chip top-left and plate top-right stay clear of the text |
 | Object on a surface | YaVendio phone, MLIP embossed card | CSS-3D or shadow, a real prop |
 | Pale data card on a plate | Yape, Soil | frosted card, mono labels |
 | Colour field / strips | Photonics | flat strips, thin ink lines over them |
