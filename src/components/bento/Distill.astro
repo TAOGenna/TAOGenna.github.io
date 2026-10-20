@@ -3,16 +3,55 @@
 // course (form → blueprint graph → lesson → runnable exercise → passing gate), restyled to
 // this site. Source + recipe: scripts/film/ (record.mjs → assemble.mjs; FILM_H=356 gives this wide 2×1 cut, the default is 16:9). The live SVG
 // version of the pipeline diagram is kept in DistillDiagram.astro.
+// Still until the tile is hovered: the still is the film's closing frame (distill_launch_wide.jpg, ffmpeg -ss 18.7, just before the fade-out);
+// hovering plays the film from the start, leaving puts the still back.
 ---
 
-<video
-	src='/projects/distill_launch_wide.mp4'
-	poster='/projects/distill_launch_wide.jpg'
-	class='h-full w-full object-cover'
-	autoplay
-	loop
-	muted
-	playsinline
-	preload='metadata'
-	aria-label='Distill in use: paste a repo URL, watch the course blueprint generate, read a lesson, run an exercise'
-></video>
+<div data-distill class='relative h-full w-full'>
+	<video
+		src='/projects/distill_launch_wide.mp4'
+		class='h-full w-full object-cover'
+		loop
+		muted
+		playsinline
+		preload='auto'
+		aria-label='Distill in use: paste a repo URL, watch the course blueprint generate, read a lesson, run an exercise'
+	></video>
+	<img
+		src='/projects/distill_launch_wide.jpg'
+		alt='Distill: paste a URL, get a course. 5 modules, 13 exercises, with a passing verification gate'
+		class='pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-300'
+	/>
+</div>
+
+<script>
+	import { onTileHover } from '../../utils/hover'
+
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+	document.querySelectorAll<HTMLElement>('[data-distill]').forEach((root) => {
+		if (reduce) return
+		const video = root.querySelector('video')!
+		const still = root.querySelector('img')!
+		let hot = false
+		onTileHover(
+			root,
+			() => {
+				hot = true
+				video
+					.play()
+					.then(() => hot && (still.style.opacity = '0'))
+					.catch(() => {})
+			},
+			() => {
+				hot = false
+				still.style.opacity = '1'
+				setTimeout(() => {
+					if (!hot) {
+						video.pause()
+						video.currentTime = 0
+					}
+				}, 320)
+			}
+		)
+	})
+</script>

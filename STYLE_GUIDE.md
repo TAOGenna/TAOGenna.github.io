@@ -132,6 +132,9 @@ old look). If a project only has a plot, re-draw it in the palette or pick a dif
 
 - **One quiet loop per tile**: ~8–12 s cycle, ease-out, every element holds its end state, then all fade
   and restart together (see `Olive.astro`). No bounce, no flashing, nothing that fights the neighbours.
+- **Busy scenes stay still until hovered** (Distill film, Yape tour, Connect 4 replay): the idle state is a
+  deliberate still frame, not frame 0, and leaving the tile puts it back (`utils/hover.ts: onTileHover`).
+  Quiet one-pass loops (Majorana, Olive, …) may run on their own.
 - Hover motion lives on the frame (panel slide-up), the wheel (spin up, orbs speed up) and Writing rows
   (2px lift). Scenes don't need to react to hover.
 - **Astro does not scope `@keyframes`**: prefix every name per tile (`yv-`, `st-`, `ls-`, `soil-`, `qc-`,

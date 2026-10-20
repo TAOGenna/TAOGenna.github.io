@@ -4,6 +4,7 @@
 // regions (or follows the cursor) and the card ranks the services paid there.
 // Geometry: Natural Earth (public domain), scripts/tile-data/peru.py. Provider names are
 // real utilities; the scores are illustrative.
+// Still on Lima until the tile is hovered; the tour runs only while hovering.
 import peru from '../../data/tiles/peru.json'
 
 const CATS = ['Water', 'Electricity', 'Mobile', 'Internet'] as const
@@ -108,6 +109,7 @@ const order = [...CATS].sort((a, b) => t0.rows[b][1] - t0.rows[a][1])
 </style>
 
 <script>
+	import { onTileHover } from '../../utils/hover'
 	type Entry = { keys: string[]; label: string; rows: Record<string, [string, number]>; cx: number; cy: number }
 	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 	document.querySelectorAll<HTMLElement>('[data-peru]').forEach((root) => {
@@ -149,14 +151,24 @@ const order = [...CATS].sort((a, b) => t0.rows[b][1] - t0.rows[a][1])
 			})
 		)
 		if (reduce) return
-		new IntersectionObserver(([e]) => {
-			clearInterval(id)
-			if (e.isIntersecting)
-				id = window.setInterval(() => {
-					if (Date.now() < pause) return
-					i = (i + 1) % tour.length
-					show(i)
-				}, 2600)
-		}).observe(root)
+		const next = () => {
+			if (Date.now() < pause) return
+			i = (i + 1) % tour.length
+			show(i)
+		}
+		onTileHover(
+			root,
+			() => {
+				clearInterval(id)
+				next()
+				id = window.setInterval(next, 2600)
+			},
+			() => {
+				clearInterval(id)
+				pause = 0
+				i = 0
+				show(0)
+			}
+		)
 	})
 </script>

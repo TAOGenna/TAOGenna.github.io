@@ -1,6 +1,7 @@
 ---
 // Paper plate: hairline board replaying a real MCTS self-play game, with the
 // search's visit counts per column as bars (the move chosen is inked).
+// Still (move START) until the tile is hovered; the replay runs only while hovering.
 import { CX, CY, BAR_X, moves, win, START } from '../../utils/connect4'
 
 const mono = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace'
@@ -84,7 +85,8 @@ const [a, b] = [win[0], win[3]]
 </style>
 
 <script>
-	import { moves, paint } from '../../utils/connect4'
+	import { moves, paint, START } from '../../utils/connect4'
+	import { onTileHover } from '../../utils/hover'
 
 	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 	document.querySelectorAll<SVGSVGElement>('[data-connect4]').forEach((svg) => {
@@ -102,9 +104,17 @@ const [a, b] = [win[0], win[3]]
 			k++
 			t = window.setTimeout(step, 520)
 		}
-		new IntersectionObserver(([e]) => {
-			clearTimeout(t)
-			if (e.isIntersecting) step()
-		}).observe(svg)
+		onTileHover(
+			svg,
+			() => {
+				clearTimeout(t)
+				k = 0
+				step()
+			},
+			() => {
+				clearTimeout(t)
+				paint(svg, START)
+			}
+		)
 	})
 </script>
