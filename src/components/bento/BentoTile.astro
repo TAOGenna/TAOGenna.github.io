@@ -8,13 +8,14 @@ interface Props {
 	project: Project
 	tone: 'paper' | 'ink' | 'glacier' | 'slate'
 	label?: string
+	logo?: { src: string; alt: string } // special case: show a logo in place of the name chip (YaVendio shows its wordmark)
 	reveal?: boolean // hover panel with description + tags (default on)
 	blurb?: string // overrides project.subheading in the hover panel
 	tags?: string[] // overrides project.tags
 	class?: string
 }
 
-const { project: p, tone, label, reveal = true, blurb, tags: tagList, class: className } = Astro.props
+const { project: p, tone, label, logo, reveal = true, blurb, tags: tagList, class: className } = Astro.props
 const tags = tagList ?? p.tags?.map((t) => t.text)
 const surface = {
 	paper: 'bg-[#f1efea] text-[#0b0f14] ring-black/10',
@@ -44,12 +45,18 @@ const muted = 'text-white/65'
 	class={cn('tile group relative block h-full overflow-hidden rounded-xl ring-1 ring-inset', surface, className)}
 >
 	<div class='absolute inset-0'><slot /></div>
-	<span
-		class={cn(
-			'absolute left-3 top-3 z-10 rounded px-2 py-1 font-mono text-[0.6rem] uppercase leading-none tracking-wider backdrop-blur-sm',
-			chip
-		)}>{label ?? p.heading}</span
-	>
+	{
+		logo ? (
+			<img src={logo.src} alt={logo.alt} draggable='false' class='pointer-events-none absolute left-3 top-3.5 z-10 h-[1.05rem] w-auto select-none' />
+		) : (
+				<span
+					class={cn(
+						'absolute left-3 top-3 z-10 rounded px-2 py-1 font-mono text-[0.6rem] uppercase leading-none tracking-wider backdrop-blur-sm',
+						chip
+					)}>{label ?? p.heading}</span
+				>
+		)
+	}
 	{
 		reveal && (
 				<div

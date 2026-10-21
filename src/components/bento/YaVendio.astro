@@ -1,140 +1,574 @@
 ---
-// A real-3D phone that rocks in perspective (the motion from kapso.com's hero): the body is
-// a stack of rounded slabs, so the metal edge has thickness at any angle. It plays a sale on
-// WhatsApp, with the results plate in front: the number dissolves between the three systems
-// built (Maia v1, Maia v2, Yago v2). The conversation is illustrative.
-const SLABS = 11 // body layers, back (dark) to front (light)
+// Object format, 2x2 tile: a results panel on the left (the plate: number + what it was, one per system) and real-3D devices
+// rocking in perspective on the right, one 30 s loop that follows the three systems. A titanium phone (a stack of slabs, so
+// the rim has thickness at any angle) plays the first two:
+//   0–10 s   Maia v1  a WhatsApp sale ($55M)  ->  Style-transfer wipe  ->  Maia v2  the inbox streaming past (600K)
+// then the camera swaps to the platform, the web app, where Yago lives: a browser window with the dashboard and Yago's dock
+// floating above it (the dock is lifted in 3D, so it parallaxes as the window turns), and the camera pushes in on it:
+//   10–15    Yago edits the seller from a request: the card, the before/after row, "Apply and publish", and the page changes
+//   15–20    Yago reads a conversation that went wrong and finds the stale FAQ behind it
+//   20–24    Yago guides: a link in its answer navigates the page in place (the real behaviour: no highlight overlay)
+// and the phone returns (24–30) with the same Yago in the mobile app. The panel's description follows each capability.
+// Below ~440 px of tile width (phones) the panel drops under the devices (container query), sizes follow the tile width (cqw).
+// DATA: the panel's numbers/wording are his (LinkedIn). ILLUSTRATIVE (English; the product wording follows the real
+// en locale): the sale, the inbox rows (shapes, no real chats), the dashboard stand-in, and the Yago requests/cards (they
+// follow the product's real card: line, before/after row struck through, approve button). Everything is CSS: the timeline is
+// authored in seconds below and turned into @keyframes. Names are prefixed yv-: Astro doesn't scope @keyframes.
+const LOOP = 30 // seconds
+
+// ---- the words on the devices (English) ----
+const L = {
+	biz: 'Andina Store',
+	bizSub: 'Business account',
+	today: 'Today',
+	m1: 'Hi, do you have trail running shoes in size 42?',
+	m2: "Hi! Yes. Here's our most popular one:",
+	prod: 'Trail Pro',
+	price: 'S/ 289 · size 42',
+	m4: 'That one. Can I pay with Yape?',
+	m5: "Sure. Here's your payment link.",
+	ok: 'Order confirmed ✓',
+	chats: 'Chats',
+	all: 'All',
+	unread: 'Unread',
+	test: 'Test your seller',
+	yago: 'Yago',
+	req: 'Warmer with wholesalers.',
+	done: 'Done',
+	line: 'Warmer with wholesalers',
+	styleLong: 'Communication style',
+	style: 'Style',
+	warm: 'Warm and concise',
+	neutral: 'Neutral',
+	apply: 'Apply and publish',
+	pub: 'Published ✓',
+	personality: 'Personality',
+	audience: 'Target audience',
+	handoff: 'Human handoff',
+	conversations: 'Conversations',
+	q1: 'Do you ship to Arequipa?',
+	a1: 'For now we only ship to Lima.',
+	hours: 'Hours',
+	times: ['9 am – 6 pm', '9 am – 1 pm', 'Closed'],
+	ask2: 'Why did it say that to Rocío?',
+	ans2: 'Your FAQ “Do you ship?” says “Lima only.”',
+	line2: 'Shipping to all of Peru',
+	answer: 'Answer',
+	new2: 'Yes, all over Peru',
+	old2: 'Lima only',
+	ask3: 'Where do I change my hours?',
+	ans3a: 'You change it in ',
+	ans3b: 'Hours',
+	ans3c: '.',
+	url: 'app.yavendio.com'
+}
+
+const css: string[] = []
+let nk = 0
+const pc = (s: number) => `${+((Math.min(Math.max(s, 0), LOOP) / LOOP) * 100).toFixed(3)}%`
+/** register @keyframes from [seconds, declarations] steps (0 % and 100 % are filled from the first/last step) */
+const kf = (steps: [number, string][], name = `yvk${nk++}`) => {
+	const st = [...steps].sort((a, b) => a[0] - b[0])
+	if (st[0][0] > 0) st.unshift([0, st[0][1]])
+	if (st[st.length - 1][0] < LOOP) st.push([LOOP, st[st.length - 1][1]])
+	css.push(`@keyframes ${name}{${st.map(([s, d]) => `${pc(s)}{${d}}`).join('')}}`)
+	return name
+}
+const use = (name: string, ease = 'ease-out') => `animation:${name} ${LOOP}s ${ease} infinite;`
+/** visible from a to b (fading f s in and out), optionally rising by `rise` as it appears */
+const win = (a: number, b: number, rise = '', f = 0.35) => {
+	const hid = `opacity:0${rise ? `;transform:translateY(${rise})` : ''}`
+	const vis = `opacity:1${rise ? ';transform:none' : ''}`
+	return use(kf([[a, hid], [a + f, vis], [b, vis], [b + f, 'opacity:0']]))
+}
+/** typing dots: appear at a, collapse again at b */
+const dotsWin = (a: number, b: number) =>
+	use(kf([[a, 'opacity:0;max-height:0;margin:0'], [a + 0.4, 'opacity:1;max-height:2em;margin:.45em 0 0'], [b, 'opacity:1;max-height:2em;margin:.45em 0 0'], [b + 0.4, 'opacity:0;max-height:0;margin:0']]))
+
+const SLABS = 14 // phone body layers, back (dark) to front (light)
 const mix = (a: number, b: number, t: number) => Math.round(a + (b - a) * t)
 const slabs = Array.from({ length: SLABS }, (_, k) => {
 	const t = k / (SLABS - 1)
-	return { z: ((k - (SLABS - 1)) * 0.085).toFixed(3), c: `rgb(${mix(104, 206, t)},${mix(111, 211, t)},${mix(118, 216, t)})` }
+	return { z: ((k - (SLABS - 1)) * 0.12).toFixed(3), c: `rgb(${mix(78, 196, t)},${mix(84, 202, t)},${mix(92, 208, t)})` }
 })
+const wslabs = Array.from({ length: 6 }, (_, k) => ({ z: ((k - 5) * 0.09).toFixed(3), c: `rgb(${mix(118, 190, k / 5)},${mix(130, 202, k / 5)},${mix(142, 212, k / 5)})` }))
+
 const faces = [
-	{ n: '$55M', short: 'in sales, end-to-end', note: 'in sales closed end-to-end by one multi-tenant shopping agent' },
-	{ n: '600K', short: 'conversations / mo', note: 'conversations a month, after rebuilding the agent from scratch' },
-	{ n: 'Yago', short: '<b>10K</b> conversations / mo', note: 'backoffice agent handling <b>10K</b> conversations a month, self-improving' }
+	{ n: '$55M', note: 'in sales closed end-to-end by one multi-tenant shopping agent' },
+	{ n: '600K', note: 'conversations a month, after rebuilding the agent from scratch' },
+	{ n: 'Yago', note: '' }
+]
+// the Yago face's description, one line per capability on screen (the first is his sentence)
+const yagoLines = [
+	{ t: 'backoffice agent handling <b>10K</b> conversations a month, self-improving', a: 10.6, b: 15.2 },
+	{ t: 'reads a chat that went wrong and finds why', a: 15.2, b: 19.8 },
+	{ t: 'guides you around the platform', a: 19.8, b: 24.0 },
+	{ t: 'the same Yago, on your phone', a: 24.0, b: 29.4 }
 ]
 const agents = ['Maia v1', 'Maia v2', 'Yago v2']
-
-// sparse digit contours for the plate's lower half (static)
-const COLS = 46,
-	ROWS = 5
-const hash = (c: number, r: number) => Math.abs(((c * 73856093) ^ (r * 19349663)) % 1000) / 1000
-const blobs = [
-	[62, 22, 24],
-	[160, 28, 32],
-	[225, 18, 18]
-]
-const val = (c: number, r: number) =>
-	blobs.reduce((v, [bx, by, s]) => v + Math.exp(-(((c + 0.5) * 5.4 - bx) ** 2 + ((r + 0.5) * 10.5 - by) ** 2) / (2 * s * s)), 0)
-const lv = Array.from({ length: ROWS }, (_, r) => Array.from({ length: COLS }, (_, c) => Math.min(Math.floor(val(c, r) * 5), 5)))
-let digits = ''
-let glow = ''
-for (let r = 0; r < ROWS; r++) {
-	for (let c = 0; c < COLS; c++) {
-		const L = lv[r][c]
-		const edge = L >= 1 && ((c < COLS - 1 && lv[r][c + 1] !== L) || (r < ROWS - 1 && lv[r + 1][c] !== L))
-		digits += (edge ? hash(c, r) < 0.7 : L >= 1 && hash(c, r) < 0.04) ? String(Math.min(L + 3, 9)) : ' '
-		glow += val(c, r) > 0.45 ? '█' : ' '
-	}
-	digits += '\n'
-	glow += '\n'
+// panel faces / agent dots: [start, end] of each system, crossfading (the last one wraps around the loop seamlessly)
+const SPAN = [[0, 5], [5, 10], [10, 30]]
+const faceKf = (i: number, vis: string, hid: string) => {
+	const [a, b] = SPAN[i]
+	const f = 0.6
+	const steps: [number, string][] =
+		i === 0 ? [[0, vis], [b - f, vis], [b, hid], [LOOP - f, hid], [LOOP, vis]] : i === 2 ? [[0, hid], [a, hid], [a + f, vis], [LOOP - f, vis], [LOOP, hid]] : [[0, hid], [a, hid], [a + f, vis], [b - f, vis], [b, hid]]
+	return use(kf(steps), 'ease-in-out')
 }
 
-// 12s chat loop. Each message gets its own keyframes (appear %, vanish at the loop end);
-// typing dots collapse again once the reply lands. Names are prefixed: Astro doesn't scope @keyframes.
-const msgs = [5, 32, 40, 52, 66, 76] // appear at % of 12s: m1 customer … m6 confirmation
-const dots = [
-	[12, 24],
-	[56, 64]
+// sparse digit contours for the panel's lower part (static): a short strip for the narrow tile, a taller field for the wide panel
+const COLS = 46
+const hash = (c: number, r: number) => Math.abs(((c * 73856093) ^ (r * 19349663)) % 1000) / 1000
+const texture = (ROWS: number, blobs: number[][]) => {
+	const val = (c: number, r: number) =>
+		blobs.reduce((v, [bx, by, sd]) => v + Math.exp(-(((c + 0.5) * 5.4 - bx) ** 2 + ((r + 0.5) * 10.5 - by) ** 2) / (2 * sd * sd)), 0)
+	const lv = Array.from({ length: ROWS }, (_, r) => Array.from({ length: COLS }, (_, c) => Math.min(Math.floor(val(c, r) * 5), 5)))
+	let d = ''
+	let g = ''
+	for (let r = 0; r < ROWS; r++) {
+		for (let c = 0; c < COLS; c++) {
+			const Lv = lv[r][c]
+			const edge = Lv >= 1 && ((c < COLS - 1 && lv[r][c + 1] !== Lv) || (r < ROWS - 1 && lv[r + 1][c] !== Lv))
+			d += (edge ? hash(c, r) < 0.7 : Lv >= 1 && hash(c, r) < 0.04) ? String(Math.min(Lv + 3, 9)) : ' '
+			g += val(c, r) > 0.45 ? '█' : ' '
+		}
+		d += '\n'
+		g += '\n'
+	}
+	return { d, g }
+}
+const short = texture(5, [[62, 22, 24], [160, 28, 32], [225, 18, 18]])
+const tall = texture(12, [[62, 94, 24], [160, 100, 32], [225, 88, 18], [90, 52, 26], [36, 66, 18], [150, 56, 22]])
+
+// ---------------- the timeline (seconds) ----------------
+const T = {
+	phoneOut: [9.5, 10.4], // the phone turns away, the web app turns in
+	webOut: [23.3, 24.2], // and back
+	wipe: [4.65, 5.25] // Style-transfer wipe: the sale becomes the inbox
+}
+// device swaps
+const phoneDev = use(
+	kf([
+		[0, 'opacity:1;transform:none'],
+		[T.phoneOut[0], 'opacity:1;transform:none'],
+		[T.phoneOut[1], 'opacity:0;transform:translate3d(3.5em,0,-5em) rotateY(38deg)'],
+		[23.4, 'opacity:0;transform:translate3d(3.5em,0,-5em) rotateY(38deg)'],
+		[24.4, 'opacity:1;transform:none']
+	]),
+	'ease-in-out'
+)
+const webDev = use(
+	kf([
+		[0, 'opacity:0;transform:translate3d(-3.5em,0,-5em) rotateY(-38deg)'],
+		[T.phoneOut[0] + 0.1, 'opacity:0;transform:translate3d(-3.5em,0,-5em) rotateY(-38deg)'],
+		[T.phoneOut[1] + 0.5, 'opacity:1;transform:none'],
+		[T.webOut[0], 'opacity:1;transform:none'],
+		[T.webOut[1], 'opacity:0;transform:translate3d(-3.5em,0,-5em) rotateY(-38deg)']
+	]),
+	'ease-in-out'
+)
+// the devices sway while screens change and settle near-frontal for the last read of each act
+const rock = (steps: [number, number, number, number, number][]) =>
+	use(kf(steps.map(([s, y, ry, rx, rz]) => [s, `transform:translateY(${y}em) rotateY(${ry}deg) rotateX(${rx}deg) rotateZ(${rz}deg)`] as [number, string])), 'ease-in-out')
+const phoneRock = rock([
+	[0, 0.9, -22, 7, -3],
+	[1.8, 0.2, -8, 3.5, -1.4],
+	[4.2, -0.2, -3, 1.5, -0.6],
+	[5.4, -0.4, 8, -1, 1],
+	[7.8, -0.2, 2, 0.6, 0.3],
+	[9.8, 0.1, -9, 2, -1],
+	[24.6, 0.2, -10, 3, -1.2],
+	[26.4, -0.2, -3, 1.4, -0.5],
+	[28.4, -0.3, 5, -0.8, 0.7],
+	[30, 0.9, -22, 7, -3]
+])
+const webRock = rock([
+	[0, 0, -14, 5, -0.8],
+	[10.8, 0, -12, 4.5, -0.6],
+	[12.8, 0, -7, 3, -0.3],
+	[15.6, 0, -10, 4, -0.5],
+	[18, 0, -5, 2.2, -0.2],
+	[21, 0, -9, 3.6, -0.4],
+	[23.4, 0, -7, 2.6, -0.3],
+	[30, 0, -14, 5, -0.8]
+])
+// the camera pushes in on the dock while Yago works, and eases back when the page changes
+const webCam = use(
+	kf([
+		[0, 'transform:scale(1)'],
+		[10.9, 'transform:scale(1)'],
+		[12.2, 'transform:scale(1.09)'],
+		[14.4, 'transform:scale(1.09)'],
+		[15.3, 'transform:scale(1.02)'],
+		[16.2, 'transform:scale(1.02)'],
+		[17.4, 'transform:scale(1.08)'],
+		[19.6, 'transform:scale(1.08)'],
+		[20.4, 'transform:scale(1.02)'],
+		[21.0, 'transform:scale(1.02)'],
+		[21.9, 'transform:scale(1.07)'],
+		[23.0, 'transform:scale(1.07)'],
+		[24.0, 'transform:scale(1)']
+	]),
+	'ease-in-out'
+)
+
+// act 1: the WhatsApp sale (messages stay until the wipe has covered them)
+const A = {
+	m: [0.45, 1.2, 1.65, 2.4, 3.15, 3.75].map((a) => win(a, 5.3, '.7em')),
+	d: [dotsWin(0.75, 1.2), dotsWin(2.7, 3.15)],
+	scroll: use(kf([[0, 'transform:translateY(0)'], [2.5, 'transform:translateY(0)'], [3.9, 'transform:translateY(-8em)'], [5.4, 'transform:translateY(-8em)'], [LOOP, 'transform:translateY(-8em)']]), 'ease-in-out'),
+	gray: use(kf([[0, 'filter:none'], [T.wipe[0], 'filter:none'], [T.wipe[1], 'filter:grayscale(1) brightness(.85)'], [29.4, 'filter:grayscale(1) brightness(.85)'], [LOOP, 'filter:none']]), 'ease-in-out')
+}
+// act 2: the inbox: clipped away until the wipe, hidden again once the phone has turned away
+const B = use(
+	kf([
+		[0, 'clip-path:inset(0 0 0 100%);opacity:1'],
+		[T.wipe[0], 'clip-path:inset(0 0 0 100%);opacity:1'],
+		[T.wipe[1], 'clip-path:inset(0);opacity:1'],
+		[T.phoneOut[1], 'clip-path:inset(0);opacity:1'],
+		[T.phoneOut[1] + 0.1, 'clip-path:inset(0);opacity:0'],
+		[LOOP, 'clip-path:inset(0);opacity:0']
+	]),
+	'ease-in-out'
+)
+const wl = use(
+	kf([
+		[0, 'left:100%;opacity:0'],
+		[T.wipe[0] - 0.15, 'left:100%;opacity:0'],
+		[T.wipe[0], 'left:100%;opacity:1'],
+		[T.wipe[1], 'left:0%;opacity:1'],
+		[T.wipe[1] + 0.15, 'left:0%;opacity:0']
+	]),
+	'ease-in-out'
+)
+// the phone returns: the mobile app, Yago. Its layer is swapped in while the phone is out of sight.
+const C = {
+	layer: use(kf([[0, 'opacity:0'], [T.phoneOut[1], 'opacity:0'], [T.phoneOut[1] + 0.1, 'opacity:1'], [29.4, 'opacity:1'], [LOOP, 'opacity:0']])),
+	user: win(24.9, 29.4, '.7em'),
+	dots: dotsWin(25.7, 26.5),
+	card: win(26.5, 29.4, '.7em'),
+	strike: use(kf([[0, 'transform:scaleX(0)'], [27.3, 'transform:scaleX(0)'], [27.7, 'transform:scaleX(1)'], [29.4, 'transform:scaleX(1)'], [29.9, 'transform:scaleX(0)']]), 'ease-in-out'),
+	press: use(kf([[0, 'transform:none;opacity:1'], [28.2, 'transform:none;opacity:1'], [28.35, 'transform:scale(.94);opacity:1'], [28.5, 'transform:none;opacity:1'], [28.62, 'opacity:0'], [LOOP, 'opacity:0']])),
+	pub: use(kf([[0, 'opacity:0;transform:scale(.92)'], [28.55, 'opacity:0;transform:scale(.92)'], [28.8, 'opacity:1;transform:none'], [29.4, 'opacity:1;transform:none'], [29.9, 'opacity:0']]))
+}
+
+// the web app: the dashboard page changes with what Yago does; the dock beside it holds three conversations
+const W = {
+	hl: use(kf([[0, 'transform:translateY(10.5em)'], [14.9, 'transform:translateY(10.5em)'], [15.4, 'transform:translateY(0)'], [22.1, 'transform:translateY(0)'], [22.6, 'transform:translateY(12.6em)'], [LOOP, 'transform:translateY(12.6em)']]), 'ease-in-out'),
+	p1: win(9.9, 15.2),
+	p2: win(15.0, 22.4),
+	p3: win(22.2, 24.4),
+	d1: win(10.6, 15.3, '', 0.3),
+	d2: win(15.2, 19.9, '', 0.3),
+	d3: win(19.8, 24.0, '', 0.3),
+	// dock 1: the request, the card, apply
+	u1: win(10.8, 15.3, '.6em'),
+	dots1: dotsWin(11.6, 12.4),
+	c1: win(12.4, 15.3, '.6em'),
+	s1: use(kf([[0, 'transform:scaleX(0)'], [13.2, 'transform:scaleX(0)'], [13.6, 'transform:scaleX(1)'], [15.2, 'transform:scaleX(1)'], [15.5, 'transform:scaleX(0)']]), 'ease-in-out'),
+	b1: use(kf([[0, 'opacity:1;transform:none'], [13.9, 'opacity:1;transform:none'], [14.05, 'opacity:1;transform:scale(.93)'], [14.2, 'opacity:1;transform:none'], [14.32, 'opacity:0'], [LOOP, 'opacity:0']])),
+	k1: use(kf([[0, 'opacity:0'], [14.25, 'opacity:0'], [14.5, 'opacity:1'], [15.2, 'opacity:1'], [15.5, 'opacity:0']])),
+	field_old: use(kf([[0, 'opacity:1'], [14.35, 'opacity:1'], [14.65, 'opacity:0'], [15.4, 'opacity:0'], [15.6, 'opacity:0']])),
+	field_new: use(kf([[0, 'opacity:0'], [14.35, 'opacity:0'], [14.65, 'opacity:1'], [15.2, 'opacity:1'], [15.5, 'opacity:0']])),
+	field_hl: use(kf([[0, 'box-shadow:0 0 0 0 rgba(143,169,184,0)'], [14.35, 'box-shadow:0 0 0 0 rgba(143,169,184,0)'], [14.6, 'box-shadow:0 0 0 .25em rgba(143,169,184,.55)'], [15.2, 'box-shadow:0 0 0 0 rgba(143,169,184,0)']])),
+	// dock 2: finds what went wrong
+	u2: win(15.6, 19.9, '.6em'),
+	y2: win(16.7, 19.9, '.6em'),
+	c2: win(17.6, 19.9, '.6em'),
+	s2: use(kf([[0, 'transform:scaleX(0)'], [18.3, 'transform:scaleX(0)'], [18.7, 'transform:scaleX(1)'], [19.9, 'transform:scaleX(1)'], [20.2, 'transform:scaleX(0)']]), 'ease-in-out'),
+	b2: use(kf([[0, 'opacity:1;transform:none'], [18.9, 'opacity:1;transform:none'], [19.03, 'opacity:1;transform:scale(.93)'], [19.16, 'opacity:1;transform:none'], [19.26, 'opacity:0'], [LOOP, 'opacity:0']])),
+	k2: use(kf([[0, 'opacity:0'], [19.2, 'opacity:0'], [19.4, 'opacity:1'], [19.9, 'opacity:1'], [20.2, 'opacity:0']])),
+	ring: use(kf([[0, 'opacity:0'], [16.4, 'opacity:0'], [16.8, 'opacity:1'], [19.9, 'opacity:1'], [20.3, 'opacity:0']])),
+	// dock 3: guides
+	u3: win(20.2, 24.0, '.6em'),
+	y3: win(21.0, 24.0, '.6em'),
+	link: use(kf([[0, 'background-color:rgba(207,210,245,0)'], [21.7, 'background-color:rgba(207,210,245,0)'], [21.9, 'background-color:rgba(207,210,245,.95)'], [22.4, 'background-color:rgba(207,210,245,.6)'], [LOOP, 'background-color:rgba(207,210,245,.6)']]))
+}
+// the panel's keyframes must be registered before the stylesheet is joined (the template runs after this block)
+const faceSt = faces.map((_, i) => faceKf(i, 'opacity:1', 'opacity:0'))
+const agentSt = agents.map((_, i) => faceKf(i, 'opacity:1', 'opacity:.4'))
+const dotSt = agents.map((_, i) => faceKf(i, 'background:#cfd2f5', 'background:transparent'))
+const lineSt = yagoLines.map((l) => win(l.a, l.b, '', 0.4))
+const kfCss = css.join('')
+
+// inbox rows: a 3-row pattern repeated, so a 3-row scroll loops seamlessly
+const inbox = [
+	{ n: 4.6, p: 8.4, b: 2, c: '#cfd2f5' },
+	{ n: 6.2, p: 6.6, b: 0, c: '#d8ece4' },
+	{ n: 3.8, p: 9.2, b: 1, c: '#c9dae2' }
 ]
-const kf =
-	msgs
-		.map((s, i) => `@keyframes yv-m${i + 1}{0%,${s}%{opacity:0;transform:translateY(.7em)}${s + 3}%,90%{opacity:1;transform:none}95%,100%{opacity:0}}`)
-		.join('') +
-	dots
-		.map(([a, b], i) => `@keyframes yv-d${i + 1}{0%,${a}%{opacity:0;max-height:0;margin:0}${a + 2}%,${b}%{opacity:1;max-height:2em;margin:.5em 0 0}${b + 2}%,100%{opacity:0;max-height:0;margin:0}}`)
-		.join('')
+const rows = Array.from({ length: 21 }, (_, i) => inbox[i % 3])
+const ico = {
+	signal: "<svg viewBox='0 0 17 11' fill='currentColor'><rect x='0' y='7' width='3' height='4' rx='.6'/><rect x='4.6' y='5' width='3' height='6' rx='.6'/><rect x='9.2' y='2.6' width='3' height='8.4' rx='.6'/><rect x='13.8' y='0' width='3' height='11' rx='.6'/></svg>",
+	wifi: "<svg viewBox='0 0 16 11' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round'><path d='M1.5 4a9.2 9.2 0 0 1 13 0M4 6.6a5.7 5.7 0 0 1 8 0'/><circle cx='8' cy='9.2' r='1' fill='currentColor' stroke='none'/></svg>",
+	batt: "<svg viewBox='0 0 26 12' fill='none'><rect x='.6' y='.6' width='21.5' height='10.8' rx='3' stroke='currentColor' stroke-opacity='.5'/><rect x='2.2' y='2.2' width='15.5' height='7.6' rx='1.6' fill='currentColor'/><rect x='23.2' y='4' width='1.8' height='4' rx='.8' fill='currentColor' fill-opacity='.5'/></svg>"
+}
+// sidebar rows of the dashboard stand-in (bars, not labels): [bar width in em, indented]
+const side = [
+	[7.2, 0],
+	[4.4, 0],
+	[5.6, 0],
+	[4.8, 0],
+	[5.2, 0],
+	[5.8, 1],
+	[3.6, 1]
+]
 ---
 
 <div class='yv relative h-full w-full overflow-hidden'>
-	<style is:inline set:html={kf}></style>
+	<style is:inline set:html={kfCss}></style>
 
-	<div class='yv-glow absolute left-1/2 top-[6%] h-[58%] w-[90%] -translate-x-1/2'></div>
+	<div class='yv-glow'></div>
 
-	<!-- the phone: rocks in 3D while the sale plays out -->
-	<div class='yv-stage absolute inset-x-0 top-0 flex justify-center pt-3'>
-		<div class='yv-phone' aria-hidden='true'>
-			{slabs.map((sl) => <i class='yv-slab' style={`--z:${sl.z}em;background:${sl.c}`}></i>)}
-			<div class='yv-front'>
-				<div class='yv-screen'>
-					<div class='yv-status'>
-						<b>9:41</b>
-						<span class='yv-ico'>
-							<svg viewBox='0 0 17 11' fill='currentColor'><rect x='0' y='7' width='3' height='4' rx='.6'/><rect x='4.6' y='5' width='3' height='6' rx='.6'/><rect x='9.2' y='2.6' width='3' height='8.4' rx='.6'/><rect x='13.8' y='0' width='3' height='11' rx='.6'/></svg>
-							<svg viewBox='0 0 16 11' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round'><path d='M1.5 4a9.2 9.2 0 0 1 13 0M4 6.6a5.7 5.7 0 0 1 8 0'/><circle cx='8' cy='9.2' r='1' fill='currentColor' stroke='none'/></svg>
-							<svg viewBox='0 0 26 12' fill='none'><rect x='.6' y='.6' width='21.5' height='10.8' rx='3' stroke='currentColor' stroke-opacity='.5'/><rect x='2.2' y='2.2' width='15.5' height='7.6' rx='1.6' fill='currentColor'/><rect x='23.2' y='4' width='1.8' height='4' rx='.8' fill='currentColor' fill-opacity='.5'/></svg>
-						</span>
-					</div>
-					<div class='yv-head'>
-						<span class='yv-back'>‹<em>3</em></span>
-						<i class='yv-av'></i>
-						<span class='yv-name'><b>Tienda Andina</b><small>cuenta de empresa</small></span>
-					</div>
-					<div class='yv-chatwrap'>
-						<div class='yv-chat'>
-							<p class='yv-pill'>Hoy</p>
-							<p class='yv-b yv-u yv-m1'>Hola, ¿tienen zapatillas trail talla 42?<time>10:42 <u>✓✓</u></time></p>
-							<p class='yv-dots yv-d1'><i></i><i></i><i></i></p>
-							<p class='yv-b yv-a yv-m2'>¡Hola! Sí. Te muestro la más pedida:<time>10:42</time></p>
-							<div class='yv-card yv-m3'>
-								<span class='yv-img'></span>
-								<span><b>Trail Pro</b><small>S/ 289 · talla 42</small></span>
+	<div class='yv-stage' aria-hidden='true'>
+		<!-- the web app: the dashboard, with Yago's dock floating above it -->
+		<div class='yv-dev yv-devw' style={webDev}>
+			<div class='yv-wcam' style={webCam}>
+				<div class='yv-web' style={webRock}>
+					{wslabs.map((sl) => <i class='yv-wslab' style={`--z:${sl.z}em;background:${sl.c}`}></i>)}
+					<div class='yv-wfront'>
+						<div class='yv-chrome'><i></i><i></i><i></i><span class='yv-url'>{L.url}</span></div>
+						<div class='yv-wbody'>
+							<div class='yv-side'>
+								<i class='yv-hl' style={W.hl}></i>
+								{
+									side.map(([w, ind]) => (
+										<div class={`yv-sr${ind ? ' yv-sub' : ''}`}>
+											<i class='yv-sic'></i>
+											<i class='yv-bar' style={`width:${w}em`}></i>
+										</div>
+									))
+								}
 							</div>
-							<p class='yv-b yv-u yv-m4'>Esa. ¿Puedo pagar con Yape?<time>10:43 <u>✓✓</u></time></p>
-							<p class='yv-dots yv-d2'><i></i><i></i><i></i></p>
-							<p class='yv-b yv-a yv-m5'>Claro. Aquí tienes tu link de pago.<time>10:43</time></p>
-							<p class='yv-ok yv-m6'>Pedido confirmado ✓</p>
+							<div class='yv-main'>
+								<!-- Personality -->
+								<div class='yv-pg' style={W.p1}>
+									<b class='yv-pt'>{L.personality}</b>
+									<div class='yv-card2'>
+										<small>{L.styleLong}</small>
+										<span class='yv-inp' style={W.field_hl}>
+											<span style={W.field_old}>{L.neutral}</span>
+											<span class='yv-abs' style={W.field_new}>{L.warm}</span>
+										</span>
+										<small>{L.audience}</small>
+										<span class='yv-inp yv-inp2'><i class='yv-bar' style='width:5em'></i></span>
+									</div>
+									<div class='yv-card2 yv-card3'>
+										<small>{L.handoff}</small>
+										<span class='yv-inp yv-inp2'><i class='yv-bar' style='width:8em'></i></span>
+									</div>
+								</div>
+								<!-- Conversations -->
+								<div class='yv-pg' style={W.p2}>
+									<b class='yv-pt'>{L.conversations}</b>
+									<div class='yv-conv'>
+										<div class='yv-clist'>
+											<span class='yv-cr on'><i></i><u></u></span>
+											<span class='yv-cr'><i></i><u></u></span>
+											<span class='yv-cr'><i></i><u></u></span>
+										</div>
+										<div class='yv-cchat'>
+											<p class='yv-cb'>{L.q1}</p>
+											<p class='yv-cb yv-cs'>{L.a1}<i class='yv-ring' style={W.ring}></i></p>
+										</div>
+									</div>
+								</div>
+								<!-- Hours -->
+								<div class='yv-pg' style={W.p3}>
+									<b class='yv-pt'>{L.hours}</b>
+									<div class='yv-card2'>
+										{
+											L.times.map((h, i) => (
+												<span class='yv-hr'>
+													<i class='yv-bar' style={`width:${3 + i * 0.4}em`}></i>
+													<em>{h}</em>
+												</span>
+											))
+										}
+									</div>
+								</div>
+							</div>
+							<div class='yv-dockgap'></div>
 						</div>
 					</div>
-					<div class='yv-input'>
-						<span class='yv-plus'>+</span>
-						<span class='yv-fld'></span>
-						<svg viewBox='0 0 14 14' fill='none' stroke='currentColor' stroke-width='1.3'><path d='M2 2h6l4 4v6H2z'/></svg>
-						<svg viewBox='0 0 16 14' fill='none' stroke='currentColor' stroke-width='1.3'><path d='M1.5 4.5h2.6l1-1.7h5.8l1 1.7h2.6v8h-13z'/><circle cx='8' cy='8.4' r='2.4'/></svg>
-						<svg viewBox='0 0 12 16' fill='none' stroke='currentColor' stroke-width='1.3' stroke-linecap='round'><rect x='3.5' y='1' width='5' height='8' rx='2.5'/><path d='M1.5 7.5a4.5 4.5 0 0 0 9 0M6 12v3'/></svg>
+					<!-- Yago's dock: lifted off the page in 3D, so it parallaxes as the window turns -->
+					<div class='yv-dockw'>
+						<div class='yv-dwin'>
+							<span class='yv-seg yv-seg2'><b>{L.test}</b><b class='on'>{L.yago}</b></span>
+							<div class='yv-dstack'>
+								<!-- dock 1: edit the seller -->
+								<div class='yv-ds' style={W.d1}>
+									<p class='yv-ub yv-ub2' style={W.u1}>{L.req}</p>
+									<p class='yv-dots yv-cdots' style={W.dots1}><i></i><i></i><i></i></p>
+									<div class='yv-yc yv-yc2' style={W.c1}>
+										<small>{L.done}</small>
+										<b>{L.line}</b>
+										<div class='yv-rw'>
+											<span>{L.style}</span>
+											<span class='yv-nv'><b>{L.warm}</b><s>{L.neutral}<i class='yv-sk' style={W.s1}></i></s></span>
+										</div>
+										<div class='yv-act yv-act2'>
+											<span class='yv-btn' style={W.b1}>{L.apply}</span>
+											<span class='yv-pub' style={W.k1}>{L.pub}</span>
+										</div>
+									</div>
+								</div>
+								<!-- dock 2: find what went wrong -->
+								<div class='yv-ds' style={W.d2}>
+									<p class='yv-ub yv-ub2' style={W.u2}>{L.ask2}</p>
+									<p class='yv-ya' style={W.y2}>{L.ans2}</p>
+									<div class='yv-yc yv-yc2' style={W.c2}>
+										<b>{L.line2}</b>
+										<div class='yv-rw'>
+											<span>{L.answer}</span>
+											<span class='yv-nv'><b>{L.new2}</b><s>{L.old2}<i class='yv-sk' style={W.s2}></i></s></span>
+										</div>
+										<div class='yv-act yv-act2'>
+											<span class='yv-btn' style={W.b2}>{L.apply}</span>
+											<span class='yv-pub' style={W.k2}>{L.pub}</span>
+										</div>
+									</div>
+								</div>
+								<!-- dock 3: guide -->
+								<div class='yv-ds' style={W.d3}>
+									<p class='yv-ub yv-ub2' style={W.u3}>{L.ask3}</p>
+									<p class='yv-ya' style={W.y3}>{L.ans3a}<u class='yv-lk' style={W.link}>{L.ans3b}</u>{L.ans3c}</p>
+								</div>
+							</div>
+						</div>
 					</div>
-					<i class='yv-home'></i>
+				</div>
+			</div>
+		</div>
+
+		<!-- the phone: WhatsApp sale, the inbox, then back at the end with Yago in the mobile app -->
+		<div class='yv-dev yv-devp' style={phoneDev}>
+			<div class='yv-phone' style={phoneRock}>
+				{slabs.map((sl) => <i class='yv-slab' style={`--z:${sl.z}em;background:${sl.c}`}></i>)}
+				<i class='yv-key' style='left:-.18em;top:5.6em;height:1.5em'></i>
+				<i class='yv-key' style='left:-.22em;top:8.4em;height:2.7em'></i>
+				<i class='yv-key' style='left:-.22em;top:11.8em;height:2.7em'></i>
+				<i class='yv-key yv-keyr' style='right:-.22em;top:9.8em;height:4.2em'></i>
+				<div class='yv-front'>
+					<i class='yv-spec'></i>
+					<div class='yv-bezel'>
+						<div class='yv-screen'>
+							<!-- act 1: Maia v1, a WhatsApp sale -->
+							<div class='yv-L yv-LA' style={A.gray}>
+								<div class='yv-status'><b>9:41</b><span class='yv-ico' set:html={ico.signal + ico.wifi + ico.batt} /></div>
+								<div class='yv-head'>
+									<span class='yv-back'>‹<em>3</em></span>
+									<i class='yv-av'></i>
+									<span class='yv-name'><b>{L.biz}</b><small>{L.bizSub}</small></span>
+								</div>
+								<div class='yv-chatwrap'>
+									<div class='yv-chat' style={A.scroll}>
+										<p class='yv-pill'>{L.today}</p>
+										<p class='yv-b yv-u' style={A.m[0]}>{L.m1}<time>10:42 <u>✓✓</u></time></p>
+										<p class='yv-dots' style={A.d[0]}><i></i><i></i><i></i></p>
+										<p class='yv-b yv-a' style={A.m[1]}>{L.m2}<time>10:42</time></p>
+										<div class='yv-card' style={A.m[2]}>
+											<span class='yv-img'></span>
+											<span><b>{L.prod}</b><small>{L.price}</small></span>
+										</div>
+										<p class='yv-b yv-u' style={A.m[3]}>{L.m4}<time>10:43 <u>✓✓</u></time></p>
+										<p class='yv-dots' style={A.d[1]}><i></i><i></i><i></i></p>
+										<p class='yv-b yv-a' style={A.m[4]}>{L.m5}<time>10:43</time></p>
+										<p class='yv-ok' style={A.m[5]}>{L.ok}</p>
+									</div>
+								</div>
+								<div class='yv-input'>
+									<span class='yv-plus'>+</span>
+									<span class='yv-fld'></span>
+									<svg viewBox='0 0 16 14' fill='none' stroke='currentColor' stroke-width='1.3'><path d='M1.5 4.5h2.6l1-1.7h5.8l1 1.7h2.6v8h-13z'/><circle cx='8' cy='8.4' r='2.4'/></svg>
+									<svg viewBox='0 0 12 16' fill='none' stroke='currentColor' stroke-width='1.3' stroke-linecap='round'><rect x='3.5' y='1' width='5' height='8' rx='2.5'/><path d='M1.5 7.5a4.5 4.5 0 0 0 9 0M6 12v3'/></svg>
+								</div>
+							</div>
+
+							<!-- act 2: Maia v2, the inbox streaming past (shapes, no real chats) -->
+							<div class='yv-L yv-LB' style={B}>
+								<div class='yv-status'><b>9:41</b><span class='yv-ico' set:html={ico.signal + ico.wifi + ico.batt} /></div>
+								<div class='yv-bh'><b>{L.chats}</b><span class='yv-chips'><i class='on'>{L.all}</i><i>{L.unread}</i></span></div>
+								<div class='yv-inbox'>
+									<div class='yv-rows'>
+										{
+											rows.map((r) => (
+												<div class='yv-row'>
+													<i class='yv-ra' style={`background:${r.c}`}></i>
+													<span class='yv-rt'>
+														<i class='yv-bar' style={`width:${r.n}em`}></i>
+														<i class='yv-bar yv-bar2' style={`width:${r.p}em`}></i>
+													</span>
+													<span class='yv-rm'>
+														<small>10:4{r.n > 5 ? 3 : 2}</small>
+														{r.b > 0 && <em>{r.b}</em>}
+													</span>
+												</div>
+											))
+										}
+									</div>
+								</div>
+							</div>
+
+							<!-- the phone's last act: Yago in the mobile app (swapped in while the phone is out of sight) -->
+							<div class='yv-L yv-LC' style={C.layer}>
+								<div class='yv-status yv-sdark'><b>9:41</b><span class='yv-ico' set:html={ico.signal + ico.wifi + ico.batt} /></div>
+								<div class='yv-tabs'>
+									<span class='yv-seg'><b>{L.test}</b><b class='on'>{L.yago}</b></span>
+								</div>
+								<div class='yv-ychat'>
+									<p class='yv-ub' style={C.user}>{L.req}</p>
+									<p class='yv-dots yv-cdots' style={C.dots}><i></i><i></i><i></i></p>
+									<div class='yv-yc' style={C.card}>
+										<small>{L.done}</small>
+										<b>{L.line}</b>
+										<div class='yv-rw'>
+											<span>{L.styleLong}</span>
+											<span class='yv-nv'><b>{L.warm}</b><s>{L.neutral}<i class='yv-sk' style={C.strike}></i></s></span>
+										</div>
+										<div class='yv-act'>
+											<span class='yv-btn' style={C.press}>{L.apply}</span>
+											<span class='yv-pub' style={C.pub}>{L.pub}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<i class='yv-wl' style={wl}></i>
+							<i class='yv-fog'></i>
+						</div>
+						<i class='yv-isl'></i>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- results plate, in front of the phone -->
-	<div class='absolute inset-x-3 bottom-3'>
-		<div class='relative h-[6.2rem] overflow-hidden rounded-[3px] bg-[#f6f8fa] text-[#0b0f14] shadow-[0_10px_24px_-8px_rgba(0,0,0,0.7)]'>
-			<pre
-				aria-hidden='true'
-				class='absolute inset-x-0 bottom-0 m-0 select-none overflow-hidden pl-1 font-mono text-[9px] leading-[10.5px] text-[#cfd2f5] blur-[7px]'>{glow}</pre>
-			<pre
-				aria-hidden='true'
-				class='absolute inset-x-0 bottom-0 m-0 hidden select-none overflow-hidden pl-1 font-mono text-[9px] leading-[10.5px] text-[#0b0f14]/55 sm:block'>{digits}</pre>
+	<!-- results panel: one number and what it was, per system -->
+	<div class='yv-plate'>
+		<div class='yv-pcard'>
+			<pre aria-hidden='true' class='yv-gl'>{short.g}</pre>
+			<pre aria-hidden='true' class='yv-dg'>{short.d}</pre>
+			<pre aria-hidden='true' class='yv-gl yv-tall'>{tall.g}</pre>
+			<pre aria-hidden='true' class='yv-dg yv-tall'>{tall.d}</pre>
 			{
 				faces.map((f, i) => (
-					<div class='yv-face absolute inset-x-0 top-0 flex flex-col items-start px-3 pt-2.5 sm:flex-row sm:gap-3' style={`--i:${i}`}>
-						<p class='font-newsreader text-[2.1rem] font-light leading-[0.95] tracking-tight sm:text-[2.5rem]'>{f.n}</p>
-						<p class='mt-1.5 min-w-0 flex-1 font-mono text-[0.5rem] leading-snug text-black/60 sm:mt-1'>
-							<span class='sm:hidden' set:html={f.short} /><span class='hidden sm:inline' set:html={f.note} />
-						</p>
+					<div class='yv-face' style={faceSt[i]}>
+						<p class='yv-n font-newsreader'>{f.n}</p>
+						{i < 2 ? (
+							<p class='yv-d' set:html={f.note} />
+						) : (
+							<div class='yv-d yv-cyc'>{yagoLines.map((l, j) => <p class='yv-cl' style={lineSt[j]} set:html={l.t} />)}</div>
+						)}
 					</div>
 				))
 			}
 		</div>
-		<ul class='mt-2 flex justify-between whitespace-nowrap font-mono text-[0.45rem] uppercase tracking-wider text-[#e9edf0] sm:text-[0.5rem]'>
+		<ul class='yv-agents'>
 			{
 				agents.map((name, i) => (
-					<li class='yv-ag flex items-center gap-1 sm:gap-1.5' style={`--i:${i}`}>
-						<span class='yv-dot h-1.5 w-1.5 shrink-0 rounded-full border border-white/60'></span>{name}
+					<li class='yv-ag' style={agentSt[i]}>
+						<span class='yv-dot' style={dotSt[i]}></span>{name}
 					</li>
 				))
 			}
@@ -143,96 +577,209 @@ const kf =
 </div>
 
 <style>
-	/* ---- phone (all sizes in em, so one font-size scales it) ---- */
-	.yv-stage {
-		perspective: 720px;
-		perspective-origin: 50% 35%;
+	/* the tile is the query container: sizes follow its width (cqw), and the panel moves to the left once it is wide enough */
+	.yv {
+		container-type: inline-size;
 	}
 	.yv-glow {
-		background: radial-gradient(closest-side, rgba(207, 210, 245, 0.38), rgba(207, 210, 245, 0) 70%);
+		position: absolute;
+		left: 50%;
+		top: 6%;
+		width: 90%;
+		height: 58%;
+		transform: translateX(-50%);
+		background: radial-gradient(closest-side, rgba(207, 210, 245, 0.34), rgba(207, 210, 245, 0) 70%);
 		filter: blur(10px);
+	}
+	.yv-stage {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 14.5rem;
+		perspective: 760px;
+		perspective-origin: 50% 36%;
+	}
+	.yv-dev {
+		position: absolute;
+		left: 50%;
+		transform-style: preserve-3d;
+	}
+	.yv-devp {
+		top: 0.5rem;
+		font-size: 2.3cqw;
+		width: 18.5em;
+		height: 37em;
+		margin-left: -9.25em;
+	}
+	.yv-devw {
+		top: 2.7rem;
+		font-size: 2.1cqw;
+		width: 30em;
+		height: 21em;
+		margin-left: -15em;
+	}
+	.yv-wcam {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		transform-origin: 88% 44%;
+		transform-style: preserve-3d;
 	}
 	.yv-phone {
 		position: relative;
-		font-size: 7.3px;
 		width: 18.5em;
 		height: 37em;
 		transform-style: preserve-3d;
-		animation: yv-rock 9s ease-in-out infinite alternate;
 	}
-	@keyframes yv-rock {
-		from {
-			transform: translateY(0.8em) rotateY(-28deg) rotateX(8deg) rotateZ(-4deg);
-		}
-		to {
-			transform: translateY(-0.6em) rotateY(20deg) rotateX(-4deg) rotateZ(3deg);
-		}
+	.yv-web {
+		position: relative;
+		width: 30em;
+		height: 21em;
+		transform-style: preserve-3d;
 	}
 	.yv-slab,
 	.yv-front {
 		position: absolute;
 		inset: 0;
-		border-radius: 3.9em;
+		border-radius: 2.6em;
 	}
 	.yv-slab {
 		transform: translateZ(var(--z));
 	}
+	.yv-key {
+		position: absolute;
+		width: 0.3em;
+		border-radius: 0.2em;
+		background: linear-gradient(90deg, #6c727a, #d3d7db 55%, #8f959c);
+		transform: translateZ(-0.7em);
+	}
+	.yv-keyr {
+		transform: translateZ(-0.7em) scaleX(-1);
+	}
 	.yv-front {
-		padding: 0.42em;
-		background: linear-gradient(150deg, #f0f2f4, #9aa1a8 38%, #e6e9ec 62%, #b5bbc1);
+		padding: 0.24em;
+		background: linear-gradient(150deg, #c9d0d6 0%, #68717a 24%, #b4bcc3 48%, #59626b 72%, #9aa3ab 100%);
+		box-shadow:
+			inset 0 0 0 0.05em rgba(255, 255, 255, 0.35),
+			inset 0 0 0 0.14em rgba(0, 0, 0, 0.28),
+			inset 0 0 0.5em rgba(0, 0, 0, 0.5);
 		transform: translateZ(0.05em);
+	}
+	/* the highlight that travels along the titanium rim as the phone turns */
+	.yv-spec {
+		position: absolute;
+		inset: 0;
+		border-radius: 2.6em;
+		pointer-events: none;
+		background-size: 320% 100%;
+		background-image: linear-gradient(100deg, transparent 0%, transparent 42%, rgba(255, 255, 255, 0.9) 49%, transparent 58%, transparent 100%);
+		animation: yv-spec 7.5s ease-in-out infinite alternate;
+	}
+	@keyframes yv-spec {
+		from {
+			background-position: 100% 0;
+		}
+		to {
+			background-position: 0% 0;
+		}
+	}
+	.yv-bezel {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		border-radius: 2.4em;
+		background: #000;
+		padding: 0.42em;
 	}
 	.yv-screen {
 		position: relative;
 		height: 100%;
 		overflow: hidden;
-		border-radius: 3.5em;
-		border: 0.28em solid #000;
+		border-radius: 2em;
 		background: #0a0f13;
 		color: #e9edf0;
 		font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 	}
-	.yv-screen::before {
-		/* notch */
+	.yv-isl {
+		position: absolute;
+		top: 0.85em;
+		left: 50%;
+		width: 5.2em;
+		height: 1.5em;
+		margin-left: -2.6em;
+		border-radius: 1em;
+		background: #000;
+		z-index: 6;
+	}
+	.yv-isl::after {
 		content: '';
 		position: absolute;
-		left: 50%;
-		top: 0;
-		width: 6.4em;
-		height: 1.5em;
-		margin-left: -3.2em;
-		border-radius: 0 0 1em 1em;
-		background: #000;
-		z-index: 3;
+		right: 0.55em;
+		top: 0.5em;
+		width: 0.5em;
+		height: 0.5em;
+		border-radius: 50%;
+		background: radial-gradient(circle at 35% 35%, #2b3a55, #0a0d14 70%);
 	}
-	.yv-screen::after {
+	.yv-fog {
 		/* fog on the glass */
-		content: '';
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(172deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.07) 38%, rgba(255, 255, 255, 0) 62%);
+		background: linear-gradient(118deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 34%, rgba(255, 255, 255, 0) 58%);
 		pointer-events: none;
 		z-index: 4;
 	}
+	.yv-L {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+	}
+	.yv-LB {
+		background: #0a0f13;
+	}
+	.yv-LC {
+		background: #f1efea;
+		color: #0b0f14;
+		opacity: 0;
+	}
+	/* the Style-transfer wipe: a white line sweeping right to left while the new screen is revealed behind it */
+	.yv-wl {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 100%;
+		width: 0.14em;
+		margin-left: -0.07em;
+		background: rgba(255, 255, 255, 0.95);
+		box-shadow: 0 0 0.7em 0.15em rgba(255, 255, 255, 0.55);
+		opacity: 0;
+		z-index: 5;
+	}
+
+	/* ---- act 1: WhatsApp sale ---- */
 	.yv-status {
 		position: relative;
 		z-index: 2;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1em 1.7em 0;
+		padding: 1.1em 1.9em 0;
 		font-size: 1em;
 	}
 	.yv-status b {
 		font-weight: 600;
 		font-size: 1.05em;
 	}
+	.yv-sdark {
+		color: #0b0f14;
+	}
 	.yv-ico {
 		display: flex;
 		align-items: center;
 		gap: 0.35em;
 	}
-	.yv-ico svg {
+	.yv-ico :global(svg) {
 		height: 0.95em;
 		width: auto;
 	}
@@ -242,7 +789,7 @@ const kf =
 		display: flex;
 		align-items: center;
 		gap: 0.6em;
-		padding: 1.1em 1em 0.8em 0.8em;
+		padding: 1.2em 1em 0.8em 0.8em;
 		background: #0a0f13;
 	}
 	.yv-back {
@@ -285,7 +832,7 @@ const kf =
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: 6.3em;
+		top: 6.5em;
 		bottom: 5.4em;
 		overflow: hidden;
 		-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 3.4em);
@@ -295,33 +842,11 @@ const kf =
 		padding: 1.6em 0.8em 0;
 		font-size: 1em;
 		line-height: 1.3;
-		animation: yv-scroll 12s infinite ease-in-out;
-	}
-	/* the chat scrolls up as the later messages arrive (the plate hides the phone's lower half) */
-	@keyframes yv-scroll {
-		0%,
-		54% {
-			transform: translateY(0);
-		}
-		68%,
-		95% {
-			transform: translateY(-11.5em);
-		}
-		96%,
-		100% {
-			transform: translateY(0);
-		}
 	}
 	.yv-chat > * {
 		margin: 0 0 0.5em;
-		opacity: 0;
-		animation-duration: 12s;
-		animation-iteration-count: infinite;
-		animation-timing-function: ease-out;
 	}
 	.yv-chat > .yv-pill {
-		opacity: 1;
-		animation: none;
 		width: fit-content;
 		margin: 0 auto 0.8em;
 		padding: 0.25em 0.8em;
@@ -429,120 +954,745 @@ const kf =
 		border-radius: 1.2em;
 		background: #1c242d;
 	}
-	.yv-input svg {
+	.yv-input :global(svg) {
 		height: 1.5em;
 		width: auto;
 	}
-	.yv-home {
-		position: absolute;
-		left: 50%;
-		bottom: 0.8em;
-		width: 7em;
-		height: 0.32em;
-		margin-left: -3.5em;
-		border-radius: 1em;
-		background: rgba(255, 255, 255, 0.85);
-		z-index: 2;
-	}
-	.yv-m1 { animation-name: yv-m1; }
-	.yv-m2 { animation-name: yv-m2; }
-	.yv-m3 { animation-name: yv-m3; }
-	.yv-m4 { animation-name: yv-m4; }
-	.yv-m5 { animation-name: yv-m5; }
-	.yv-m6 { animation-name: yv-m6; }
-	.yv-d1 { animation-name: yv-d1; }
-	.yv-d2 { animation-name: yv-d2; }
 
-	/* ---- results plate: number dissolves between the three systems ---- */
+	/* ---- act 2: the inbox streaming past ---- */
+	.yv-bh {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.5em 1.1em 0.7em;
+		background: #0a0f13;
+	}
+	.yv-bh b {
+		font-size: 1.5em;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+	.yv-chips {
+		display: flex;
+		gap: 0.35em;
+		font-size: 0.8em;
+	}
+	.yv-chips i {
+		font-style: normal;
+		padding: 0.3em 0.75em;
+		border-radius: 1em;
+		background: #1c242d;
+		color: #9aa5b0;
+	}
+	.yv-chips i.on {
+		background: rgba(216, 236, 228, 0.16);
+		color: #d8ece4;
+	}
+	.yv-inbox {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 7.2em;
+		bottom: 0;
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 1.6em);
+		mask-image: linear-gradient(to bottom, transparent 0, #000 1.6em);
+	}
+	.yv-rows {
+		animation: yv-inb 1.6s linear infinite;
+	}
+	/* three rows per period, so the stream never shows a seam */
+	@keyframes yv-inb {
+		to {
+			transform: translateY(-14.4em);
+		}
+	}
+	.yv-row {
+		display: flex;
+		align-items: center;
+		gap: 0.8em;
+		height: 4.8em;
+		padding: 0 1.1em;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	}
+	.yv-ra {
+		flex: none;
+		width: 3em;
+		height: 3em;
+		border-radius: 50%;
+	}
+	.yv-rt {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55em;
+	}
+	.yv-bar {
+		display: block;
+		height: 0.7em;
+		border-radius: 0.4em;
+		background: #e9edf0;
+		opacity: 0.85;
+	}
+	.yv-bar2 {
+		height: 0.55em;
+		background: #7f8a96;
+		opacity: 0.6;
+	}
+	.yv-rm {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.4em;
+		font-size: 0.8em;
+		color: #7f8a96;
+	}
+	.yv-rm em {
+		font-style: normal;
+		min-width: 1.7em;
+		padding: 0.15em 0.5em;
+		border-radius: 1em;
+		background: #8fa9b8;
+		color: #0a0f13;
+		text-align: center;
+		font-weight: 600;
+	}
+
+	/* ---- Yago (the mobile app, and the dock on the web app, share these) ---- */
+	.yv-tabs {
+		display: flex;
+		justify-content: center;
+		padding: 0.7em 1em 0.35em;
+	}
+	.yv-seg {
+		display: flex;
+		gap: 0.2em;
+		padding: 0.25em;
+		border-radius: 1.4em;
+		background: #e4e1da;
+		font-size: 0.82em;
+	}
+	.yv-seg b {
+		padding: 0.4em 0.9em;
+		border-radius: 1.2em;
+		font-weight: 500;
+		color: #6b7480;
+		white-space: nowrap;
+	}
+	.yv-seg b.on {
+		background: #fff;
+		color: #0b0f14;
+		box-shadow: 0 1px 2px rgba(11, 15, 20, 0.12);
+	}
+	.yv-ychat {
+		padding: 0.3em 0.9em 0;
+		font-size: 1em;
+		line-height: 1.3;
+	}
+	.yv-ychat > * {
+		margin: 0 0 0.45em;
+	}
+	.yv-ub {
+		margin-left: auto !important;
+		width: fit-content;
+		max-width: 86%;
+		padding: 0.4em 0.65em;
+		font-size: 0.92em;
+		border-radius: 0.9em;
+		border-top-right-radius: 0.3em;
+		background: #e4e1da;
+	}
+	.yv-ya {
+		width: fit-content;
+		max-width: 92%;
+		margin: 0 0 0.45em;
+		padding: 0.4em 0.6em;
+		border-radius: 0.9em;
+		border-top-left-radius: 0.3em;
+		background: #fff;
+		border: 1px solid rgba(11, 15, 20, 0.08);
+	}
+	.yv-cdots {
+		background: #e4e1da;
+	}
+	.yv-cdots i {
+		background: #7e8ea1;
+	}
+	.yv-yc {
+		padding: 0.5em 0.7em 0.6em;
+		border-radius: 0.9em;
+		background: #fff;
+		border: 1px solid rgba(11, 15, 20, 0.1);
+		box-shadow: 0 0.4em 1em -0.5em rgba(11, 15, 20, 0.25);
+	}
+	.yv-yc small {
+		display: block;
+		font-size: 0.7em;
+		color: #7b8591;
+	}
+	.yv-yc > b {
+		display: block;
+		margin-top: 0.05em;
+		font-size: 1em;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+	.yv-rw {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.6em;
+		margin-top: 0.45em;
+		padding-top: 0.4em;
+		border-top: 1px solid rgba(11, 15, 20, 0.08);
+		font-size: 0.8em;
+	}
+	.yv-rw > span:first-child {
+		color: #7b8591;
+	}
+	.yv-nv {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		line-height: 1.25;
+	}
+	.yv-nv b {
+		font-weight: 600;
+	}
+	.yv-nv s {
+		position: relative;
+		color: #8a929c;
+		text-decoration: none;
+	}
+	.yv-sk {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 52%;
+		height: 1px;
+		background: currentColor;
+		transform-origin: 0 50%;
+		transform: scaleX(0);
+	}
+	.yv-act {
+		position: relative;
+		margin-top: 0.5em;
+		height: 2.1em;
+	}
+	.yv-btn,
+	.yv-pub {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.7em;
+		font-size: 0.9em;
+		font-weight: 600;
+	}
+	.yv-btn {
+		background: #0b0f14;
+		color: #f1efea;
+	}
+	.yv-pub {
+		background: #d8ece4;
+		color: #1f4c40;
+		opacity: 0;
+	}
+
+	/* ---- the web app (the platform): browser window, dashboard stand-in, Yago's dock ---- */
+	.yv-wslab {
+		position: absolute;
+		inset: 0;
+		border-radius: 1.2em;
+		transform: translateZ(var(--z));
+	}
+	.yv-wfront {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		border-radius: 1.2em;
+		background: #f1efea;
+		color: #0b0f14;
+		font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+		box-shadow:
+			inset 0 0 0 0.1em rgba(255, 255, 255, 0.7),
+			0 1.4em 2.4em -0.8em rgba(0, 0, 0, 0.65);
+		transform: translateZ(0.05em);
+	}
+	.yv-wfront::after {
+		/* a soft sheen across the window */
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 38%);
+	}
+	.yv-chrome {
+		flex: none;
+		display: flex;
+		align-items: center;
+		gap: 0.45em;
+		height: 1.9em;
+		padding: 0 0.9em;
+		background: #e4e1da;
+	}
+	.yv-chrome i {
+		width: 0.5em;
+		height: 0.5em;
+		border-radius: 50%;
+		background: #c2beb4;
+	}
+	.yv-url {
+		flex: none;
+		width: 11em;
+		height: 1.1em;
+		margin: 0 auto;
+		border-radius: 0.55em;
+		background: #f6f4ef;
+		color: #7b8591;
+		font-size: 0.6em;
+		line-height: 1.85em;
+		text-align: center;
+	}
+	.yv-wbody {
+		flex: 1;
+		display: grid;
+		grid-template-columns: 4.6em 1fr 10.9em;
+		min-height: 0;
+	}
+	.yv-side {
+		position: relative;
+		padding: 0.6em 0.45em;
+		background: #ebe8e1;
+	}
+	.yv-hl {
+		position: absolute;
+		left: 0.3em;
+		right: 0.3em;
+		top: 0.6em;
+		height: 1.9em;
+		border-radius: 0.5em;
+		background: #cfd2f5;
+	}
+	.yv-sr {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 0.4em;
+		height: 2.1em;
+		padding: 0 0.35em;
+	}
+	.yv-sr .yv-bar {
+		height: 0.5em;
+		max-width: 2.4em;
+		background: #46505b;
+		opacity: 0.7;
+	}
+	.yv-sub {
+		padding-left: 0.9em;
+	}
+	.yv-sic {
+		flex: none;
+		width: 0.8em;
+		height: 0.8em;
+		border-radius: 0.25em;
+		background: #8fa9b8;
+		opacity: 0.8;
+	}
+	.yv-main {
+		position: relative;
+		min-width: 0;
+		padding: 0.8em 0.7em;
+	}
+	.yv-pg {
+		position: absolute;
+		inset: 0.8em 0.7em;
+		opacity: 0;
+	}
+	.yv-pt {
+		display: block;
+		margin-bottom: 0.55em;
+		font-size: 0.95em;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+	.yv-card2 {
+		padding: 0.55em 0.6em;
+		border-radius: 0.6em;
+		background: #fff;
+		border: 1px solid rgba(11, 15, 20, 0.08);
+	}
+	.yv-card3 {
+		margin-top: 0.5em;
+	}
+	.yv-card2 small {
+		display: block;
+		margin: 0.1em 0 0.25em;
+		font-size: 0.62em;
+		color: #6b7480;
+	}
+	.yv-inp {
+		position: relative;
+		display: block;
+		height: 1.7em;
+		margin-bottom: 0.35em;
+		padding: 0.4em 0.55em;
+		border-radius: 0.4em;
+		border: 1px solid rgba(11, 15, 20, 0.14);
+		font-size: 0.7em;
+		line-height: 0.9;
+		white-space: nowrap;
+	}
+	.yv-inp2 {
+		height: 1.5em;
+		padding: 0.45em 0.55em;
+	}
+	.yv-inp2 .yv-bar {
+		height: 0.45em;
+		margin-top: 0.1em;
+		background: #aeb6bf;
+	}
+	.yv-abs {
+		position: absolute;
+		left: 0.55em;
+		top: 0.4em;
+	}
+	.yv-conv {
+		display: grid;
+		grid-template-columns: 3.4em 1fr;
+		gap: 0.5em;
+		height: 12em;
+	}
+	.yv-clist {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3em;
+	}
+	.yv-cr {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25em;
+		padding: 0.4em;
+		border-radius: 0.4em;
+	}
+	.yv-cr.on {
+		background: #e4e1da;
+	}
+	.yv-cr i {
+		display: block;
+		height: 0.4em;
+		width: 70%;
+		border-radius: 0.3em;
+		background: #46505b;
+		opacity: 0.7;
+	}
+	.yv-cr u {
+		display: block;
+		height: 0.35em;
+		width: 100%;
+		border-radius: 0.3em;
+		background: #aeb6bf;
+	}
+	.yv-cchat {
+		position: relative;
+		padding: 0.5em;
+		border-radius: 0.5em;
+		background: #ece9e2;
+	}
+	.yv-cb {
+		width: fit-content;
+		max-width: 92%;
+		margin: 0 0 0.4em;
+		padding: 0.35em 0.5em;
+		border-radius: 0.5em;
+		background: #fff;
+		font-size: 0.66em;
+		line-height: 1.25;
+	}
+	.yv-cs {
+		position: relative;
+		margin-left: auto;
+		background: #d8ece4;
+	}
+	.yv-ring {
+		position: absolute;
+		inset: -0.25em;
+		border-radius: 0.65em;
+		border: 0.12em solid #8fa9b8;
+		box-shadow: 0 0 0 0.2em rgba(143, 169, 184, 0.3);
+		opacity: 0;
+	}
+	.yv-hr {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 1.9em;
+		border-bottom: 1px solid rgba(11, 15, 20, 0.07);
+	}
+	.yv-hr:last-child {
+		border-bottom: 0;
+	}
+	.yv-hr .yv-bar {
+		height: 0.5em;
+		background: #46505b;
+		opacity: 0.7;
+	}
+	.yv-hr em {
+		font-style: normal;
+		font-size: 0.66em;
+		color: #46505b;
+	}
+	.yv-dockw {
+		position: absolute;
+		right: 0.5em;
+		top: 2.4em;
+		bottom: 0.55em;
+		width: 10.3em;
+		transform: translateZ(1.6em);
+		font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+		color: #0b0f14;
+	}
+	.yv-dwin {
+		height: 100%;
+		padding: 0.25em;
+		border-radius: 0.95em;
+		background: #1c1c1e;
+		box-shadow:
+			0 1.1em 1.8em -0.5em rgba(0, 0, 0, 0.6),
+			0 0 0 0.06em rgba(255, 255, 255, 0.14);
+	}
+	.yv-dwin > .yv-seg {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin: 0;
+		padding: 0.2em;
+		border-radius: 0.7em 0.7em 0 0;
+		font-size: 0.6em;
+	}
+	.yv-dstack {
+		position: relative;
+		height: calc(100% - 1.7em);
+		padding: 0.5em 0.5em 0;
+		border-radius: 0 0 0.75em 0.75em;
+		background: #f7f6f2;
+		font-size: 0.74em;
+		line-height: 1.25;
+	}
+	.yv-ds {
+		position: absolute;
+		inset: 0.5em 0.5em 0;
+		opacity: 0;
+	}
+	.yv-ds > * {
+		margin: 0 0 0.4em;
+	}
+	.yv-ub2 {
+		font-size: 0.95em;
+		padding: 0.35em 0.5em;
+	}
+	.yv-yc2 {
+		padding: 0.4em 0.5em 0.45em;
+	}
+	.yv-act2 {
+		height: 1.8em;
+		margin-top: 0.4em;
+	}
+	.yv-lk {
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+		border-radius: 0.2em;
+		padding: 0 0.15em;
+		margin: 0 -0.15em;
+	}
+
+	/* ---- the results panel (the plate) ---- */
+	.yv-plate {
+		position: absolute;
+		left: 0.75rem;
+		right: 0.75rem;
+		bottom: 0.75rem;
+	}
+	.yv-pcard {
+		position: relative;
+		height: 6.2rem;
+		overflow: hidden;
+		border-radius: 3px;
+		background: #f6f8fa;
+		color: #0b0f14;
+		box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.7);
+	}
+	.yv-gl,
+	.yv-dg {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0;
+		padding-left: 0.25rem;
+		overflow: hidden;
+		user-select: none;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 9px;
+		line-height: 10.5px;
+	}
+	.yv-tall {
+		display: none;
+	}
+	.yv-gl {
+		color: #cfd2f5;
+		filter: blur(7px);
+	}
+	.yv-dg {
+		color: rgba(11, 15, 20, 0.55);
+	}
+	.yv-face {
+		position: absolute;
+		inset: 0 0 auto 0;
+		display: flex;
+		gap: 0.75rem;
+		padding: 0.65rem 0.75rem 0;
+		opacity: 0;
+	}
 	.yv-face :global(b) {
 		font-weight: 800;
 		color: #0b0f14;
 	}
-	.yv-face {
-		opacity: 0;
-		animation: yv-face 12s infinite;
-		animation-delay: calc(var(--i) * 4s);
+	.yv-n {
+		margin: 0;
+		font-size: 2.5rem;
+		font-weight: 300;
+		line-height: 0.95;
+		letter-spacing: -0.02em;
 	}
-	@keyframes yv-face {
-		0% {
-			opacity: 0;
-		}
-		5%,
-		28% {
-			opacity: 1;
-		}
-		34%,
-		100% {
-			opacity: 0;
-		}
+	.yv-d {
+		position: relative;
+		flex: 1;
+		min-width: 0;
+		margin: 0.25rem 0 0;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.5rem;
+		line-height: 1.35;
+		color: rgba(0, 0, 0, 0.6);
+	}
+	.yv-cl {
+		position: absolute;
+		inset: 0 0 auto 0;
+		margin: 0;
+		opacity: 0;
+	}
+	.yv-agents {
+		display: flex;
+		justify-content: space-between;
+		margin: 0.5rem 0 0;
+		padding: 0;
+		list-style: none;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: #e9edf0;
+		white-space: nowrap;
 	}
 	.yv-ag {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
 		opacity: 0.4;
-		animation: yv-act 12s infinite;
-		animation-delay: calc(var(--i) * 4s);
 	}
-	.yv-ag .yv-dot {
-		animation: yv-dot 12s infinite;
-		animation-delay: calc(var(--i) * 4s);
+	.yv-dot {
+		width: 0.375rem;
+		height: 0.375rem;
+		flex: none;
+		border-radius: 50%;
+		border: 1px solid rgba(255, 255, 255, 0.6);
 	}
-	@keyframes yv-act {
-		0%,
-		3% {
-			opacity: 0.4;
+
+	/* ---- wide tile (the 2x2 on desktop, or a wide 2-column tile): panel on the left, devices get the full height ---- */
+	@container (min-width: 440px) {
+		.yv-stage {
+			left: 38%;
+			height: auto;
+			bottom: 0;
+			perspective-origin: 50% 42%;
 		}
-		7%,
-		30% {
-			opacity: 1;
+		.yv-devp {
+			top: 50%;
+			font-size: min(1.32cqw, 7.7px);
+			margin-top: -18.5em;
 		}
-		35%,
-		100% {
-			opacity: 0.4;
+		.yv-devw {
+			top: 50%;
+			font-size: min(1.68cqw, 9.8px);
+			margin-top: -10.5em;
 		}
-	}
-	@keyframes yv-dot {
-		0%,
-		3% {
-			background: transparent;
+		.yv-glow {
+			left: 68%;
+			top: 12%;
+			width: 62%;
+			height: 76%;
 		}
-		7%,
-		30% {
-			background: #cfd2f5;
+		.yv-plate {
+			right: auto;
+			top: 2.9rem;
+			width: 35%;
+			max-width: 15.5rem;
+			display: flex;
+			flex-direction: column;
 		}
-		35%,
-		100% {
-			background: transparent;
+		.yv-pcard {
+			flex: 1;
+			height: auto;
 		}
-	}
-	@media (max-width: 639px) {
-		.yv-phone {
-			font-size: 6.2px;
+		.yv-face {
+			flex-direction: column;
+			gap: 0.35rem;
+			padding: 0.85rem 0.9rem 0;
+		}
+		.yv-n {
+			font-size: 3.4rem;
+		}
+		.yv-gl:not(.yv-tall),
+		.yv-dg:not(.yv-tall) {
+			display: none;
+		}
+		.yv-tall {
+			display: block;
+		}
+		.yv-d {
+			flex: none;
+			min-height: 4.4em;
+			font-size: 0.56rem;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.yv-phone {
-			animation: none;
-			transform: rotateY(-18deg) rotateX(4deg);
+		.yv *,
+		.yv-rows {
+			animation: none !important;
 		}
-		.yv-chat {
-			animation: none;
-		}
-		.yv-chat > * {
-			animation: none;
-			opacity: 1;
-			max-height: none;
-		}
+		/* a still: the sale, the first number */
+		.yv-devw,
+		.yv-LB,
+		.yv-LC,
+		.yv-wl,
+		.yv-spec,
 		.yv-dots {
 			display: none;
 		}
-		.yv-face,
-		.yv-ag,
-		.yv-ag .yv-dot {
-			animation: none;
+		.yv-devp {
+			transform: none;
+		}
+		.yv-phone {
+			transform: rotateY(-18deg) rotateX(4deg);
 		}
 		.yv-face:first-of-type {
 			opacity: 1;
 		}
-		.yv-ag {
+		.yv-ag:first-of-type {
 			opacity: 1;
 		}
 	}

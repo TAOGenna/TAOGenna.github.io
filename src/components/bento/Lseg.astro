@@ -1,18 +1,30 @@
 ---
 // Paper tile: three scenes in turn. Per scene the prompt labels type in, the photo
 // comes into focus, then the recolored segmentation mask fades in beside it.
+// Wide tile (the full-width banner, container >= 840 px): all three scenes sit side by side as a triptych on the same
+// 24 s loop. Each column runs the same sequence offset by 8 s (negative delays, so it is already in steady state at
+// t=0): one column is always working, the other two rest in their finished state (clear photo, mask, labels). Narrow
+// tiles keep the stacked scenes. Data: real LSeg inputs/masks, src/data/tiles/lseg.json (scripts/tile-data).
 import data from '../../data/tiles/lseg.json'
 
 const scenes = data.scenes
 const T = 8 // seconds per scene
+const N = scenes.length
+// banner: each label has its own keyframes (appear at 0.5 s + 0.6 s per label, rest until the column resets at 95 %)
+const labelKf = Array.from({ length: 6 }, (_, j) => {
+	const a = ((0.5 + j * 0.6) / (N * T)) * 100
+	return `@keyframes ls-bl${j}{0%,${a.toFixed(2)}%{opacity:0;transform:translateX(-6px)}${(a + 1.5).toFixed(2)}%,95%{opacity:1;transform:none}100%{opacity:0}}`
+}).join('')
 ---
 
-<div class='relative h-full w-full'>
+<div class='lseg-root relative h-full w-full'>
+	<style is:inline set:html={labelKf}></style>
+	<div class='lseg-row h-full w-full'>
 	{
 		scenes.map((s, i) => (
 			<div
 				class='lseg-sc absolute inset-0 flex items-center justify-center gap-3 px-4 pb-3 pt-10 sm:gap-4'
-				style={`--sd:${i * T}s`}
+				style={`--sd:${i * T}s;--sw:${-((N * T - i * T) % (N * T))}s`}
 			>
 				<img
 					src={`/projects/tiles/lseg_${s.key}_input.jpg`}
@@ -36,15 +48,19 @@ const T = 8 // seconds per scene
 					class='lseg-mask h-full shrink-0 rounded-sm object-cover'
 					style={`aspect-ratio:${s.ar}`}
 				/>
-				<p class='absolute right-3 top-3.5 font-mono text-[0.5rem] uppercase tracking-wider opacity-45'>
+				<p class='lseg-ct absolute right-3 top-3.5 font-mono text-[0.5rem] uppercase tracking-wider opacity-45'>
 					{String(i + 1).padStart(2, '0')}/{String(scenes.length).padStart(2, '0')} · {s.scene}
 				</p>
 			</div>
 		))
 	}
+	</div>
 </div>
 
 <style>
+	.lseg-root {
+		container-type: inline-size;
+	}
 	/* 24s cycle = 3 scenes x 8s; keyframes are relative to each scene's own delay */
 	.lseg-sc {
 		opacity: 0;
@@ -116,12 +132,112 @@ const T = 8 // seconds per scene
 			opacity: 0;
 		}
 	}
+	/* wide tile: a triptych, three columns, one always working */
+	@container (min-width: 840px) {
+		.lseg-row {
+			display: flex;
+		}
+		.lseg-root .lseg-sc {
+			position: relative;
+			inset: auto;
+			flex: 1 1 0;
+			min-width: 0;
+			gap: 0.55rem;
+			padding: 2.5rem 0.9rem 0.75rem;
+			opacity: 1;
+			animation: none;
+		}
+		.lseg-root .lseg-sc + .lseg-sc {
+			border-left: 1px solid rgba(11, 15, 20, 0.09);
+		}
+		.lseg-root .lseg-sc {
+			padding-inline: 0.7rem;
+			gap: 0.45rem;
+		}
+		/* images and labels scale with the tile so a column never overflows (944 px is the tightest) */
+		.lseg-root .lseg-photo,
+		.lseg-root .lseg-mask {
+			height: min(100%, 9.4cqw);
+			animation-delay: var(--sw);
+		}
+		.lseg-root .lseg-sc ul {
+			font-size: min(0.92rem, 1.3cqw);
+			line-height: 1.25;
+		}
+		.lseg-photo {
+			animation-name: ls-bp;
+		}
+		.lseg-mask {
+			animation-name: ls-bm;
+		}
+		.lseg-li {
+			animation-delay: var(--sw);
+		}
+		.lseg-li:nth-child(1) { animation-name: ls-bl0; }
+		.lseg-li:nth-child(2) { animation-name: ls-bl1; }
+		.lseg-li:nth-child(3) { animation-name: ls-bl2; }
+		.lseg-li:nth-child(4) { animation-name: ls-bl3; }
+		.lseg-li:nth-child(5) { animation-name: ls-bl4; }
+		.lseg-li:nth-child(6) { animation-name: ls-bl5; }
+		.lseg-ct {
+			animation: ls-bc 24s infinite;
+			animation-delay: var(--sw);
+		}
+	}
+	@keyframes ls-bp {
+		0% {
+			filter: grayscale(1) blur(7px);
+		}
+		14%,
+		95% {
+			filter: grayscale(1) blur(0);
+		}
+		100% {
+			filter: grayscale(1) blur(7px);
+		}
+	}
+	@keyframes ls-bm {
+		0%,
+		17% {
+			opacity: 0;
+		}
+		22%,
+		95% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	/* the scene's caption is lit while its column works, dimmed while it rests */
+	@keyframes ls-bc {
+		0%,
+		33% {
+			opacity: 0.8;
+		}
+		38%,
+		95% {
+			opacity: 0.3;
+		}
+		100% {
+			opacity: 0.8;
+		}
+	}
 	@media (prefers-reduced-motion: reduce) {
 		.lseg-sc {
 			animation: none;
 		}
 		.lseg-sc:first-child {
 			opacity: 1;
+		}
+		@container (min-width: 840px) {
+			.lseg-root .lseg-sc {
+				opacity: 1;
+			}
+			.lseg-ct {
+				animation: none;
+				opacity: 0.55;
+			}
 		}
 		.lseg-li,
 		.lseg-photo,

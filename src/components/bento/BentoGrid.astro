@@ -17,9 +17,10 @@ const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
 ---
 
 <!--  M M B B   M=Majorana 2x2  B=title 2x1
-      D D S Y   S=Style  Y=Yape
-      V C W W   V=YaVendio 1x2  C=Connect 4  W=Distill 2x1
-      V K L L   K=Soil  L=LSeg 2x1 -->
+      M M S Y   S=Style  Y=Yape
+      V V C K   V=YaVendio 2x2  C=Connect 4  K=Soil
+      V V W W   W=Distill 2x1
+      L L L L   L=LSeg, a full-width banner (2x1 on phones) -->
 <div class='grid auto-rows-[10rem] grid-flow-dense grid-cols-2 gap-3 lg:grid-flow-row lg:grid-cols-4'>
 	<BentoTile project={by('Majorana zero modes')} tone='paper' label='Majorana' class='col-span-2 row-span-2'><Majorana /></BentoTile>
 	<div class='col-span-2 flex flex-col justify-between rounded-xl bg-[#0b0f14] p-5 text-white'>
@@ -33,12 +34,13 @@ const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
 	<BentoTile
 		project={by('YaVendio')}
 		tone='ink'
-		class='row-span-2'
+		logo={{ src: '/projects/yavendio-wordmark-white.png', alt: 'YaVendio' }}
+		class='col-span-2 row-span-2'
 		blurb='Built the multi-tenant shopping agent behind $55M in closed sales, rebuilt it to handle 600K conversations a month, and wrote Yago, the backoffice agent handling 10K conversations a month.'
 		tags={['Applied AI', 'Product']}
 	><YaVendio /></BentoTile>
 	<BentoTile project={by('MCTS for Connect 4')} tone='paper' label='Connect 4 with Monte Carlo tree search'><Connect4 /></BentoTile>
-	<BentoTile project={by('Distill')} tone='paper' label='Distill' class='col-span-2'><Distill /></BentoTile>
 	<BentoTile project={by('Soil Organic Carbon with GNNs')} tone='glacier' label='Soil carbon'><Soil /></BentoTile>
-	<BentoTile project={by('Language-driven Segmentation')} tone='paper' label='LSeg' class='col-span-2'><Lseg /></BentoTile>
+	<BentoTile project={by('Distill')} tone='paper' label='Distill' class='col-span-2'><Distill /></BentoTile>
+	<BentoTile project={by('Language-driven Segmentation')} tone='paper' label='LSeg' class='col-span-2 lg:col-span-4'><Lseg /></BentoTile>
 </div>

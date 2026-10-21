@@ -87,11 +87,17 @@ chrome; use the hex values only inside tile scenes, where the tone is fixed.
 **Frame.** `BentoTile.astro` owns the frame; a scene never draws its own border, chip or hover panel.
 Props: `project` (from `data/projects.ts`), `tone` (`ink | paper | glacier | slate`), `label` (chip text),
 `reveal` (hover panel, default on; turn off only when the tile already says everything, like Yape),
-`blurb`/`tags` (override the panel copy).
+`blurb`/`tags` (override the panel copy), `logo` (a special case: show a logo instead of the mono name
+chip; only YaVendio does, with its real white wordmark `public/projects/yavendio-wordmark-white.png`).
 
 **Grid.** `auto-rows-[10rem]`, `gap-3`, 2 columns on phones (`grid-flow-dense`), 4 from `lg`. Spans:
 1×1 default, `col-span-2`, `row-span-2`; a scene must survive 1×1 up to 2×2 and stay readable at phone
-width. Layout lives in `BentoGrid.astro` (homepage + top of `/projects`) and `MoreGrid.astro` (archive);
+width. **The grid is deliberately uneven**: big tiles are staggered (Majorana 2×2 on the left, YaVendio 2×2
+below it, Distill a wide band), and a row can end in a full-width banner (`col-span-2 lg:col-span-4`, LSeg).
+Never tidy it into a regular lattice; the section's character is that it isn't homogeneous. A tile that has
+to work at very different widths (YaVendio: 2×2 on desktop, full width on phones) sizes itself from its own
+width with a CSS container query (`container-type: inline-size`, `cqw` units, `@container (min-width: …)`)
+instead of viewport breakpoints. Layout lives in `BentoGrid.astro` (homepage + top of `/projects`) and `MoreGrid.astro` (archive);
 **source order is grid order**, and the diagram in each file's header comment is the map. Update it when
 you move things.
 
