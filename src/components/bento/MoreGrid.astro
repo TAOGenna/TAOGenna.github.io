@@ -8,6 +8,7 @@
 //   H P P W    P=Pong 2x1    W=PPCA
 //   L K C C    L=MLIP  K=Non-Markovianity  C=Competitive programming 2x2
 //   X X C C    X=Photonics 2x1
+//   D D 4 4    D=Distill 2x1  4=Connect 4 2x1 (both moved off the homepage)
 import BentoTile from './BentoTile.astro'
 import Maho from './Maho.astro'
 import Inversion from './Inversion.astro'
@@ -21,6 +22,8 @@ import Mlip from './Mlip.astro'
 import NonMarkov from './NonMarkov.astro'
 import Photonics from './Photonics.astro'
 import CompetitiveProgramming from './CompetitiveProgramming.astro'
+import Distill from './Distill.astro'
+import Connect4 from './Connect4.astro'
 import { projects } from '@/data/projects'
 import { getAllPosts } from '@/utils'
 
@@ -74,4 +77,6 @@ const photonics = writing('photonics-microwave-systems', 'A 3-channel radio-over
 	<BentoTile project={nonMarkov} tone='paper' label='Non-Markovianity'><NonMarkov /></BentoTile>
 	<BentoTile project={cp} tone='paper' label='Competitive programming tools' class='col-span-2 row-span-2'><CompetitiveProgramming /></BentoTile>
 	<BentoTile project={photonics} tone='paper' label='Photonics' class='col-span-2'><Photonics /></BentoTile>
+	<BentoTile project={by('Distill')} tone='paper' label='Distill' class='col-span-2'><Distill /></BentoTile>
+	<BentoTile project={by('MCTS for Connect 4')} tone='paper' label='Connect 4 with Monte Carlo tree search' class='col-span-2'><Connect4 /></BentoTile>
 </div>

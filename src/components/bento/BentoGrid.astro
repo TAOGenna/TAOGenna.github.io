@@ -2,11 +2,9 @@
 // The "Stuff I've Made" bento: one bespoke scene per project (live SVG/HTML + real data), in the
 // layout below. Used by the homepage and by /projects (which adds MoreGrid for the archive).
 import BentoTile from './BentoTile.astro'
-import Distill from './Distill.astro'
 import StyleTransfer from './StyleTransfer.astro'
 import Yape from './Yape.astro'
 import YaVendio from './YaVendio.astro'
-import Connect4 from './Connect4.astro'
 import Majorana from './Majorana.astro'
 import Soil from './Soil.astro'
 import Lseg from './Lseg.astro'
@@ -18,11 +16,11 @@ const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
 ---
 
 <!--  M M B B   M=Majorana 2x2  B=title 2x1
-      M M S Y   S=Style  Y=Yape
-      V V C K   V=YaVendio 2x2  C=Connect 4  K=Soil
-      V V P P   P=Projections 2x2, staggered right of YaVendio
-      W W P P   W=Distill 2x1
-      L L L L   L=LSeg, a full-width banner (2x1 on phones) -->
+      M M P P   P=Projections 2x2, staggered right of Majorana
+      V V P P   V=YaVendio 2x2
+      V V S Y   S=Style  Y=Yape
+      L L K K   L=LSeg 2x1  K=Soil (Spatialise) 2x1
+      Distill and Connect 4 live in the /projects archive (MoreGrid). -->
 <div class='grid auto-rows-[10rem] grid-flow-dense grid-cols-2 gap-3 lg:grid-flow-row lg:grid-cols-4'>
 	<BentoTile project={by('Majorana zero modes')} tone='paper' label='Majorana' class='col-span-2 row-span-2'><Majorana /></BentoTile>
 	<div class='col-span-2 flex flex-col justify-between rounded-xl bg-[#0b0f14] p-5 text-white'>
@@ -31,8 +29,7 @@ const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
 			Stuff I've<br />Made.
 		</h1>
 	</div>
-	<BentoTile project={by('Neural Style Transfer')} tone='paper' label='Style transfer'><StyleTransfer /></BentoTile>
-	<BentoTile project={by('Recommendation Systems')} tone='glacier' label='Yape' reveal={false}><Yape /></BentoTile>
+	<BentoTile project={by('Projections')} tone='slate' label='Projections' class='col-span-2 row-span-2'><Projections /></BentoTile>
 	<BentoTile
 		project={by('YaVendio')}
 		tone='ink'
@@ -41,9 +38,8 @@ const mono = 'font-mono text-[0.6rem] uppercase tracking-wider'
 		blurb='Built the multi-tenant shopping agent behind $55M in closed sales, rebuilt it to handle 600K conversations a month, and wrote Yago, the backoffice agent handling 10K conversations a month.'
 		tags={['Applied AI', 'Product']}
 	><YaVendio /></BentoTile>
-	<BentoTile project={by('MCTS for Connect 4')} tone='paper' label='Connect 4 with Monte Carlo tree search'><Connect4 /></BentoTile>
-	<BentoTile project={by('Soil Organic Carbon with GNNs')} tone='glacier' label='Soil carbon'><Soil /></BentoTile>
-	<BentoTile project={by('Projections')} tone='slate' label='Projections' class='col-span-2 row-span-2'><Projections /></BentoTile>
-	<BentoTile project={by('Distill')} tone='paper' label='Distill' class='col-span-2'><Distill /></BentoTile>
-	<BentoTile project={by('Language-driven Segmentation')} tone='paper' label='LSeg' class='col-span-2 lg:col-span-4'><Lseg /></BentoTile>
+	<BentoTile project={by('Neural Style Transfer')} tone='paper' label='Style transfer'><StyleTransfer /></BentoTile>
+	<BentoTile project={by('Recommendation Systems')} tone='glacier' label='Yape' reveal={false}><Yape /></BentoTile>
+	<BentoTile project={by('Language-driven Segmentation')} tone='paper' label='LSeg' class='col-span-2'><Lseg /></BentoTile>
+	<BentoTile project={by('Soil Organic Carbon with GNNs')} tone='glacier' label='Soil carbon' class='col-span-2'><Soil /></BentoTile>
 </div>

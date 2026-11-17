@@ -1,5 +1,6 @@
 ---
-// Projections: OBJECT ON A SURFACE. An open magazine lying on the slate tile. On hover its right page turns, spread
+// Projections: OBJECT ON A SURFACE. An open magazine lying on the Projections landing's
+// teal ground (its colour, glow and imprinted cover drawing, public/projects/tiles/proj_lines.webp). On hover its right page turns, spread
 // after spread, through the real issues; leaving the tile closes back to the still frame (the Nº 01 front).
 //
 // DATA (all real, nothing invented): the spreads are the README's own captures of Nº 01 (Nov 2026) and the
@@ -43,7 +44,16 @@ const bg = (src: string) => `background-image:url(${src})`
 		position: absolute;
 		inset: 0;
 		container-type: size;
-		background: radial-gradient(120% 90% at 50% 58%, #8b9aac 0%, #7e8ea1 55%, #6f7f93 100%);
+		/* the Projections landing's ground: teal, a glow up right, the cover's drawing imprinted in light lines */
+		background: radial-gradient(75% 65% at 78% 22%, rgba(150, 220, 222, 0.3), transparent 72%), #477f82;
+	}
+	.pj::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba(244, 250, 248, 0.32);
+		-webkit-mask: url(/projects/tiles/proj_lines.webp) center / cover no-repeat;
+		mask: url(/projects/tiles/proj_lines.webp) center / cover no-repeat;
 	}
 	.pj-stage {
 		position: absolute;
@@ -58,7 +68,7 @@ const bg = (src: string) => `background-image:url(${src})`
 		position: absolute;
 		inset: 10% 4% -7% 4%;
 		border-radius: 50%;
-		background: rgba(11, 15, 20, 0.45);
+		background: rgba(8, 36, 40, 0.6);
 		filter: blur(18px);
 	}
 	.pj-book {
@@ -167,7 +177,7 @@ const bg = (src: string) => `background-image:url(${src})`
 </style>
 
 <script>
-	import { onTileHover } from '@/utils/hover'
+	import { onTileHover } from '../../utils/hover'
 
 	const HOLD = 1500 // ms a spread stays open before the next turn
 	const TURN = 950 // must match the .pj-leaf.turn transition
