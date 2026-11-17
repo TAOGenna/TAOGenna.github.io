@@ -23,6 +23,18 @@ export const HOMEPAGE_COUNT = 6
 
 export const projects: Project[] = [
 	{
+		heading: 'Projections',
+		href: 'https://taogenna.github.io/projections/',
+		subheading:
+			'A magazine my agents make from what I save: papers, posts, repos, contest problems. Every piece is captured in full, with its own figures, formulas and code, and bound into an issue that turns like paper in the browser.',
+		altText: 'Projections, an open issue of the magazine',
+		tags: [
+			{ text: 'Agent skill', outline: true },
+			{ text: 'Python', outline: true },
+			{ text: 'Playwright', outline: true }
+		]
+	},
+	{
 		heading: 'YaVendio',
 		href: 'https://yavendio.com',
 		subheading: 'Conversational AI agents that sell and support customers over WhatsApp.',

@@ -1,0 +1,232 @@
+---
+// Projections: OBJECT ON A SURFACE. An open magazine lying on the slate tile. On hover its right page turns, spread
+// after spread, through the real issues; leaving the tile closes back to the still frame (the Nº 01 front).
+//
+// DATA (all real, nothing invented): the spreads are the README's own captures of Nº 01 (Nov 2026) and the
+// sample Nº 00, resized by scripts/tile-data/projections.py -> public/projects/tiles/proj_*.jpg.
+// ILLUSTRATIVE: only the page turn itself (the real reader turns pages too, but this one is drawn here in CSS).
+// Static fallback (no JS / reduced motion): the open Nº 01 front.
+// Layout is plain scoped CSS (no Tailwind classes), so it works without a dev-server restart.
+const spreads = [
+	'n01-cover',
+	'n01-contents',
+	'n00-jpeg',
+	'n00-muon',
+	'n00-matmul',
+	'n01-winding-numbers',
+	'n01-self-compressing',
+	'n01-crawler'
+].map((n, i) => `/projects/tiles/proj_${i}_${n}.jpg`)
+const bg = (src: string) => `background-image:url(${src})`
+---
+
+<div class='pj' data-pj={JSON.stringify(spreads)}>
+	<div class='pj-stage'>
+		<div class='pj-shadow' aria-hidden='true'></div>
+		<div
+			class='pj-book'
+			role='img'
+			aria-label='Projections: an open issue of the magazine, its pages turning through chapters on JPEG, Muon, matrix multiplication and winding numbers'
+		>
+			<div class='pj-half pj-l' style={bg(spreads[0])}></div>
+			<div class='pj-half pj-r' style={bg(spreads[0])}></div>
+			<div class='pj-leaf'>
+				<div class='pj-face pj-front' style={bg(spreads[0])}></div>
+				<div class='pj-face pj-back'></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.pj {
+		position: absolute;
+		inset: 0;
+		container-type: size;
+		background: radial-gradient(120% 90% at 50% 58%, #8b9aac 0%, #7e8ea1 55%, #6f7f93 100%);
+	}
+	.pj-stage {
+		position: absolute;
+		left: 50%;
+		top: 47%;
+		width: min(80cqw, 112cqh);
+		aspect-ratio: 16 / 10;
+		translate: -50% -50%;
+		perspective: 1700px;
+	}
+	.pj-shadow {
+		position: absolute;
+		inset: 10% 4% -7% 4%;
+		border-radius: 50%;
+		background: rgba(11, 15, 20, 0.45);
+		filter: blur(18px);
+	}
+	.pj-book {
+		position: absolute;
+		inset: 0;
+		transform: rotateX(16deg);
+		transform-origin: 50% 100%;
+		transform-style: preserve-3d;
+	}
+	.pj-half,
+	.pj-face {
+		position: absolute;
+		top: 0;
+		width: 50%;
+		height: 100%;
+		background-size: 200% 100%;
+		background-repeat: no-repeat;
+		background-color: #f1efea;
+	}
+	.pj-l {
+		left: 0;
+		background-position: 0 0;
+		border-radius: 2px 0 0 2px;
+	}
+	.pj-r {
+		left: 50%;
+		background-position: 100% 0;
+		border-radius: 0 2px 2px 0;
+	}
+	/* the gutter: each page darkens toward the spine */
+	.pj-half::after,
+	.pj-face::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+	.pj-l::after,
+	.pj-back::after {
+		background: linear-gradient(to left, rgba(11, 15, 20, 0.28), rgba(11, 15, 20, 0) 9%);
+	}
+	.pj-r::after,
+	.pj-front::after {
+		background: linear-gradient(to right, rgba(11, 15, 20, 0.3), rgba(11, 15, 20, 0) 9%);
+	}
+	.pj-leaf {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		width: 50%;
+		height: 100%;
+		transform-origin: 0 50%;
+		transform-style: preserve-3d;
+		transform: translateZ(1px) rotateY(0deg);
+	}
+	.pj-leaf .pj-face {
+		left: 0;
+		width: 100%;
+		backface-visibility: hidden;
+	}
+	.pj-front {
+		background-position: 100% 0;
+		border-radius: 0 2px 2px 0;
+	}
+	.pj-back {
+		background-position: 0 0;
+		border-radius: 2px 0 0 2px;
+		transform: rotateY(180deg);
+	}
+	/* light falling off the page as it lifts */
+	.pj-face::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background: #0b0f14;
+		opacity: 0;
+	}
+	.pj-leaf.turn {
+		transition: transform 0.95s cubic-bezier(0.45, 0.05, 0.25, 1);
+		transform: translateZ(1px) rotateY(-180deg);
+	}
+	.pj-leaf.turn .pj-front::before {
+		animation: pj-shade-front 0.95s ease-in forwards;
+	}
+	.pj-leaf.turn .pj-back::before {
+		animation: pj-shade-back 0.95s ease-out forwards;
+	}
+	@keyframes pj-shade-front {
+		from { opacity: 0; }
+		to { opacity: 0.35; }
+	}
+	@keyframes pj-shade-back {
+		from { opacity: 0.3; }
+		to { opacity: 0; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.pj-leaf.turn {
+			transition: none;
+		}
+		.pj-leaf.turn .pj-face::before {
+			animation: none;
+		}
+	}
+</style>
+
+<script>
+	import { onTileHover } from '@/utils/hover'
+
+	const HOLD = 1500 // ms a spread stays open before the next turn
+	const TURN = 950 // must match the .pj-leaf.turn transition
+
+	for (const root of document.querySelectorAll<HTMLElement>('[data-pj]')) {
+		const srcs: string[] = JSON.parse(root.dataset.pj!)
+		const q = (s: string) => root.querySelector<HTMLElement>(s)!
+		const L = q('.pj-l'), R = q('.pj-r'), leaf = q('.pj-leaf'), front = q('.pj-front'), back = q('.pj-back')
+		const set = (el: HTMLElement, i: number) => (el.style.backgroundImage = `url(${srcs[i]})`)
+		const loaded = new Map<number, Promise<void>>()
+		const load = (i: number) => {
+			if (!loaded.has(i)) {
+				const im = new Image()
+				im.src = srcs[i]
+				loaded.set(i, im.decode().catch(() => {}))
+			}
+			return loaded.get(i)!
+		}
+
+		let cur = 0
+		let playing = false
+		let timer = 0
+
+		// Show spread i, at rest.
+		const rest = (i: number) => {
+			leaf.classList.remove('turn')
+			cur = i
+			set(L, i)
+			set(R, i)
+			set(front, i)
+		}
+
+		const turn = async () => {
+			const next = (cur + 1) % srcs.length
+			await load(next)
+			if (!playing) return
+			load((next + 1) % srcs.length) // warm the one after
+			set(R, next) // revealed under the turning page
+			set(back, next) // lands on the left
+			void leaf.offsetWidth
+			leaf.classList.add('turn')
+			timer = window.setTimeout(() => {
+				if (!playing) return
+				rest(next)
+				timer = window.setTimeout(turn, HOLD)
+			}, TURN)
+		}
+
+		const play = () => {
+			if (playing || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+			playing = true
+			timer = window.setTimeout(turn, 350)
+		}
+		const idle = () => {
+			playing = false
+			clearTimeout(timer)
+			rest(0)
+		}
+
+		onTileHover(root, play, idle)
+	}
+</script>

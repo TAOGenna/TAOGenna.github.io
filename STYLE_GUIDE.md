@@ -121,7 +121,7 @@ one (glacier and slate are the cool breaks between paper tiles). Dark tiles are 
 |---|---|---|
 | Real photo | Pong, LSeg input, Style transfer | the original, uncropped story |
 | Printed page / book spread | Majorana (paper + blackboard), Inversion (paper + replayed simulation), Thesis | slow pan; chip top-left and plate top-right stay clear of the text |
-| Object on a surface | YaVendio phone, MLIP embossed card | CSS-3D or shadow, a real prop |
+| Object on a surface | YaVendio phone, MLIP embossed card, Projections open magazine (pages turn on hover) | CSS-3D or shadow, a real prop |
 | Pale data card on a plate | Yape, Soil | frosted card, mono labels |
 | Colour field / strips | Photonics | flat strips, thin ink lines over them |
 | Digit-contour texture | Quantum, PPCA, Soil background | digits only on contour lines; **max ~2 per block** |
@@ -144,7 +144,7 @@ old look). If a project only has a plot, re-draw it in the palette or pick a dif
 - Hover motion lives on the frame (panel slide-up), the wheel (spin up, orbs speed up) and Writing rows
   (2px lift). Scenes don't need to react to hover.
 - **Astro does not scope `@keyframes`**: prefix every name per tile (`yv-`, `st-`, `ls-`, `soil-`, `qc-`,
-  `ol-`, `ph-`, `th-`, `ion-`, `inv-`, `iv-`, `ml-`, `mj-`, `dst-`, `cpc-`, `vr-`, `hm-`, `ct-`, `pd-`, `lb-`, …) or tiles overwrite each other.
+  `ol-`, `ph-`, `th-`, `ion-`, `inv-`, `iv-`, `ml-`, `mj-`, `dst-`, `cpc-`, `vr-`, `hm-`, `ct-`, `pd-`, `lb-`, `pj-`, …) or tiles overwrite each other.
 - Honour `prefers-reduced-motion: reduce` (stop or freeze the loop). Every animated vector scene does;
   the video and photo tiles are exempt.
 - Video: `autoplay loop muted playsinline preload='metadata'`, a coloured `poster` (not a white-fade
