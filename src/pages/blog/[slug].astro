@@ -6,6 +6,9 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro'
 import PostLayout from '@/layouts/BlogPost.astro'
 import { getAllPosts } from '@/utils'
 import Link from '@/components/Link.astro'
+import Poem from '@/components/prose/Poem.astro'
+import Film from '@/components/prose/Film.astro'
+import Lede from '@/components/prose/Lede.astro'
 
 export const getStaticPaths = (async () => {
 	const blogEntries = await getAllPosts()
@@ -22,5 +25,5 @@ const { Content } = await entry.render()
 ---
 
 <PostLayout post={entry}>
-	<Content components={{ a: Link }} />
+	<Content components={{ a: Link, Poem, Film, Lede }} />
 </PostLayout>

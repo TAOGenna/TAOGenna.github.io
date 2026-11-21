@@ -1312,7 +1312,7 @@ const rows = std.map((x) => ({ ...x, k: x.d === null ? -1 : pillK++ }))
 
 		// ---- the reel: one scene at a time, advance on a timer, hold while hovered
 		const DUR = scenes.map((s) => +s.dataset.dur!)
-		const tile = root.closest('a')
+		const tile = root.closest('.tile')
 		let i = -1,
 			t = 0,
 			left = 0,

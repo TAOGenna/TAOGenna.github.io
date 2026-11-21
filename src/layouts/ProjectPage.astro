@@ -1,0 +1,98 @@
+---
+// A project write-up at /projects/<slug>/ (after thijs.net/projects/sf-game): back link, label,
+// title, italic subtitle, hero film or image, link row, the write-up, then more projects.
+// Title, subtitle and tags come from data/projects.ts; the rest from src/content/project/<slug>.mdx.
+import type { CollectionEntry } from 'astro:content'
+import type { Project } from '@/data/projects'
+import { projects } from '@/data/projects'
+import PageLayout from './BaseLayout.astro'
+import Film from '@/components/prose/Film.astro'
+import { destinationOf, resolveHref } from '../utils/destination'
+import 'katex/dist/katex.min.css'
+import '../styles/prose.css'
+
+interface Props {
+	entry: CollectionEntry<'project'>
+	project: Project
+}
+const { entry, project: p } = Astro.props
+const { year, hero, links } = entry.data
+const tags = p.tags?.map((t) => t.text) ?? []
+
+const linkRow = await Promise.all(links.map(async (l) => ({ ...l, d: await resolveHref(l.href, `project ${entry.slug}`) })))
+
+// Other projects that have a write-up, in grid order.
+const more = (
+	await Promise.all(projects.filter((x) => x !== p).map(async (x) => ({ x, d: await destinationOf(x) })))
+)
+	.filter(({ d }) => d.kind === 'page')
+	.slice(0, 2)
+
+const mono = 'font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground'
+---
+
+<PageLayout meta={{ title: p.heading, description: p.subheading }}>
+	<div class='mx-auto w-full max-w-[46rem]'>
+		<a href='/projects/' class='font-mono text-xs text-muted-foreground hover:text-foreground'>← Projects</a>
+
+		<header class='mt-10'>
+			<p class={mono}>Project <span class='mx-1'>/</span> {year}{tags.length > 0 && <span> · {tags.join(' · ')}</span>}</p>
+			<h1 class='mt-3 text-balance font-newsreader text-5xl font-normal leading-[1.05] tracking-tight text-foreground sm:text-6xl'>
+				{p.heading}
+			</h1>
+			<p class='mt-5 text-pretty font-newsreader text-xl italic leading-relaxed text-muted-foreground'>{p.subheading}</p>
+		</header>
+
+		{
+			hero?.video ? (
+				<Film src={hero.video} poster={hero.poster} caption={hero.caption} alt={p.altText} />
+			) : hero?.image ? (
+				<figure class='my-10'>
+					<img src={hero.image} alt={p.altText} class='w-full rounded-lg ring-1 ring-black/10' />
+					{hero.caption && <figcaption class='mt-3 text-center font-mono text-[0.7rem] text-muted-foreground'>{hero.caption}</figcaption>}
+				</figure>
+			) : null
+		}
+
+		{
+			linkRow.length > 0 && (
+				<nav class='-mt-2 mb-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm'>
+					{linkRow.map(({ label, d }) =>
+						d.kind === 'external' ? (
+							<a href={d.href} target='_blank' rel='noopener noreferrer' class='underline underline-offset-4 hover:opacity-60'>
+								{label} ↗
+							</a>
+						) : d.kind !== 'none' ? (
+							<a href={d.href} class='underline underline-offset-4 hover:opacity-60'>
+								{label} →
+							</a>
+						) : null
+					)}
+				</nav>
+			)
+		}
+
+		<article class='blog-prose font-lora break-words' data-pagefind-body>
+			<slot />
+		</article>
+	</div>
+
+	<section class='mx-auto mt-20 w-full max-w-[56rem] border-t border-border pt-10'>
+		<div class='flex items-baseline justify-between'>
+			{more.length > 0 && <h2 class='font-newsreader text-3xl'>More projects</h2>}
+			<a href='/projects/' class='ml-auto font-mono text-xs text-muted-foreground hover:text-foreground'>All projects →</a>
+		</div>
+		{
+			more.length > 0 && (
+				<div class='mt-6 grid gap-4 sm:grid-cols-2'>
+					{more.map(({ x, d }) => (
+						<a href={(d as { href: string }).href} class='group rounded-xl bg-[#f1efea] p-5 text-[#0b0f14] ring-1 ring-inset ring-black/10'>
+							<h3 class='font-newsreader text-2xl group-hover:underline'>{x.heading}</h3>
+							<p class='mt-2 text-sm leading-snug text-[#0b0f14]/70'>{x.subheading}</p>
+						</a>
+					))}
+				</div>
+			)
+		}
+	</section>
+</PageLayout>

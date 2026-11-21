@@ -39,4 +39,23 @@ const post = defineCollection({
 		})
 })
 
-export const collections = { post }
+// Project write-ups, served at /projects/<slug>/. The file name must match a `slug` in
+// data/projects.ts: title, subtitle and tags come from there, so they are written once.
+const project = defineCollection({
+	type: 'content',
+	schema: z.object({
+		year: z.number().int(),
+		hero: z
+			.object({
+				video: z.string().optional(),
+				image: z.string().optional(),
+				poster: z.string().optional(),
+				caption: z.string().optional()
+			})
+			.optional(),
+		// The link row under the hero. Internal paths are checked at build (utils/destination).
+		links: z.array(z.object({ label: z.string(), href: z.string() })).default([])
+	})
+})
+
+export const collections = { post, project }

@@ -1,0 +1,105 @@
+---
+// A poem set on a sheet of paper (after thariq.io/blog/clay-and-light). Use in any .mdx post or
+// project write-up. Each paragraph of the slot is a stanza; line breaks inside a stanza are kept.
+//   <Poem title="Bismillah" author="Rumi" translator="Coleman Barks" source="The Essential Rumi">
+//   It's a habit of yours to walk slowly.
+//   You hold a grudge for years.
+//
+//   Be wide as the air to learn a secret.
+//   </Poem>
+interface Props {
+	title?: string
+	author?: string
+	translator?: string
+	source?: string
+}
+const { title, author, translator, source } = Astro.props
+---
+
+<figure class='poem not-prose'>
+	<div class='poem-paper'>
+		{title && <h3 class='poem-title'>{title}</h3>}
+		<div class='poem-body'><slot /></div>
+		{
+			(author || translator || source) && (
+				<figcaption class='poem-credit'>
+					{author && <div class='poem-author'>{author}</div>}
+					{translator && <div>translated by {translator}</div>}
+					{source && <div class='poem-source'>{source}</div>}
+				</figcaption>
+			)
+		}
+	</div>
+</figure>
+
+<style>
+	.poem {
+		margin: 3rem auto;
+		max-width: 34rem;
+	}
+	/* A physical sheet: stays paper-coloured in dark mode too, like the printed tiles. */
+	.poem-paper {
+		position: relative;
+		padding: 3rem 2.5rem 2.25rem;
+		background: #fcfbf7;
+		color: #23262b;
+		border: 1px solid rgba(0, 0, 0, 0.07);
+		border-radius: 2px;
+		transform: rotate(0.5deg);
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.06),
+			0 12px 30px -12px rgba(0, 0, 0, 0.22);
+	}
+	/* curled bottom-right corner */
+	.poem-paper::after {
+		content: '';
+		position: absolute;
+		right: -1px;
+		bottom: -1px;
+		width: 2.4rem;
+		height: 2.4rem;
+		background: linear-gradient(315deg, hsl(var(--background)) 48%, #e9e5da 50%, #f6f3ec 70%);
+		box-shadow: -2px -2px 4px -2px rgba(0, 0, 0, 0.12);
+		border-top-left-radius: 2px;
+	}
+	.poem-title {
+		margin: 0 0 1.5rem;
+		font-family: 'Cormorant Garamond Variable', serif;
+		font-style: italic;
+		font-weight: 600;
+		font-size: 1.45rem;
+		color: #1b1e23;
+	}
+	.poem-body {
+		font-family: 'Alegreya Variable', serif;
+		font-size: 1.05rem;
+		line-height: 1.7;
+	}
+	.poem-body :global(p) {
+		margin: 0 0 1.25rem;
+		white-space: pre-line; /* keep the poem's own line breaks */
+		color: inherit;
+	}
+	.poem-credit {
+		margin-top: 2.75rem;
+		text-align: center;
+		font-size: 0.75rem;
+		letter-spacing: 0.02em;
+		color: #8a8275;
+		line-height: 1.6;
+	}
+	.poem-author {
+		font-family: 'Cormorant Garamond Variable', serif;
+		font-size: 0.95rem;
+		color: #6b6358;
+	}
+	.poem-source {
+		font-style: italic;
+	}
+	@media (max-width: 480px) {
+		.poem-paper {
+			padding: 2.25rem 1.5rem 1.75rem;
+			transform: none;
+		}
+	}
+</style>

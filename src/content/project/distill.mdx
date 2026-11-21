@@ -1,0 +1,69 @@
+---
+year: 2026
+hero:
+  video: /projects/distill_launch.mp4
+  poster: /projects/distill_launch.jpg
+  caption: 'Paste a repo URL, watch the blueprint, read a lesson, run an exercise. Recorded from the real UI.'
+links:
+  - { label: 'Read the courses', href: /courses/index.html }
+  - { label: 'Code', href: 'https://github.com/TAOGenna/Distill' }
+---
+
+<Lede>
+For any paper, blog post or repo there is a minimum curriculum that takes you from zero to really
+understanding it. Distill tries to write that curriculum: it finds the bare prerequisites, builds a
+dependency graph up from them, and ends at the original source, with lessons to read and exercises to run
+along the way.
+</Lede>
+
+## Why I built it
+
+It started with a need: to learn things deeply, not superficially. I would find a topic on X or in a
+technical blog and want to understand it, really understand it, not just know what it says.
+
+Doing that by hand means going down the rabbit hole: following each thing you don't know back to what it
+rests on, until you hit ground you already stand on. My hypothesis is that this dig can be done for you.
+Extract the essential prerequisites, order them into a dependency graph, and you have the shortest path
+from the bare minimum to a fair understanding of the source.
+
+I let LLMs do the writing because I think they are already good enough to teach. What they don't do on
+their own is start in the right place: they teach from where you are, not from where the topic needs you
+to begin. That is why Distill is mostly a harness around the model, keeping it on the curriculum, and I
+think some harness like it will almost always be needed.
+
+I had an adult learner in mind: someone already technical, reading a paper or a technical blog, who has to
+take the topic apart into a curriculum before they can learn it. I think the idea is more general than
+that, but the picture I keep coming back to is Brilliant for adults: for people who are already technical
+and hungry for more.
+
+## How it works
+
+**Blueprint.** Distill reads the whole source and writes a curriculum: which modules depend on which, a
+contract for every exercise (what is provided and what you write), the key excerpts, and how each one is
+validated.
+
+**Generate.** Each module is a multi-turn conversation with the full source. The model writes the lesson
+first, then the exercises one at a time. Solutions are executed between turns, so the real output of
+exercise 1 feeds the prompt for exercise 2. Modules generate in parallel.
+
+**Review.** Pre-flight checks (syntax, leftover TODOs, output patterns) catch structural problems, an LLM
+review checks the teaching and the contracts, and failed modules are generated again.
+
+Lessons are teaching documents of 3,000 to 10,000 words, not summaries. Exercises are `.py` files with TODO
+blocks, docstrings and a `__main__` test harness, with solutions included.
+
+## Courses it made
+
+- [Differentiable equilibrium averages: from Zwanzig to sampler-agnostic gradients for MOF design](/courses/differentiable_equilibrium_averages_from_zwanzig_t/index.html)
+- [End-to-end learned image compression: from transform coding to neural codecs](/courses/endtoend_learned_image_compression_from_transform/index.html)
+- [From Kevin Bacon to billion-scale vector search: building ANN indices from scratch](/courses/from_kevin_bacon_to_billionscale_vector_search_bui/index.html)
+- [Self-compressing neural networks: learning to quantize from scratch](/courses/selfcompressing_neural_networks_learning_to_quanti/index.html)
+
+## Open questions
+
+**Figures.** I still don't trust LLMs to make good teaching images. Distill draws with Excalidraw and
+ASCII, and that may have been the wrong call; plain LaTeX might do better. That remains to be tested.
+
+**Reading I haven't done.** I built this from intuition. Next would be the research on how people learn,
+the work on reinforcement learning for education, and what Khan Academy has written about these
+principles.

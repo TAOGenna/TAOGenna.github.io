@@ -1,0 +1,23 @@
+---
+// A film with a caption (after thijs.net/projects). Plays on click with the browser's own controls;
+// the poster shows until then. Use as a project page hero or inside any .mdx post.
+interface Props {
+	src: string
+	poster?: string
+	caption?: string
+	alt?: string
+}
+const { src, poster, caption, alt } = Astro.props
+---
+
+<figure class='not-prose my-10'>
+	<video
+		src={src}
+		poster={poster}
+		controls
+		playsinline
+		preload={poster ? 'none' : 'metadata'}
+		aria-label={alt ?? caption}
+		class='aspect-video w-full rounded-lg bg-black object-cover ring-1 ring-black/10'></video>
+	{caption && <figcaption class='mt-3 text-center font-mono text-[0.7rem] text-muted-foreground'>{caption}</figcaption>}
+</figure>

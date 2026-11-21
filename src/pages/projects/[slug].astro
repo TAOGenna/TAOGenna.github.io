@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+import { projects } from '@/data/projects'
+import ProjectPage from '@/layouts/ProjectPage.astro'
+import Poem from '@/components/prose/Poem.astro'
+import Film from '@/components/prose/Film.astro'
+import Lede from '@/components/prose/Lede.astro'
+import Link from '@/components/Link.astro'
+
+export const getStaticPaths = (async () => {
+	const entries = await getCollection('project')
+	return entries.map((entry) => {
+		const project = projects.find((p) => p.slug === entry.slug)
+		if (!project) throw new Error(`src/content/project/${entry.slug}.mdx has no project with slug '${entry.slug}' in data/projects.ts`)
+		return { params: { slug: entry.slug }, props: { entry, project } }
+	})
+}) satisfies GetStaticPaths
+
+const { entry, project } = Astro.props
+const { Content } = await entry.render()
+---
+
+<ProjectPage entry={entry} project={project}>
+	<Content components={{ a: Link, Poem, Film, Lede }} />
+</ProjectPage>

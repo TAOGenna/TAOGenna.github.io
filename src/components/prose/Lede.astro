@@ -1,0 +1,24 @@
+---
+// A highlighted opening paragraph (after thariq.io/blog/sherpa): what the thing is, in a few lines,
+// before the rest of the write-up. Use once, at the top.
+---
+
+<div class='lede not-prose'><slot /></div>
+
+<style>
+	.lede {
+		margin: 0 0 2.5rem;
+		padding: 1rem 1.25rem;
+		border-radius: 4px;
+		background: hsl(42 90% 55% / 0.12);
+		color: hsl(var(--foreground) / 0.88);
+		font-size: 1.1rem;
+		line-height: 1.8;
+	}
+	.lede :global(p) {
+		margin: 0;
+	}
+	.lede :global(p + p) {
+		margin-top: 0.9rem;
+	}
+</style>

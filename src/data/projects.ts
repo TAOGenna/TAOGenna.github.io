@@ -6,14 +6,18 @@ export interface ProjectTag {
 
 export interface Project {
 	heading: string
-	href: string
+	// Where the tile goes is decided by utils/destination.ts, in this order:
+	//   a write-up at src/content/project/<slug>.mdx  -> /projects/<slug>/
+	//   href starting with '/'                        -> a page or file on this site (checked at build)
+	//   any other href                                -> another site (new tab)
+	//   neither                                       -> the tile is not a link
+	slug?: string
+	href?: string
 	subheading: string
 	altText: string
 	imagePath?: string
 	videoPath?: string
 	tags?: ProjectTag[]
-	demo?: string
-	demoLabel?: string
 	video?: boolean // link points at a video; shows a play badge over the thumbnail
 }
 
@@ -103,12 +107,12 @@ export const projects: Project[] = [
 	},
 	{
 		heading: 'Distill',
+		slug: 'distill',
 		href: 'https://github.com/TAOGenna/Distill',
 		subheading:
-			'AI that turns any URL into a full progressive course with lessons, exercises, and solutions.',
+			'Turns a paper, blog post or repo into the minimum curriculum to really understand it: from the bare prerequisites, up a dependency graph, to the source.',
 		videoPath: '/projects/distill_small_demo.mp4',
 		altText: 'Distill demo',
-		demo: '/courses/index.html',
 		tags: [{ text: 'Prototype', color: '#8a6d2f' }]
 	},
 	{

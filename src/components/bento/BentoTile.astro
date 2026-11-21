@@ -3,6 +3,7 @@
 // hover panel with description + tags. Each scene supplies its own visuals.
 import type { Project } from '@/data/projects'
 import { cn } from '@/utils'
+import { destinationOf } from '../../utils/destination'
 
 interface Props {
 	project: Project
@@ -37,10 +38,22 @@ const panel =
 		? `${glass} bg-[#1b2330]/55 border-white/25 text-white`
 		: `${glass} bg-[#0b0f14]/60 border-white/20 text-white`
 const muted = 'text-white/65'
+
+// Where the tile goes: a write-up, a page on this site, another site (new tab), or nowhere (not a link).
+const d = await destinationOf(p)
+const Tag = d.kind === 'none' ? 'div' : 'a'
+const link =
+	d.kind === 'none'
+		? {}
+		: d.kind === 'external'
+			? { href: d.href, target: '_blank', rel: 'noopener noreferrer' }
+			: { href: d.href }
+// Said in the hover panel, so the visitor knows before clicking whether it's a write-up or another site.
+const goes = d.kind === 'page' ? 'Read the write-up →' : d.kind === 'external' ? `${new URL(d.href).host.replace(/^www\./, '')} ↗` : undefined
 ---
 
-<a
-	href={p.href}
+<Tag
+	{...link}
 	data-tone={tone}
 	class={cn('tile group relative block h-full overflow-hidden rounded-xl ring-1 ring-inset', surface, className)}
 >
@@ -67,16 +80,17 @@ const muted = 'text-white/65'
 				>
 					<p class='text-[0.8rem] leading-snug'>{blurb ?? p.subheading}</p>
 					{
-						tags && (
-							<p class={cn('mt-1.5 font-mono text-[0.55rem] uppercase tracking-wider', muted)}>
-								{tags.join(' · ')}
+						(tags || goes) && (
+							<p class={cn('mt-1.5 flex justify-between gap-3 font-mono text-[0.55rem] uppercase tracking-wider', muted)}>
+								<span>{tags?.join(' · ')}</span>
+								{goes && <span class='shrink-0 text-white'>{goes}</span>}
 							</p>
 						)
 					}
 				</div>
 		)
 	}
-</a>
+</Tag>
 
 <style>
 	/* paper grain, like the printed tiles in the reference */
